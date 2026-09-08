@@ -1,1 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>USDT Earn</title>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#07101d;
+  color:#fff;
+  overflow-x:hidden;
+}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+
+.header{
+  padding:18px 16px 12px;
+  background:#0b1727;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:22px;
+  font-weight:800;
+}
+.user-name{
+  font-size:13px;
+  opacity:.75;
+}
+.balance-box{
+  margin-top:14px;
+  padding:15px;
+  border-radius:16px;
+  background:#122238;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.balance-label{
+  font-size:12px;
+  opacity:.65;
+}
+.balance{
+  font-size:24px;
+  font-weight:800;
+  margin-top:4px;
+}
+.coin{
+  font-size:26px;
+}
+
+.page{
+  display:none;
+  padding:16px 16px 95px;
+}
+.page.active{display:block}
+
+.card{
+  background:#0d1b2d;
+  border:1px solid #1b3049;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:14px;
+}
+.card h2{
+  margin:0 0 8px;
+  font-size:19px;
+}
+.card p{
+  color:#9eb0c5;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.main-game{
+  padding:22px;
+  border-radius:20px;
+  background:linear-gradient(145deg,#102944,#0b1727);
+  text-align:center;
+}
+.main-game .icon{
+  font-size:55px;
+}
+.main-game h2{
+  margin:8px 0;
+}
+.main-game p{
+  margin:0 0 16px;
+}
+
+.primary{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  background:#18a957;
+  color:white;
+  font-weight:800;
+}
+.secondary{
+  width:100%;
+  padding:13px;
+  border-radius:13px;
+  background:#172b43;
+  color:white;
+  font-weight:700;
+  margin-top:10px;
+}
+.danger{
+  background:#c93a3a;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.stat{
+  padding:15px;
+  border-radius:15px;
+  background:#0d1b2d;
+  border:1px solid #1b3049;
+}
+.stat-title{
+  font-size:12px;
+  color:#8da1b8;
+}
+.stat-value{
+  font-size:21px;
+  font-weight:800;
+  margin-top:6px;
+}
+
+.nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:72px;
+  background:#0a1524;
+  border-top:1px solid #1c3048;
+  display:flex;
+  z-index:20;
+}
+.nav button{
+  flex:1;
+  background:transparent;
+  color:#7890aa;
+  font-size:11px;
+}
+.nav button.active{
+  color:#24d778;
+}
+.nav-icon{
+  display:block;
+  font-size:23px;
+  margin-bottom:3px;
+}
+
+.ref-link{
+  background:#07101d;
+  padding:12px;
+  border-radius:10px;
+  word-break:break-all;
+  color:#9ee8bb;
+  font-size:12px;
+}
+
+.form-group{
+  margin-bottom:12px;
+}
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  color:#9eb0c5;
+  font-size:12px;
+}
+.form-group input,
+.form-group select{
+  width:100%;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid #29415d;
+  background:#081421;
+  color:#fff;
+  outline:none;
+}
+
+.notice{
+  padding:12px;
+  background:#172b43;
+  border-radius:11px;
+  font-size:12px;
+  color:#9eb0c5;
+  line-height:1.5;
+}
+
+#gamePage{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:#02070d;
+}
+#gamePage.active{
+  display:block;
+}
+
+#gameCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  touch-action:none;
+}
+
+.game-hud{
+  position:absolute;
+  top:10px;
+  left:10px;
+  right:10px;
+  z-index:5;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none;
+}
+.hud-box{
+  background:rgba(5,15,27,.78);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  padding:8px 11px;
+  font-size:12px;
+}
+.hud-value{
+  font-weight:800;
+  font-size:16px;
+}
+.close-game{
+  pointer-events:auto;
+  background:rgba(200,50,50,.8);
+  color:#fff;
+  border-radius:50%;
+  width:38px;
+  height:38px;
+  font-size:18px;
+}
+
+.fire-button{
+  position:absolute;
+  right:20px;
+  bottom:30px;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:#d93434;
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  z-index:10;
+  box-shadow:0 0 25px rgba(255,40,40,.35);
+}
+.fire-button:active{
+  transform:scale(.94);
+  background:#ff4545;
+}
+
+.game-message{
+  position:absolute;
+  inset:0;
+  z-index:15;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.72);
+  padding:25px;
+  text-align:center;
+}
+.game-message.active{
+  display:flex;
+}
+.game-message-box{
+  width:100%;
+  max-width:350px;
+  padding:25px;
+  border-radius:20px;
+  background:#0d1b2d;
+  border:1px solid #29415d;
+}
+.game-message-box h2{
+  margin-top:0;
+}
+.game-message-box p{
+  color:#9eb0c5;
+  line-height:1.5;
+}
+.small{
+  font-size:11px;
+  color:#71859b;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-row">
+    <div class="logo">💰 USDT Earn</div>
+    <div class="user-name" id="userName">User</div>
+  </div>
+
+  <div class="balance-box">
+    <div>
+      <div class="balance-label">Balance</div>
+      <div class="balance" id="balance">0.00 USDT</div>
+    </div>
+    <div class="coin">💵</div>
+  </div>
+</header>
+
+<section id="home" class="page active">
+
+  <div class="main-game card">
+    <div class="icon">✈️</div>
+    <h2>Escape from Bomb</h2>
+    <p>
+      Fly the fighter jet, destroy bombs, collect coins and survive as long as possible.
+    </p>
+    <button class="primary" onclick="openGame()">PLAY GAME</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-title">Coins</div>
+      <div class="stat-value" id="homeCoins">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Score</div>
+      <div class="stat-value" id="homeScore">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Referrals</div>
+      <div class="stat-value" id="homeReferrals">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Ads Watched</div>
+      <div class="stat-value" id="homeAds">0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>How it works</h2>
+    <p>
+      Play the game, destroy bombs and collect coins.
+      Automatic firing starts immediately when the game starts.
+      At the end of the game an ad may be required before another game.
+    </p>
+  </div>
+
+</section>
+
+<section id="referral" class="page">
+
+  <div class="card">
+    <h2>👥 Invite Friends</h2>
+    <p>Invite friends and receive referral rewards.</p>
+
+    <div class="ref-link" id="refLink">
+      Loading referral link...
+    </div>
+
+    <button class="primary" onclick="copyReferral()">
+      COPY REFERRAL LINK
+    </button>
+
+    <button class="secondary" onclick="shareReferral()">
+      SHARE WITH FRIENDS
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>Referral Statistics</h2>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-title">Invited</div>
+        <div class="stat-value" id="refCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">Reward</div>
+        <div class="stat-value">0 USDT</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section id="wallet" class="page">
+
+  <div class="card">
+    <h2>💰 Wallet</h2>
+
+    <div class="balance-box">
+      <div>
+        <div class="balance-label">Available Balance</div>
+        <div class="balance" id="walletBalance">0.00 USDT</div>
+      </div>
+      <div>💵</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Withdraw</h2>
+
+    <div class="form-group">
+      <label>Amount</label>
+      <input id="withdrawAmount" type="number" min="0" step="0.01" placeholder="USDT amount">
+    </div>
+
+    <div class="form-group">
+      <label>Network</label>
+      <select id="withdrawNetwork">
+        <option value="BEP20">BEP20</option>
+        <option value="TRC20">TRC20</option>
+        <option value="ERC20">ERC20</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Wallet Address</label>
+      <input id="withdrawAddress" type="text" placeholder="Wallet address">
+    </div>
+
+    <button class="primary" onclick="requestWithdraw()">
+      REQUEST WITHDRAWAL
+    </button>
+
+    <div class="notice" style="margin-top:12px">
+      Real withdrawals require a secure backend and server-side balance validation.
+    </div>
+  </div>
+
+</section>
+
+<section id="profile" class="page">
+
+  <div class="card">
+    <h2>👤 Profile</h2>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-title">User ID</div>
+        <div class="stat-value" id="profileId">-</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">Balance</div>
+        <div class="stat-value" id="profileBalance">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">Coins</div>
+        <div class="stat-value" id="profileCoins">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">Score</div>
+        <div class="stat-value" id="profileScore">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>System</h2>
+    <p>
+      Telegram Mini App version 1.0
+    </p>
+  </div>
+
+</section>
+
+<nav class="nav">
+  <button class="active" onclick="showPage('home',this)">
+    <span class="nav-icon">🏠</span>
+    Home
+  </button>
+
+  <button onclick="showPage('referral',this)">
+    <span class="nav-icon">👥</span>
+    Invite
+  </button>
+
+  <button onclick="showPage('wallet',this)">
+    <span class="nav-icon">💰</span>
+    Wallet
+  </button>
+
+  <button onclick="showPage('profile',this)">
+    <span class="nav-icon">👤</span>
+    Profile
+  </button>
+</nav>
+
+<div id="gamePage">
+
+  <canvas id="gameCanvas"></canvas>
+
+  <div class="game-hud">
+
+    <div class="hud-box">
+      ❤️ <span id="lives">3</span>
+    </div>
+
+    <div class="hud-box">
+      ⭐ <span class="hud-value" id="gameScore">0</span>
+    </div>
+
+    <div class="hud-box">
+      🪙 <span class="hud-value" id="gameCoins">0</span>
+    </div>
+
+    <button class="close-game" onclick="closeGame()">✕</button>
+
+  </div>
+
+  <button
+    class="fire-button"
+    id="fireButton">
+    FIRE
+  </button>
+
+  <div class="game-message" id="gameMessage">
+
+    <div class="game-message-box">
+
+      <h2 id="messageTitle">Game Over</h2>
+
+      <p id="messageText">
+        Your game has ended.
+      </p>
+
+      <button
+        class="primary"
+        id="restartButton"
+        onclick="restartGame()">
+        PLAY AGAIN
+      </button>
+
+      <button
+        class="secondary"
+        onclick="closeGame()">
+        CLOSE
+      </button>
+
+      <div class="small" style="margin-top:12px">
+        AdsGram reward ads require a valid publisher block ID.
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const tg = window.Telegram && window.Telegram.WebApp
+  ? window.Telegram.WebApp
+  : null;
+
+if(tg){
+  tg.ready();
+  tg.expand();
+}
+
+const data = {
+  balance: Number(localStorage.getItem("balance") || 0),
+  coins: Number(localStorage.getItem("coins") || 0),
+  score: Number(localStorage.getItem("score") || 0),
+  referrals: Number(localStorage.getItem("referrals") || 0),
+  ads: Number(localStorage.getItem("ads") || 0)
+};
+
+const user =
+  tg && tg.initDataUnsafe && tg.initDataUnsafe.user
+    ? tg.initDataUnsafe.user
+    : null;
+
+const userId = user ? user.id : "demo-user";
+
+document.getElementById("userName").textContent =
+  user
+    ? ((user.first_name || "") + " " + (user.last_name || "")).trim()
+    : "Demo User";
+
+document.getElementById("profileId").textContent = userId;
+
+const BOT_USERNAME = "YOUR_BOT_USERNAME";
+
+/*
+  Replace this with the real AdsGram Block ID
+  from your AdsGram publisher dashboard.
+*/
+const ADSGRAM_BLOCK_ID = "YOUR_BLOCK_ID";
+
+let adsgram = null;
+
+try{
+  if(
+    window.Adsgram &&
+    ADSGRAM_BLOCK_ID !== "YOUR_BLOCK_ID"
+  ){
+    adsgram = window.Adsgram.init({
+      blockId: ADSGRAM_BLOCK_ID
+    });
+  }
+}catch(e){
+  adsgram = null;
+}
+
+function saveData(){
+  localStorage.setItem("balance", data.balance);
+  localStorage.setItem("coins", data.coins);
+  localStorage.setItem("score", data.score);
+  localStorage.setItem("referrals", data.referrals);
+  localStorage.setItem("ads", data.ads);
+}
+
+function updateUI(){
+
+  document.getElementById("balance").textContent =
+    data.balance.toFixed(2) + " USDT";
+
+  document.getElementById("walletBalance").textContent =
+    data.balance.toFixed(2) + " USDT";
+
+  document.getElementById("profileBalance").textContent =
+    data.balance.toFixed(2);
+
+  document.getElementById("homeCoins").textContent =
+    data.coins;
+
+  document.getElementById("profileCoins").textContent =
+    data.coins;
+
+  document.getElementById("homeScore").textContent =
+    data.score;
+
+  document.getElementById("profileScore").textContent =
+    data.score;
+
+  document.getElementById("homeReferrals").textContent =
+    data.referrals;
+
+  document.getElementById("refCount").textContent =
+    data.referrals;
+
+  document.getElementById("homeAds").textContent =
+    data.ads;
+}
+
+updateUI();
+
+const referralLink =
+  "https://t.me/" +
+  BOT_USERNAME +
+  "?start=ref_" +
+  encodeURIComponent(userId);
+
+document.getElementById("refLink").textContent =
+  referralLink;
+
+function showPage(pageId, button){
+
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
+
+  document.getElementById(pageId)
+    .classList.add("active");
+
+  document.querySelectorAll(".nav button")
+    .forEach(b => b.classList.remove("active"));
+
+  button.classList.add("active");
+}
+
+function copyReferral(){
+
+  navigator.clipboard
+    .writeText(referralLink)
+    .then(() => alert("Referral link copied."));
+}
+
+function shareReferral(){
+
+  const text =
+    "Join USDT Earn and play Escape from Bomb!";
+
+  const url =
+    "https://t.me/share/url?url=" +
+    encodeURIComponent(referralLink) +
+    "&text=" +
+    encodeURIComponent(text);
+
+  if(tg){
+    tg.openTelegramLink(url);
+  }else{
+    window.open(url,"_blank");
+  }
+}
+
+function requestWithdraw(){
+
+  const amount =
+    Number(document.getElementById("withdrawAmount").value);
+
+  const network =
+    document.getElementById("withdrawNetwork").value;
+
+  const address =
+    document.getElementById("withdrawAddress").value.trim();
+
+  if(!amount || amount <= 0){
+    alert("Enter a valid amount.");
+    return;
+  }
+
+  if(amount > data.balance){
+    alert("Insufficient balance.");
+    return;
+  }
+
+  if(!address){
+    alert("Enter your wallet address.");
+    return;
+  }
+
+  alert(
+    "Withdrawal request prepared.\n\n" +
+    "Amount: " + amount + " USDT\n" +
+    "Network: " + network
+  );
+}
+
+/* =========================
+   GAME
+========================= */
+
+const canvas =
+  document.getElementById("gameCanvas");
+
+const ctx =
+  canvas.getContext("2d");
+
+let W = 0;
+let H = 0;
+
+function resizeCanvas(){
+
+  const dpr =
+    Math.min(window.devicePixelRatio || 1, 2);
+
+  W = window.innerWidth;
+  H = window.innerHeight;
+
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+
+  canvas.style.width = W + "px";
+  canvas.style.height = H + "px";
+
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+let jet = null;
+let bullets = [];
+let bombs = [];
+let coins = [];
+
+let lives = 3;
+let gameScore = 0;
+let gameCoins = 0;
+
+let gameRunning = false;
+let gameStart = 0;
+
+let lastFrame = 0;
+let lastBomb = 0;
+let lastCoin = 0;
+
+let autoFireTimer = 0;
+let manualFireTimer = 0;
+
+let firePressed = false;
+let dragging = false;
+
+let fiveMinuteShown = false;
+let fiveMinuteAdRunning = false;
+
+function resetGame(){
+
+  jet = {
+    x: W / 2,
+    y: H - 115,
+    width: 58,
+    height: 82
+  };
+
+  bullets = [];
+  bombs = [];
+  coins = [];
+
+  lives = 3;
+  gameScore = 0;
+  gameCoins = 0;
+
+  lastFrame = performance.now();
+  lastBomb = 0;
+  lastCoin = 0;
+
+  autoFireTimer = 0;
+  manualFireTimer = 0;
+
+  fiveMinuteShown = false;
+  fiveMinuteAdRunning = false;
+
+  updateGameHUD();
+}
+
+function openGame(){
+
+  document.getElementById("gamePage")
+    .classList.add("active");
+
+  startNewGame();
+}
+
+function closeGame(){
+
+  gameRunning = false;
+
+  document.getElementById("gamePage")
+    .classList.remove("active");
+
+  document.getElementById("gameMessage")
+    .classList.remove("active");
+}
+
+function startNewGame(){
+
+  resetGame();
+
+  gameRunning = true;
+
+  /*
+    Start automatic firing immediately.
+    The first shot happens on the first frame.
+  */
+  autoFireTimer =
+    getDifficulty().fireInterval;
+
+  lastFrame = performance.now();
+
+  document.getElementById("gameMessage")
+    .classList.remove("active");
+
+  requestAnimationFrame(gameLoop);
+}
+
+function getDifficulty(){
+
+  const elapsed =
+    gameRunning
+      ? (performance.now() - gameStart) / 1000
+      : 0;
+
+  const minute =
+    Math.floor(elapsed / 60);
+
+  let bombSpeed;
+  let bombInterval;
+  let fireInterval;
+
+  if(minute <= 0){
+
+    bombSpeed = 170;
+    bombInterval = 900;
+    fireInterval = 330;
+
+  }else if(minute === 1){
+
+    bombSpeed = 195;
+    bombInterval = 820;
+    fireInterval = 310;
+
+  }else if(minute === 2){
+
+    bombSpeed = 220;
+    bombInterval = 750;
+    fireInterval = 290;
+
+  }else if(minute === 3){
+
+    bombSpeed = 245;
+    bombInterval = 690;
+    fireInterval = 270;
+
+  }else if(minute === 4){
+
+    bombSpeed = 275;
+    bombInterval = 630;
+    fireInterval = 250;
+
+  }else{
+
+    bombSpeed =
+      Math.min(320 + (minute - 5) * 10, 380);
+
+    bombInterval =
+      Math.max(560 - (minute - 5) * 10, 430);
+
+    fireInterval = 235;
+  }
+
+  return {
+    bombSpeed,
+    bombInterval,
+    fireInterval
+  };
+}
+
+function fireWeapon(){
+
+  if(!gameRunning || !jet) return;
+
+  const elapsed =
+    (performance.now() - gameStart) / 1000;
+
+  const dualFire =
+    elapsed >= 300;
+
+  if(dualFire){
+
+    bullets.push({
+      x: jet.x - 17,
+      y: jet.y - 38,
+      speed: 650
+    });
+
+    bullets.push({
+      x: jet.x + 17,
+      y: jet.y - 38,
+      speed: 650
+    });
+
+  }else{
+
+    bullets.push({
+      x: jet.x,
+      y: jet.y - 40,
+      speed: 650
+    });
+  }
+}
+
+function automaticFire(dt){
+
+  if(!gameRunning) return;
+
+  const difficulty =
+    getDifficulty();
+
+  autoFireTimer += dt * 1000;
+
+  while(
+    autoFireTimer >= difficulty.fireInterval
+  ){
+
+    autoFireTimer -=
+      difficulty.fireInterval;
+
+    fireWeapon();
+  }
+}
+
+function manualFire(dt){
+
+  if(!firePressed || !gameRunning)
+    return;
+
+  manualFireTimer += dt * 1000;
+
+  if(manualFireTimer >= 150){
+
+    manualFireTimer = 0;
+
+    fireWeapon();
+  }
+}
+
+function spawnBomb(){
+
+  bombs.push({
+    x: 25 + Math.random() * (W - 50),
+    y: -40,
+    radius: 18,
+    speed: getDifficulty().bombSpeed
+  });
+}
+
+function spawnCoin(){
+
+  coins.push({
+    x: 20 + Math.random() * (W - 40),
+    y: -20,
+    radius: 12,
+    speed: 130
+  });
+}
+
+function drawBackground(){
+
+  const gradient =
+    ctx.createLinearGradient(0,0,0,H);
+
+  gradient.addColorStop(0,"#020914");
+  gradient.addColorStop(1,"#06182a");
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,W,H);
+
+  for(let i=0;i<60;i++){
+
+    const x =
+      (i * 97) % W;
+
+    const y =
+      ((i * 151) +
+      Math.floor(performance.now()/80) * (i%3))
+      % H;
+
+    ctx.fillStyle = "rgba(255,255,255,.35)";
+    ctx.fillRect(x,y,1,1);
+  }
+}
+
+function drawJet(){
+
+  if(!jet) return;
+
+  ctx.save();
+
+  ctx.translate(jet.x,jet.y);
+
+  /*
+    Fighter jet shape.
+  */
+
+  ctx.fillStyle = "#b8c7d8";
+
+  ctx.beginPath();
+  ctx.moveTo(0,-43);
+  ctx.lineTo(9,-15);
+  ctx.lineTo(28,13);
+  ctx.lineTo(12,11);
+  ctx.lineTo(7,35);
+  ctx.lineTo(0,25);
+  ctx.lineTo(-7,35);
+  ctx.lineTo(-12,11);
+  ctx.lineTo(-28,13);
+  ctx.lineTo(-9,-15);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "#42a5ff";
+
+  ctx.beginPath();
+  ctx.moveTo(0,-29);
+  ctx.lineTo(7,-10);
+  ctx.lineTo(0,4);
+  ctx.lineTo(-7,-10);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "#e7f3ff";
+
+  ctx.beginPath();
+  ctx.arc(0,-20,4,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.fillStyle = "#ff8b24";
+
+  ctx.beginPath();
+  ctx.moveTo(-6,28);
+  ctx.lineTo(0,44);
+  ctx.lineTo(6,28);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawBullet(b){
+
+  ctx.fillStyle = "#ffe45c";
+
+  ctx.shadowBlur = 8;
+  ctx.shadowColor = "#ffe45c";
+
+  ctx.fillRect(
+    b.x - 2,
+    b.y - 12,
+    4,
+    15
+  );
+
+  ctx.shadowBlur = 0;
+}
+
+function drawBomb(b){
+
+  ctx.fillStyle = "#222";
+
+  ctx.beginPath();
+  ctx.arc(
+    b.x,
+    b.y,
+    b.radius,
+    0,
+    Math.PI*2
+  );
+  ctx.fill();
+
+  ctx.strokeStyle = "#555";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  ctx.fillStyle = "#ff3e3e";
+
+  ctx.beginPath();
+  ctx.arc(
+    b.x - 5,
+    b.y - 5,
+    4,
+    0,
+    Math.PI*2
+  );
+  ctx.fill();
+
+  ctx.strokeStyle = "#e5a43a";
+  ctx.lineWidth = 3;
+
+  ctx.beginPath();
+  ctx.moveTo(
+    b.x + 7,
+    b.y - 15
+  );
+  ctx.lineTo(
+    b.x + 15,
+    b.y - 25
+  );
+  ctx.stroke();
+}
+
+function drawCoin(c){
+
+  ctx.fillStyle = "#ffd84a";
+
+  ctx.beginPath();
+  ctx.arc(
+    c.x,
+    c.y,
+    c.radius,
+    0,
+    Math.PI*2
+  );
+  ctx.fill();
+
+  ctx.strokeStyle = "#fff2a1";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = "#795b00";
+  ctx.font = "bold 13px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("2",c.x,c.y);
+}
+
+function distance(a,b){
+
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+
+  return Math.sqrt(dx*dx + dy*dy);
+}
+
+function updateGame(dt){
+
+  if(!gameRunning) return;
+
+  const difficulty =
+    getDifficulty();
+
+  const now =
+    performance.now();
+
+  /*
+    Spawn bombs.
+  */
+
+  if(
+    now - lastBomb >=
+    difficulty.bombInterval
+  ){
+
+    spawnBomb();
+    lastBomb = now;
+  }
+
+  /*
+    About 25 coin packs per minute.
+  */
+
+  if(
+    now - lastCoin >= 2400
+  ){
+
+    spawnCoin();
+    lastCoin = now;
+  }
+
+  automaticFire(dt);
+  manualFire(dt);
+
+  /*
+    Bullets.
+  */
+
+  for(let i=bullets.length-1;i>=0;i--){
+
+    const b = bullets[i];
+
+    b.y -= b.speed * dt;
+
+    if(b.y < -30){
+      bullets.splice(i,1);
+    }
+  }
+
+  /*
+    Bombs.
+  */
+
+  for(let i=bombs.length-1;i>=0;i--){
+
+    const b = bombs[i];
+
+    b.y += b.speed * dt;
+
+    let destroyed = false;
+
+    /*
+      Bullet collision.
+    */
+
+    for(let j=bullets.length-1;j>=0;j--){
+
+      const bullet = bullets[j];
+
+      if(
+        distance(
+          {x:b.x,y:b.y},
+          {x:bullet.x,y:bullet.y}
+        ) <
+        b.radius + 7
+      ){
+
+        bombs.splice(i,1);
+        bullets.splice(j,1);
+
+        gameScore += 10;
+
+        destroyed = true;
+
+        break;
+      }
+    }
+
+    if(destroyed) continue;
+
+    /*
+      Jet collision.
+    */
+
+    if(
+      distance(
+        {x:b.x,y:b.y},
+        {x:jet.x,y:jet.y}
+      ) <
+      b.radius + 25
+    ){
+
+      bombs.splice(i,1);
+
+      lives--;
+
+      updateGameHUD();
+
+      if(lives <= 0){
+
+        finishGame();
+        return;
+      }
+
+      continue;
+    }
+
+    /*
+      Bomb passed bottom.
+    */
+
+    if(b.y > H + 40){
+
+      bombs.splice(i,1);
+
+      lives--;
+
+      updateGameHUD();
+
+      if(lives <= 0){
+
+        finishGame();
+        return;
+      }
+    }
+  }
+
+  /*
+    Coins.
+  */
+
+  for(let i=coins.length-1;i>=0;i--){
+
+    const c = coins[i];
+
+    c.y += c.speed * dt;
+
+    if(
+      distance(
+        {x:c.x,y:c.y},
+        {x:jet.x,y:jet.y}
+      ) <
+      c.radius + 28
+    ){
+
+      coins.splice(i,1);
+
+      gameCoins += 2;
+
+      updateGameHUD();
+
+      continue;
+    }
+
+    if(c.y > H + 30){
+      coins.splice(i,1);
+    }
+  }
+
+  /*
+    Five minute ad.
+  */
+
+  const elapsed =
+    (performance.now() - gameStart) / 1000;
+
+  if(
+    elapsed >= 300 &&
+    !fiveMinuteShown &&
+    !fiveMinuteAdRunning
+  ){
+
+    fiveMinuteShown = true;
+
+    showFiveMinuteAd();
+  }
+}
+
+function drawGame(){
+
+  drawBackground();
+
+  bombs.forEach(drawBomb);
+  coins.forEach(drawCoin);
+  bullets.forEach(drawBullet);
+
+  drawJet();
+}
+
+function gameLoop(timestamp){
+
+  if(!gameRunning) return;
+
+  const dt =
+    Math.min(
+      (timestamp - lastFrame) / 1000,
+      0.033
+    );
+
+  lastFrame = timestamp;
+
+  updateGame(dt);
+  drawGame();
+
+  if(gameRunning){
+    requestAnimationFrame(gameLoop);
+  }
+}
+
+function updateGameHUD(){
+
+  document.getElementById("lives").textContent =
+    lives;
+
+  document.getElementById("gameScore").textContent =
+    gameScore;
+
+  document.getElementById("gameCoins").textContent =
+    gameCoins;
+}
+
+function finishGame(){
+
+  gameRunning = false;
+
+  data.coins += gameCoins;
+  data.score += gameScore;
+
+  saveData();
+  updateUI();
+
+  document.getElementById("messageTitle")
+    .textContent = "GAME OVER";
+
+  document.getElementById("messageText")
+    .textContent =
+      "Score: " +
+      gameScore +
+      " | Coins: +" +
+      gameCoins;
+
+  document.getElementById("gameMessage")
+    .classList.add("active");
+}
+
+async function restartGame(){
+
+  if(adsgram){
+
+    const ok =
+      await showRewardAd();
+
+    if(!ok){
+      return;
+    }
+  }else{
+
+    alert(
+      "AdsGram is not connected yet. Add your real AdsGram Block ID first."
+    );
+
+    return;
+  }
+
+  startNewGame();
+}
+
+async function showRewardAd(){
+
+  if(!adsgram){
+    return false;
+  }
+
+  try{
+
+    const result =
+      await adsgram.show();
+
+    if(result){
+
+      data.ads++;
+
+      saveData();
+      updateUI();
+
+      return true;
+    }
+
+  }catch(e){
+
+    console.log(e);
+  }
+
+  return false;
+}
+
+async function showFiveMinuteAd(){
+
+  if(!gameRunning) return;
+
+  gameRunning = false;
+  fiveMinuteAdRunning = true;
+
+  document.getElementById("messageTitle")
+    .textContent = "5 MINUTES COMPLETED";
+
+  document.getElementById("messageText")
+    .textContent =
+      "Watch the reward ad to continue the game.";
+
+  document.getElementById("restartButton")
+    .textContent = "CONTINUE";
+
+  document.getElementById("gameMessage")
+    .classList.add("active");
+
+  if(adsgram){
+
+    const ok =
+      await showRewardAd();
+
+    if(ok){
+
+      document.getElementById("gameMessage")
+        .classList.remove("active");
+
+      document.getElementById("restartButton")
+        .textContent = "PLAY AGAIN";
+
+      fiveMinuteAdRunning = false;
+
+      gameRunning = true;
+
+      lastFrame = performance.now();
+
+      requestAnimationFrame(gameLoop);
+
+      return;
+    }
+  }
+
+  document.getElementById("messageText")
+    .textContent =
+      "AdsGram is not connected. Add your real Block ID to continue.";
+
+  fiveMinuteAdRunning = false;
+}
+
+/* =========================
+   MOVEMENT
+========================= */
+
+function moveJet(clientX){
+
+  if(!jet || !gameRunning) return;
+
+  const margin = 35;
+
+  jet.x =
+    Math.max(
+      margin,
+      Math.min(
+        W - margin,
+        clientX
+      )
+    );
+}
+
+canvas.addEventListener(
+  "touchstart",
+  function(e){
+
+    if(!gameRunning) return;
+
+    dragging = true;
+
+    if(e.touches[0]){
+      moveJet(e.touches[0].clientX);
+    }
+  },
+  {passive:true}
+);
+
+canvas.addEventListener(
+  "touchmove",
+  function(e){
+
+    if(!dragging) return;
+
+    if(e.touches[0]){
+      moveJet(e.touches[0].clientX);
+    }
+  },
+  {passive:true}
+);
+
+canvas.addEventListener(
+  "touchend",
+  function(){
+    dragging = false;
+  },
+  {passive:true}
+);
+
+canvas.addEventListener(
+  "mousedown",
+  function(e){
+
+    dragging = true;
+    moveJet(e.clientX);
+  }
+);
+
+window.addEventListener(
+  "mousemove",
+  function(e){
+
+    if(dragging){
+      moveJet(e.clientX);
+    }
+  }
+);
+
+window.addEventListener(
+  "mouseup",
+  function(){
+    dragging = false;
+  }
+);
+
+/* =========================
+   FIRE BUTTON
+========================= */
+
+const fireButton =
+  document.getElementById("fireButton");
+
+fireButton.addEventListener(
+  "touchstart",
+  function(e){
+
+    e.preventDefault();
+
+    if(!gameRunning) return;
+
+    firePressed = true;
+    manualFireTimer = 150;
+
+    fireWeapon();
+  },
+  {passive:false}
+);
+
+fireButton.addEventListener(
+  "touchend",
+  function(e){
+
+    e.preventDefault();
+
+    firePressed = false;
+    manualFireTimer = 0;
+  },
+  {passive:false}
+);
+
+fireButton.addEventListener(
+  "mousedown",
+  function(){
+
+    if(!gameRunning) return;
+
+    firePressed = true;
+    manualFireTimer = 150;
+
+    fireWeapon();
+  }
+);
+
+window.addEventListener(
+  "mouseup",
+  function(){
+
+    firePressed = false;
+    manualFireTimer = 0;
+  }
+);
+
+updateGameHUD();
+
+</script>
+
+</body>
+</html>
