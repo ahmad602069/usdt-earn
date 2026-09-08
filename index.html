@@ -1,1 +1,2220 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
+<title>USDT Earn</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:#07111f;
+    color:white;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
+}
+
+.header{
+    padding:18px 15px;
+    background:#0b192b;
+    border-bottom:1px solid #1c3047;
+}
+
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.user-name{
+    color:#9fb2c7;
+    font-size:13px;
+}
+
+.balance-box{
+    margin-top:14px;
+    padding:15px;
+    border-radius:16px;
+    background:#12243a;
+}
+
+.balance-title{
+    color:#91a4ba;
+    font-size:13px;
+}
+
+.balance{
+    font-size:27px;
+    font-weight:bold;
+    margin-top:4px;
+}
+
+main{
+    padding:15px;
+    padding-bottom:90px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    background:#0d1d30;
+    border:1px solid #20364f;
+    border-radius:17px;
+    padding:16px;
+    margin-bottom:13px;
+}
+
+.card h2,
+.card h3{
+    margin-top:0;
+}
+
+.muted{
+    color:#91a4ba;
+}
+
+.primary{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    background:#16ad5a;
+    margin-top:8px;
+}
+
+.secondary{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    background:#19314a;
+    margin-top:8px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:13px;
+}
+
+.stat{
+    background:#10253b;
+    padding:14px;
+    border-radius:13px;
+}
+
+.stat-title{
+    color:#91a4ba;
+    font-size:12px;
+}
+
+.stat-value{
+    display:block;
+    margin-top:5px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:13px;
+    margin:6px 0 12px;
+    border-radius:10px;
+    border:1px solid #29435e;
+    background:#071421;
+    color:white;
+    outline:none;
+}
+
+.small{
+    font-size:12px;
+    line-height:1.7;
+    color:#91a4ba;
+    word-break:break-word;
+}
+
+.nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:70px;
+    background:#091625;
+    border-top:1px solid #20364f;
+    display:flex;
+    z-index:20;
+}
+
+.nav button{
+    flex:1;
+    background:transparent;
+    color:#71879f;
+    font-size:12px;
+}
+
+.nav button.active{
+    color:#20d875;
+}
+
+/* GAME */
+
+#game{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#020811;
+    z-index:100;
+}
+
+#game.active{
+    display:block;
+}
+
+#gameCanvas{
+    width:100%;
+    height:100%;
+    display:block;
+    touch-action:none;
+}
+
+.game-hud{
+    position:absolute;
+    top:10px;
+    left:10px;
+    right:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:5;
+    direction:ltr;
+}
+
+.hud-item{
+    background:#071421dd;
+    padding:9px 12px;
+    border-radius:10px;
+}
+
+.close-game{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#bd3d3d;
+}
+
+.fire-button{
+    position:absolute;
+    right:20px;
+    bottom:25px;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#d83136;
+    font-size:15px;
+    z-index:6;
+}
+
+.game-message{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:#000b;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:10;
+}
+
+.game-message.active{
+    display:flex;
+}
+
+.game-message-box{
+    width:100%;
+    max-width:360px;
+    padding:22px;
+    text-align:center;
+    background:#0d1d30;
+    border:1px solid #29435e;
+    border-radius:18px;
+}
+
+.hidden{
+    display:none!important;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-row">
+        <div class="logo">💰 USDT Earn</div>
+        <div class="user-name" id="userName">User</div>
+    </div>
+
+    <div class="balance-box">
+        <div class="balance-title">موجودی</div>
+        <div class="balance" id="balance">0.00 USDT</div>
+    </div>
+
+</header>
+
+
+<main>
+
+<!-- HOME -->
+
+<section id="homePage" class="page active">
+
+    <div class="card">
+
+        <h2>✈️ فرار از بمب</h2>
+
+        <p class="muted">
+            با هواپیما حرکت کن، بمب‌ها را نابود کن و سکه جمع کن.
+        </p>
+
+        <button class="primary" onclick="startGame()">
+            🎮 شروع بازی
+        </button>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="stat">
+            <span class="stat-title">🪙 سکه</span>
+            <span class="stat-value" id="coins">0</span>
+        </div>
+
+        <div class="stat">
+            <span class="stat-title">⭐ امتیاز</span>
+            <span class="stat-value" id="score">0</span>
+        </div>
+
+        <div class="stat">
+            <span class="stat-title">👥 دعوت</span>
+            <span class="stat-value" id="referrals">0</span>
+        </div>
+
+        <div class="stat">
+            <span class="stat-title">📺 تبلیغات</span>
+            <span class="stat-value" id="ads">0</span>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>ℹ️ برنامه</h3>
+
+        <p class="small">
+            شلیک خودکار از شروع بازی فعال است.
+            دکمه FIRE نیز برای شلیک دستی وجود دارد.
+            در شروع بازی ۳ جان داری.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- INVITE -->
+
+<section id="invitePage" class="page">
+
+    <div class="card">
+
+        <h2>👥 دعوت دوستان</h2>
+
+        <p class="muted">
+            لینک دعوت خودت را با دوستانت شریک کن.
+        </p>
+
+        <div id="refLink" class="small"></div>
+
+        <button class="primary" onclick="copyReferral()">
+            📋 کپی لینک
+        </button>
+
+        <button class="secondary" onclick="shareReferral()">
+            📤 اشتراک‌گذاری
+        </button>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="stat">
+            <span class="stat-title">دعوت‌ها</span>
+            <span class="stat-value" id="referrals2">0</span>
+        </div>
+
+        <div class="stat">
+            <span class="stat-title">پاداش</span>
+            <span class="stat-value">0 USDT</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WALLET -->
+
+<section id="walletPage" class="page">
+
+    <div class="card">
+
+        <h2>💰 کیف پول</h2>
+
+        <div class="balance-box">
+
+            <div class="balance-title">
+                موجودی قابل برداشت
+            </div>
+
+            <div class="balance" id="walletBalance">
+                0.00 USDT
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>💸 درخواست برداشت</h3>
+
+        <label>مقدار USDT</label>
+
+        <input
+            id="withdrawAmount"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="مثلاً 10"
+        >
+
+        <label>شبکه</label>
+
+        <select id="withdrawNetwork">
+
+            <option value="BEP20">
+                BEP20
+            </option>
+
+            <option value="TRC20">
+                TRC20
+            </option>
+
+            <option value="ERC20">
+                ERC20
+            </option>
+
+        </select>
+
+        <label>آدرس کیف پول</label>
+
+        <input
+            id="withdrawAddress"
+            type="text"
+            placeholder="آدرس کیف پول"
+        >
+
+        <button
+            class="primary"
+            onclick="requestWithdraw()"
+        >
+            درخواست برداشت
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>📋 تاریخچه برداشت</h3>
+
+        <div id="withdrawHistory" class="small">
+            هنوز برداشتی ثبت نشده است.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profilePage" class="page">
+
+    <div class="card">
+
+        <h2>👤 پروفایل</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <span class="stat-title">Telegram ID</span>
+                <span class="stat-value" id="telegramId">-</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-title">موجودی</span>
+                <span class="stat-value" id="profileBalance">0</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-title">سکه</span>
+                <span class="stat-value" id="profileCoins">0</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-title">امتیاز</span>
+                <span class="stat-value" id="profileScore">0</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- NAVIGATION -->
+
+<nav class="nav">
+
+    <button
+        class="active"
+        onclick="showPage('homePage',this)"
+    >
+        🏠<br>
+        خانه
+    </button>
+
+    <button
+        onclick="showPage('invitePage',this)"
+    >
+        👥<br>
+        دعوت
+    </button>
+
+    <button
+        onclick="showPage('walletPage',this)"
+    >
+        💰<br>
+        کیف پول
+    </button>
+
+    <button
+        onclick="showPage('profilePage',this)"
+    >
+        👤<br>
+        پروفایل
+    </button>
+
+</nav>
+
+
+<!-- GAME -->
+
+<div id="game">
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="game-hud">
+
+        <div class="hud-item">
+            ❤️ <span id="gameLives">3</span>
+        </div>
+
+        <div class="hud-item">
+            ⭐ <span id="gameScore">0</span>
+        </div>
+
+        <div class="hud-item">
+            🪙 <span id="gameCoins">0</span>
+        </div>
+
+        <button
+            class="close-game"
+            onclick="closeGame()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <button
+        class="fire-button"
+        id="fireButton"
+    >
+        FIRE
+    </button>
+
+
+    <div
+        class="game-message"
+        id="gameMessage"
+    >
+
+        <div class="game-message-box">
+
+            <h2 id="gameMessageTitle">
+                Game Over
+            </h2>
+
+            <p
+                id="gameMessageText"
+                class="muted"
+            ></p>
+
+            <button
+                class="primary"
+                onclick="restartGame()"
+            >
+                🔄 بازی دوباره
+            </button>
+
+            <button
+                class="secondary"
+                onclick="closeGame()"
+            >
+                بستن
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==============================
+   TELEGRAM
+============================== */
+
+const telegram =
+    window.Telegram &&
+    window.Telegram.WebApp
+        ? window.Telegram.WebApp
+        : null;
+
+if(telegram){
+
+    try{
+        telegram.ready();
+        telegram.expand();
+    }catch(e){}
+
+}
+
+
+const telegramUser =
+    telegram &&
+    telegram.initDataUnsafe &&
+    telegram.initDataUnsafe.user
+        ? telegram.initDataUnsafe.user
+        : null;
+
+
+const userId =
+    telegramUser &&
+    telegramUser.id
+        ? telegramUser.id
+        : 0;
+
+
+const userName =
+    telegramUser
+        ? (
+            telegramUser.first_name ||
+            "User"
+          )
+        : "User";
+
+
+document.getElementById("userName").textContent =
+    userName;
+
+document.getElementById("telegramId").textContent =
+    userId || "-";
+
+
+/* ==============================
+   LOCAL FALLBACK DATA
+   Prevents white screen if API
+   is not connected yet.
+============================== */
+
+let appState = {
+
+    balance:0,
+    coins:0,
+    score:0,
+    referrals:0,
+    ads:0
+
+};
+
+
+function renderState(){
+
+    const balance =
+        Number(appState.balance) || 0;
+
+    const coins =
+        Number(appState.coins) || 0;
+
+    const score =
+        Number(appState.score) || 0;
+
+    const referrals =
+        Number(appState.referrals) || 0;
+
+    const ads =
+        Number(appState.ads) || 0;
+
+
+    document.getElementById("balance").textContent =
+        balance.toFixed(2) + " USDT";
+
+    document.getElementById("walletBalance").textContent =
+        balance.toFixed(2) + " USDT";
+
+    document.getElementById("coins").textContent =
+        coins;
+
+    document.getElementById("score").textContent =
+        score;
+
+    document.getElementById("referrals").textContent =
+        referrals;
+
+    document.getElementById("referrals2").textContent =
+        referrals;
+
+    document.getElementById("ads").textContent =
+        ads;
+
+    document.getElementById("profileBalance").textContent =
+        balance.toFixed(2);
+
+    document.getElementById("profileCoins").textContent =
+        coins;
+
+    document.getElementById("profileScore").textContent =
+        score;
+
+}
+
+
+/* ==============================
+   API
+============================== */
+
+async function api(url,options={}){
+
+    const headers =
+        options.headers || {};
+
+    headers["Content-Type"] =
+        "application/json";
+
+
+    if(
+        telegram &&
+        telegram.initData
+    ){
+
+        headers["X-Telegram-Init-Data"] =
+            telegram.initData;
+
+    }
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                ...options,
+                headers
+            }
+        );
+
+
+    if(!response.ok){
+
+        throw new Error(
+            "API error " +
+            response.status
+        );
+
+    }
+
+
+    return response.json();
+
+}
+
+
+/* ==============================
+   LOAD USER
+============================== */
+
+async function loadUser(){
+
+    renderState();
+
+    try{
+
+        const data =
+            await api("/api/me");
+
+        if(data){
+
+            appState = {
+                ...appState,
+                ...data
+            };
+
+            renderState();
+
+        }
+
+    }catch(error){
+
+        /*
+          API not connected yet.
+          Keep the page working.
+        */
+
+        console.log(
+            "API unavailable:",
+            error
+        );
+
+    }
+
+}
+
+
+loadUser();
+
+
+/* ==============================
+   PAGES
+============================== */
+
+function showPage(id,button){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            page =>
+                page.classList.remove("active")
+        );
+
+
+    const target =
+        document.getElementById(id);
+
+    if(target){
+
+        target.classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(
+            b =>
+                b.classList.remove("active")
+        );
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+/* ==============================
+   REFERRAL
+============================== */
+
+const referralLink =
+    location.origin +
+    location.pathname +
+    "?ref=" +
+    (userId || "");
+
+
+document.getElementById("refLink").textContent =
+    referralLink;
+
+
+function copyReferral(){
+
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
+
+        navigator.clipboard
+            .writeText(referralLink)
+            .then(
+                () =>
+                    alert("لینک کپی شد")
+            )
+            .catch(
+                () =>
+                    alert(referralLink)
+            );
+
+    }else{
+
+        alert(referralLink);
+
+    }
+
+}
+
+
+function shareReferral(){
+
+    const shareUrl =
+        "https://t.me/share/url?url=" +
+        encodeURIComponent(referralLink);
+
+
+    if(telegram){
+
+        try{
+
+            telegram.openTelegramLink(
+                shareUrl
+            );
+
+            return;
+
+        }catch(e){}
+
+    }
+
+
+    window.open(
+        shareUrl,
+        "_blank"
+    );
+
+}
+
+
+/* ==============================
+   WITHDRAW
+============================== */
+
+async function requestWithdraw(){
+
+    const amount =
+        Number(
+            document.getElementById(
+                "withdrawAmount"
+            ).value
+        );
+
+    const network =
+        document.getElementById(
+            "withdrawNetwork"
+        ).value;
+
+    const address =
+        document.getElementById(
+            "withdrawAddress"
+        ).value.trim();
+
+
+    if(!amount || amount <= 0){
+
+        alert("مقدار برداشت را وارد کنید.");
+
+        return;
+
+    }
+
+
+    if(!address){
+
+        alert("آدرس کیف پول را وارد کنید.");
+
+        return;
+
+    }
+
+
+    try{
+
+        const result =
+            await api(
+                "/api/withdraw",
+                {
+                    method:"POST",
+                    body:JSON.stringify({
+
+                        amount,
+                        network,
+                        address
+
+                    })
+                }
+            );
+
+
+        alert(
+            result.message ||
+            "درخواست برداشت ثبت شد."
+        );
+
+
+        loadUser();
+
+    }catch(error){
+
+        /*
+          If backend isn't ready yet,
+          don't crash the application.
+        */
+
+        alert(
+            "سرور برداشت هنوز وصل نشده است."
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   GAME
+============================== */
+
+const canvas =
+    document.getElementById(
+        "gameCanvas"
+    );
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let width=0;
+let height=0;
+
+let player=null;
+
+let bullets=[];
+let bombs=[];
+let gameCoins=[];
+
+let lives=3;
+let gameScore=0;
+let collectedCoins=0;
+
+let gameRunning=false;
+
+let animationId=null;
+
+let lastFrame=0;
+
+let gameStartTime=0;
+
+let autoFireTimer=0;
+let manualFireTimer=0;
+
+let fireHeld=false;
+
+let lastBombTime=0;
+let lastCoinTime=0;
+
+
+function resizeGame(){
+
+    width =
+        window.innerWidth;
+
+    height =
+        window.innerHeight;
+
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        width * dpr;
+
+    canvas.height =
+        height * dpr;
+
+    canvas.style.width =
+        width + "px";
+
+    canvas.style.height =
+        height + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+
+    if(player){
+
+        player.x =
+            Math.max(
+                35,
+                Math.min(
+                    width-35,
+                    player.x
+                )
+            );
+
+        player.y =
+            height - 115;
+
+    }
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeGame
+);
+
+resizeGame();
+
+
+/*
+  Difficulty:
+  minute 1 = easy
+  gradually increases.
+*/
+
+function difficulty(){
+
+    const minutes =
+        Math.floor(
+            (performance.now() -
+             gameStartTime)
+            / 60000
+        );
+
+
+    return {
+
+        bombSpeed:
+            Math.min(
+                150 +
+                minutes * 25,
+                360
+            ),
+
+        bombInterval:
+            Math.max(
+                950 -
+                minutes * 65,
+                450
+            ),
+
+        fireInterval:
+            Math.max(
+                340 -
+                minutes * 15,
+                230
+            )
+
+    };
+
+}
+
+
+/*
+  AUTO FIRE
+  Always ON.
+*/
+
+function shoot(){
+
+    if(
+        !gameRunning ||
+        !player
+    ){
+
+        return;
+
+    }
+
+
+    const elapsed =
+        performance.now() -
+        gameStartTime;
+
+
+    /*
+      Dual fire after 5 minutes.
+    */
+
+    if(elapsed >= 300000){
+
+        bullets.push({
+            x:player.x-15,
+            y:player.y-40,
+            speed:650
+        });
+
+        bullets.push({
+            x:player.x+15,
+            y:player.y-40,
+            speed:650
+        });
+
+    }else{
+
+        bullets.push({
+            x:player.x,
+            y:player.y-40,
+            speed:650
+        });
+
+    }
+
+}
+
+
+/* ==============================
+   START GAME
+============================== */
+
+function startGame(){
+
+    document
+        .getElementById("game")
+        .classList.add("active");
+
+
+    document
+        .getElementById("gameMessage")
+        .classList.remove("active");
+
+
+    player={
+
+        x:width/2,
+        y:height-115
+
+    };
+
+
+    bullets=[];
+    bombs=[];
+    gameCoins=[];
+
+
+    lives=3;
+    gameScore=0;
+    collectedCoins=0;
+
+
+    gameRunning=true;
+
+
+    gameStartTime =
+        performance.now();
+
+
+    lastFrame =
+        performance.now();
+
+
+    lastBombTime =
+        performance.now();
+
+
+    lastCoinTime =
+        performance.now();
+
+
+    /*
+      First automatic shot
+      happens immediately.
+    */
+
+    autoFireTimer =
+        difficulty().fireInterval;
+
+
+    manualFireTimer=0;
+
+
+    updateHUD();
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    animationId =
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+/* ==============================
+   GAME LOOP
+============================== */
+
+function gameLoop(time){
+
+    if(!gameRunning){
+
+        return;
+
+    }
+
+
+    const dt =
+        Math.min(
+            (time-lastFrame)/1000,
+            0.033
+        );
+
+
+    lastFrame=time;
+
+
+    updateGame(dt);
+    drawGame();
+
+
+    animationId =
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+/* ==============================
+   UPDATE
+============================== */
+
+function updateGame(dt){
+
+    const d =
+        difficulty();
+
+
+    /*
+      Automatic firing.
+    */
+
+    autoFireTimer +=
+        dt*1000;
+
+
+    while(
+        autoFireTimer >=
+        d.fireInterval
+    ){
+
+        autoFireTimer -=
+            d.fireInterval;
+
+        shoot();
+
+    }
+
+
+    /*
+      FIRE button.
+    */
+
+    if(fireHeld){
+
+        manualFireTimer +=
+            dt*1000;
+
+
+        if(
+            manualFireTimer >= 150
+        ){
+
+            manualFireTimer=0;
+
+            shoot();
+
+        }
+
+    }
+
+
+    /*
+      Spawn bombs.
+    */
+
+    const now =
+        performance.now();
+
+
+    if(
+        now-lastBombTime >=
+        d.bombInterval
+    ){
+
+        bombs.push({
+
+            x:
+                25 +
+                Math.random() *
+                Math.max(
+                    1,
+                    width-50
+                ),
+
+            y:-30,
+
+            radius:17,
+
+            speed:d.bombSpeed
+
+        });
+
+
+        lastBombTime=now;
+
+    }
+
+
+    /*
+      25 coins per minute:
+      one pack approximately
+      every 2.4 seconds.
+    */
+
+    if(
+        now-lastCoinTime >=
+        2400
+    ){
+
+        gameCoins.push({
+
+            x:
+                25 +
+                Math.random() *
+                Math.max(
+                    1,
+                    width-50
+                ),
+
+            y:-20,
+
+            radius:12,
+
+            speed:130
+
+        });
+
+
+        lastCoinTime=now;
+
+    }
+
+
+    /*
+      Bullets.
+    */
+
+    for(
+        let i=bullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        bullets[i].y -=
+            bullets[i].speed*dt;
+
+
+        if(
+            bullets[i].y < -30
+        ){
+
+            bullets.splice(i,1);
+
+        }
+
+    }
+
+
+    /*
+      Bombs.
+    */
+
+    for(
+        let i=bombs.length-1;
+        i>=0;
+        i--
+    ){
+
+        const bomb =
+            bombs[i];
+
+
+        bomb.y +=
+            bomb.speed*dt;
+
+
+        let destroyed=false;
+
+
+        /*
+          Bullet collision.
+        */
+
+        for(
+            let j=bullets.length-1;
+            j>=0;
+            j--
+        ){
+
+            const bullet =
+                bullets[j];
+
+
+            if(
+                Math.hypot(
+                    bomb.x-bullet.x,
+                    bomb.y-bullet.y
+                ) <
+                bomb.radius+7
+            ){
+
+                bombs.splice(i,1);
+                bullets.splice(j,1);
+
+                gameScore +=10;
+
+                destroyed=true;
+
+                break;
+
+            }
+
+        }
+
+
+        if(destroyed){
+
+            continue;
+
+        }
+
+
+        /*
+          Player collision.
+        */
+
+        if(
+            Math.hypot(
+                bomb.x-player.x,
+                bomb.y-player.y
+            ) <
+            bomb.radius+25
+        ){
+
+            bombs.splice(i,1);
+
+            lives--;
+
+            updateHUD();
+
+
+            if(lives<=0){
+
+                gameOver();
+
+                return;
+
+            }
+
+
+            continue;
+
+        }
+
+
+        /*
+          Bomb reaches bottom.
+        */
+
+        if(
+            bomb.y >
+            height+40
+        ){
+
+            bombs.splice(i,1);
+
+            lives--;
+
+            updateHUD();
+
+
+            if(lives<=0){
+
+                gameOver();
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+      Coins.
+    */
+
+    for(
+        let i=gameCoins.length-1;
+        i>=0;
+        i--
+    ){
+
+        const coin =
+            gameCoins[i];
+
+
+        coin.y +=
+            coin.speed*dt;
+
+
+        if(
+            Math.hypot(
+                coin.x-player.x,
+                coin.y-player.y
+            ) <
+            coin.radius+28
+        ){
+
+            gameCoins.splice(i,1);
+
+            /*
+              Each pack = 2 coins.
+            */
+
+            collectedCoins +=2;
+
+            continue;
+
+        }
+
+
+        if(
+            coin.y >
+            height+30
+        ){
+
+            gameCoins.splice(i,1);
+
+        }
+
+    }
+
+
+    updateHUD();
+
+}
+
+
+/* ==============================
+   DRAW
+============================== */
+
+function drawGame(){
+
+    ctx.fillStyle =
+        "#020914";
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+      Stars.
+    */
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    for(
+        let i=0;
+        i<55;
+        i++
+    ){
+
+        const sx =
+            (i*97)%width;
+
+        const sy =
+            (i*151)%height;
+
+        ctx.fillRect(
+            sx,
+            sy,
+            1,
+            1
+        );
+
+    }
+
+
+    /*
+      Bombs.
+    */
+
+    bombs.forEach(
+        bomb=>{
+
+            ctx.beginPath();
+
+            ctx.arc(
+                bomb.x,
+                bomb.y,
+                bomb.radius,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle =
+                "#252525";
+
+            ctx.fill();
+
+            ctx.strokeStyle =
+                "#e33";
+
+            ctx.lineWidth=2;
+
+            ctx.stroke();
+
+        }
+    );
+
+
+    /*
+      Coins.
+    */
+
+    gameCoins.forEach(
+        coin=>{
+
+            ctx.beginPath();
+
+            ctx.arc(
+                coin.x,
+                coin.y,
+                coin.radius,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fillStyle =
+                "#ffd83d";
+
+            ctx.fill();
+
+            ctx.fillStyle =
+                "#6b4f00";
+
+            ctx.font =
+                "bold 11px Arial";
+
+            ctx.textAlign =
+                "center";
+
+            ctx.fillText(
+                "2",
+                coin.x,
+                coin.y+4
+            );
+
+        }
+    );
+
+
+    /*
+      Bullets.
+    */
+
+    bullets.forEach(
+        bullet=>{
+
+            ctx.fillStyle =
+                "#ffe65c";
+
+            ctx.fillRect(
+                bullet.x-2,
+                bullet.y-12,
+                4,
+                15
+            );
+
+        }
+    );
+
+
+    /*
+      Fighter jet.
+    */
+
+    if(player){
+
+        ctx.save();
+
+        ctx.translate(
+            player.x,
+            player.y
+        );
+
+
+        /*
+          Wings/body.
+        */
+
+        ctx.fillStyle =
+            "#c9d5e2";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(0,-45);
+        ctx.lineTo(10,-12);
+        ctx.lineTo(31,15);
+        ctx.lineTo(11,11);
+        ctx.lineTo(6,35);
+        ctx.lineTo(0,25);
+        ctx.lineTo(-6,35);
+        ctx.lineTo(-11,11);
+        ctx.lineTo(-31,15);
+        ctx.lineTo(-10,-12);
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /*
+          Cockpit.
+        */
+
+        ctx.fillStyle =
+            "#3299ef";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(0,-31);
+        ctx.lineTo(7,-10);
+        ctx.lineTo(0,5);
+        ctx.lineTo(-7,-10);
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        /*
+          Engine flame.
+        */
+
+        ctx.fillStyle =
+            "#ff8b25";
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(-5,25);
+        ctx.lineTo(0,45);
+        ctx.lineTo(5,25);
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        ctx.restore();
+
+    }
+
+}
+
+
+/* ==============================
+   HUD
+============================== */
+
+function updateHUD(){
+
+    document.getElementById(
+        "gameLives"
+    ).textContent =
+        lives;
+
+
+    document.getElementById(
+        "gameScore"
+    ).textContent =
+        gameScore;
+
+
+    document.getElementById(
+        "gameCoins"
+    ).textContent =
+        collectedCoins;
+
+}
+
+
+/* ==============================
+   GAME OVER
+============================== */
+
+function gameOver(){
+
+    gameRunning=false;
+
+
+    document.getElementById(
+        "gameMessageTitle"
+    ).textContent =
+        "💥 Game Over";
+
+
+    document.getElementById(
+        "gameMessageText"
+    ).textContent =
+        "امتیاز: " +
+        gameScore +
+        " | سکه: +" +
+        collectedCoins;
+
+
+    document
+        .getElementById("gameMessage")
+        .classList.add("active");
+
+
+    /*
+      Save result if server exists.
+    */
+
+    saveGame();
+
+}
+
+
+/* ==============================
+   SAVE GAME
+============================== */
+
+async function saveGame(){
+
+    try{
+
+        await api(
+            "/api/game",
+            {
+                method:"POST",
+                body:JSON.stringify({
+
+                    score:gameScore,
+                    coins:collectedCoins
+
+                })
+            }
+        );
+
+
+        await loadUser();
+
+    }catch(error){
+
+        /*
+          Game remains usable
+          even without backend.
+        */
+
+        console.log(
+            "Game save unavailable"
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   RESTART
+============================== */
+
+function restartGame(){
+
+    /*
+      AdsGram rewarded replay
+      will be connected here.
+      
+      For now the game restarts
+      without crashing if AdsGram
+      isn't configured.
+    */
+
+    document
+        .getElementById("gameMessage")
+        .classList.remove("active");
+
+
+    startGame();
+
+}
+
+
+/* ==============================
+   CLOSE GAME
+============================== */
+
+function closeGame(){
+
+    gameRunning=false;
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    document
+        .getElementById("game")
+        .classList.remove("active");
+
+
+    document
+        .getElementById("gameMessage")
+        .classList.remove("active");
+
+}
+
+
+/* ==============================
+   MOVE PLAYER
+============================== */
+
+function movePlayer(clientX){
+
+    if(
+        !gameRunning ||
+        !player
+    ){
+
+        return;
+
+    }
+
+
+    player.x =
+        Math.max(
+            35,
+            Math.min(
+                width-35,
+                clientX
+            )
+        );
+
+}
+
+
+/* Touch */
+
+canvas.addEventListener(
+    "touchmove",
+    function(event){
+
+        if(
+            event.touches &&
+            event.touches.length
+        ){
+
+            movePlayer(
+                event.touches[0].clientX
+            );
+
+        }
+
+    },
+    {passive:true}
+);
+
+
+/* Mouse */
+
+canvas.addEventListener(
+    "mousemove",
+    function(event){
+
+        movePlayer(
+            event.clientX
+        );
+
+    }
+);
+
+
+/* ==============================
+   FIRE BUTTON
+============================== */
+
+const fireButton =
+    document.getElementById(
+        "fireButton"
+    );
+
+
+fireButton.addEventListener(
+    "touchstart",
+    function(event){
+
+        event.preventDefault();
+
+        fireHeld=true;
+
+        manualFireTimer=150;
+
+        shoot();
+
+    },
+    {passive:false}
+);
+
+
+fireButton.addEventListener(
+    "touchend",
+    function(event){
+
+        event.preventDefault();
+
+        fireHeld=false;
+
+        manualFireTimer=0;
+
+    },
+    {passive:false}
+);
+
+
+fireButton.addEventListener(
+    "mousedown",
+    function(){
+
+        fireHeld=true;
+
+        manualFireTimer=150;
+
+        shoot();
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseup",
+    function(){
+
+        fireHeld=false;
+
+        manualFireTimer=0;
+
+    }
+);
+
+
+/* ==============================
+   INITIAL RENDER
+============================== */
+
+renderState();
+
+</script>
+
+</body>
+</html>
