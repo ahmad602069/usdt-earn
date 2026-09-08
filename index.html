@@ -32,28 +32,9 @@ body.game-mode{
     overflow:hidden;
 }
 
-
-/* =====================================================
-   حالت بازی
-===================================================== */
-
-body.game-mode .header{
-    display:none;
-}
-
-body.game-mode main{
-    padding:0;
-}
-
-
-/* =====================================================
-   عمومی
-===================================================== */
-
-button{
-    font-family:inherit;
-    cursor:pointer;
-}
+/* ===============================
+   هدر اصلی
+=============================== */
 
 .header{
     padding:18px;
@@ -171,6 +152,7 @@ body.game-mode main{
 
 #gamePage{
     width:100%;
+    height:100vh;
 }
 
 .game-card{
@@ -180,16 +162,13 @@ body.game-mode main{
     border-radius:0;
     background:#020914;
     width:100%;
+    height:100vh;
 }
 
-
-/* =====================================================
-   هدر کوچک بازی
-===================================================== */
-
+/* هدر بازی بسیار کوچک شده */
 .game-header{
     height:30px;
-    padding:3px 7px;
+    padding:2px 7px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -209,28 +188,23 @@ body.game-mode main{
 .game-info{
     display:flex;
     gap:3px;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
     justify-content:flex-end;
 }
 
 .game-badge{
-    padding:3px 5px;
+    padding:2px 4px;
     background:#102941;
     border-radius:5px;
     font-size:8px;
     white-space:nowrap;
 }
 
-
-/* =====================================================
-   محیط بازی
-===================================================== */
-
 .game-wrapper{
     position:relative;
     width:100%;
     height:calc(100vh - 30px);
-    min-height:0;
+    min-height:430px;
     overflow:hidden;
     border:0;
     border-radius:0;
@@ -293,29 +267,33 @@ body.game-mode main{
     right:0;
     bottom:0;
     left:0;
-    z-index:70;
-    padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+    z-index:80;
+
+    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
-    gap:7px;
+    gap:6px;
+
     background:linear-gradient(
         to top,
         rgba(2,9,20,.99),
-        rgba(2,9,20,.88),
-        rgba(2,9,20,0)
+        rgba(2,9,20,.90),
+        rgba(2,9,20,.15)
     );
-    pointer-events:auto;
 }
 
 .game-control-button{
-    min-height:46px;
+    min-height:43px;
+
     border:1px solid #294662;
-    border-radius:11px;
+    border-radius:10px;
+
     background:#10253b;
     color:white;
-    font-size:13px;
+
+    font-size:12px;
     font-weight:bold;
-    pointer-events:auto;
 }
 
 .game-control-button.pause{
@@ -334,39 +312,145 @@ body.game-mode main{
     opacity:.4;
 }
 
-
-/* =====================================================
-   موشک
-===================================================== */
-
 .missile-button{
     position:absolute;
     left:50%;
-    bottom:72px;
-    transform:translateX(-50%);
-    z-index:71;
+    bottom:62px;
 
-    min-width:170px;
-    padding:12px 16px;
+    transform:translateX(-50%);
+
+    z-index:81;
+
+    min-width:155px;
+    padding:10px 14px;
 
     border:1px solid #8c313a;
-    border-radius:13px;
+    border-radius:12px;
 
     background:#b52b38;
     color:white;
 
-    font-size:14px;
+    font-size:13px;
     font-weight:bold;
-
-    pointer-events:auto;
 }
 
 .missile-button:disabled{
     opacity:.45;
 }
 
-.game-hint{
-    display:none;
+
+/* =====================================================
+   زمین بازی
+===================================================== */
+
+.ground-info{
+    position:absolute;
+    right:0;
+    bottom:0;
+    left:0;
+
+    height:18%;
+
+    pointer-events:none;
+    z-index:5;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(18,42,30,.15),
+            rgba(18,42,30,.85) 30%,
+            rgba(8,25,18,.98)
+        );
+}
+
+.ground-line{
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+
+    height:3px;
+
+    background:#426b43;
+
+    box-shadow:
+        0 0 10px rgba(60,130,65,.8);
+}
+
+.ground-details{
+    position:absolute;
+    right:0;
+    bottom:0;
+    left:0;
+    height:75%;
+
+    background:
+        repeating-linear-gradient(
+            165deg,
+            transparent 0,
+            transparent 18px,
+            rgba(93,119,75,.15) 19px,
+            transparent 20px
+        );
+}
+
+.ground-road{
+    position:absolute;
+    left:50%;
+    bottom:-15px;
+
+    transform:translateX(-50%);
+
+    width:25%;
+    height:120%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(75,83,77,.15),
+            rgba(51,55,53,.55)
+        );
+
+    clip-path:polygon(
+        35% 0,
+        65% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
+.ground-light{
+    position:absolute;
+
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:#c9d58d;
+
+    box-shadow:
+        0 0 7px #c9d58d;
+}
+
+.ground-light.one{
+    left:15%;
+    bottom:35%;
+}
+
+.ground-light.two{
+    right:15%;
+    bottom:55%;
+}
+
+.ground-light.three{
+    left:30%;
+    bottom:65%;
+}
+
+.ground-light.four{
+    right:30%;
+    bottom:25%;
 }
 
 
@@ -380,9 +464,12 @@ body.game-mode main{
     bottom:0;
     left:0;
     height:70px;
+
     display:flex;
+
     background:#091625;
     border-top:1px solid #20364f;
+
     z-index:100;
 }
 
@@ -392,9 +479,12 @@ body.game-mode main{
 
 .nav button{
     flex:1;
+
     border:0;
+
     background:transparent;
     color:#71879f;
+
     font-size:12px;
 }
 
@@ -411,12 +501,11 @@ body.game-mode main{
 
     .game-header{
         height:30px;
-        padding:3px 6px;
     }
 
     .game-wrapper{
         height:calc(100vh - 30px);
-        min-height:0;
+        min-height:430px;
     }
 
     .game-title{
@@ -424,49 +513,24 @@ body.game-mode main{
     }
 
     .game-badge{
-        padding:3px 5px;
+        padding:2px 4px;
         font-size:8px;
     }
 
     .game-control-button{
-        min-height:44px;
+        min-height:42px;
+        font-size:11px;
+    }
+
+    .missile-button{
+        bottom:61px;
+        min-width:145px;
+        padding:9px;
         font-size:12px;
     }
 
-    .missile-button{
-        bottom:68px;
-        min-width:155px;
-        padding:11px;
-        font-size:13px;
-    }
-
 }
 
-
-/* =====================================================
-   موبایل‌های خیلی کوچک
-===================================================== */
-
-@media(max-height:600px){
-
-    .game-bottom-controls{
-        padding-top:5px;
-        padding-bottom:5px;
-    }
-
-    .game-control-button{
-        min-height:38px;
-        font-size:11px;
-    }
-
-    .missile-button{
-        bottom:57px;
-        min-width:135px;
-        padding:8px 10px;
-        font-size:11px;
-    }
-
-}
 </style>
 </head>
 
@@ -636,7 +700,29 @@ body.game-mode main{
                 <canvas id="gameCanvas"></canvas>
 
 
-                <!-- شروع -->
+                <!-- ================================
+                     زمین بازی
+                ================================= -->
+
+                <div class="ground-info">
+
+                    <div class="ground-line"></div>
+
+                    <div class="ground-details"></div>
+
+                    <div class="ground-road"></div>
+
+                    <div class="ground-light one"></div>
+                    <div class="ground-light two"></div>
+                    <div class="ground-light three"></div>
+                    <div class="ground-light four"></div>
+
+                </div>
+
+
+                <!-- ================================
+                     شروع
+                ================================= -->
 
                 <div
                     id="startOverlay"
@@ -674,7 +760,9 @@ body.game-mode main{
                 </div>
 
 
-                <!-- پایان بازی -->
+                <!-- ================================
+                     پایان بازی
+                ================================= -->
 
                 <div
                     id="gameOverOverlay"
@@ -725,7 +813,9 @@ body.game-mode main{
                 </div>
 
 
-                <!-- کنترل‌های پایین -->
+                <!-- ================================
+                     کنترل‌های پایین
+                ================================= -->
 
                 <div class="game-bottom-controls">
 
@@ -742,7 +832,7 @@ body.game-mode main{
                         class="game-control-button pause"
                         onclick="pauseGame()"
                     >
-                        ⏸️ توقف
+                        ⏸️ استاپ
                     </button>
 
                     <button
@@ -757,7 +847,9 @@ body.game-mode main{
                 </div>
 
 
-                <!-- موشک -->
+                <!-- ================================
+                     موشک
+                ================================= -->
 
                 <button
                     id="missileButton"
@@ -1331,8 +1423,6 @@ var player = {
     targetX:0,
     targetY:0,
 
-    /* کوچک‌تر شد */
-
     width:38,
     height:52,
 
@@ -1416,7 +1506,7 @@ function resizeCanvas(){
             width / 2;
 
         player.y =
-            height - 145;
+            height - 105;
 
         player.targetX =
             player.x;
@@ -1571,7 +1661,17 @@ function pauseGame(){
     gamePaused = true;
 
 
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    animationId = null;
+
+
     updateControlButtons();
+
+    updateGameUI();
 
 }
 
@@ -1826,15 +1926,11 @@ function updateGame(
         );
 
 
-    /*
-       پایین صفحه برای کنترل‌ها خالی می‌ماند
-    */
-
     player.y =
         Math.max(
             height * 0.42,
             Math.min(
-                height - 125,
+                height * 0.80,
                 player.y
             )
         );
@@ -1894,4 +1990,2272 @@ function updateGame(
        تیر دشمن
     */
 
-   
+    if(
+        timestamp - lastEnemyShotTime >=
+        difficulty.enemyShotInterval
+    ){
+
+        enemyShoot();
+
+        lastEnemyShotTime =
+            timestamp;
+
+    }
+
+
+    updateBullets(delta);
+
+    updateMissiles(delta);
+
+    updateBombs(delta,difficulty);
+
+    updateEnemies(delta,difficulty);
+
+    updateEnemyBullets(delta);
+
+    updateExplosions(delta);
+
+    checkCollisions();
+
+}
+
+
+/* =====================================================
+   گلوله خودکار
+===================================================== */
+
+function fireAutomaticBullet(){
+
+    bullets.push({
+
+        x:player.x,
+
+        y:player.y - 27,
+
+        width:4,
+
+        height:14,
+
+        speed:8
+
+    });
+
+}
+
+
+/* =====================================================
+   موشک ویژه
+===================================================== */
+
+function fireSpecialMissile(){
+
+    if(!gameRunning){
+
+        return;
+
+    }
+
+
+    if(gamePaused){
+
+        return;
+
+    }
+
+
+    if(missiles <= 0){
+
+        return;
+
+    }
+
+
+    missiles--;
+
+
+    specialMissiles.push({
+
+        x:player.x,
+
+        y:player.y - 30,
+
+        width:8,
+
+        height:23,
+
+        speed:7,
+
+        power:2
+
+    });
+
+
+    updateGameUI();
+
+}
+
+
+/* =====================================================
+   بمب
+===================================================== */
+
+function createBomb(){
+
+    var width =
+        canvas.clientWidth;
+
+
+    bombs.push({
+
+        x:
+            25 +
+            Math.random() *
+            Math.max(
+                1,
+                width - 50
+            ),
+
+        y:-30,
+
+        radius:9,
+
+        speed:
+            getDifficulty().bombSpeed
+
+    });
+
+}
+
+
+/* =====================================================
+   دشمن کوچک‌تر
+===================================================== */
+
+function createEnemy(){
+
+    var width =
+        canvas.clientWidth;
+
+
+    enemies.push({
+
+        x:
+            35 +
+            Math.random() *
+            Math.max(
+                1,
+                width - 70
+            ),
+
+        y:-35,
+
+        width:28,
+
+        height:38,
+
+        speed:
+            getDifficulty().enemySpeed,
+
+        health:1,
+
+        shotTimer:
+            Math.random() * 1000
+
+    });
+
+}
+
+
+/* =====================================================
+   تیر دشمن
+===================================================== */
+
+function enemyShoot(){
+
+    if(enemies.length === 0){
+
+        return;
+
+    }
+
+
+    var enemy =
+        enemies[
+            Math.floor(
+                Math.random() *
+                enemies.length
+            )
+        ];
+
+
+    enemyBullets.push({
+
+        x:enemy.x,
+
+        y:enemy.y + 17,
+
+        radius:3.5,
+
+        speed:
+            4.0 +
+            getDifficulty().progress *
+            1.0
+
+    });
+
+}
+
+
+/* =====================================================
+   Update گلوله
+===================================================== */
+
+function updateBullets(delta){
+
+    for(
+        var i=bullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        bullets[i].y -=
+            bullets[i].speed;
+
+
+        if(
+            bullets[i].y < -30
+        ){
+
+            bullets.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   Update موشک
+===================================================== */
+
+function updateMissiles(delta){
+
+    for(
+        var i=specialMissiles.length-1;
+        i>=0;
+        i--
+    ){
+
+        specialMissiles[i].y -=
+            specialMissiles[i].speed;
+
+
+        if(
+            specialMissiles[i].y < -40
+        ){
+
+            specialMissiles.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   Update بمب
+===================================================== */
+
+function updateBombs(
+    delta,
+    difficulty
+){
+
+    for(
+        var i=bombs.length-1;
+        i>=0;
+        i--
+    ){
+
+        bombs[i].y +=
+            bombs[i].speed;
+
+
+        bombs[i].x +=
+            Math.sin(
+                (elapsedSeconds * 2) +
+                i
+            ) * 0.25;
+
+
+        if(
+            bombs[i].y >
+            canvas.clientHeight + 40
+        ){
+
+            bombs.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   Update دشمن
+===================================================== */
+
+function updateEnemies(
+    delta,
+    difficulty
+){
+
+    for(
+        var i=enemies.length-1;
+        i>=0;
+        i--
+    ){
+
+        enemies[i].y +=
+            enemies[i].speed;
+
+
+        if(
+            enemies[i].y >
+            canvas.clientHeight + 70
+        ){
+
+            enemies.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   Update تیر دشمن
+===================================================== */
+
+function updateEnemyBullets(delta){
+
+    for(
+        var i=enemyBullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        enemyBullets[i].y +=
+            enemyBullets[i].speed;
+
+
+        if(
+            enemyBullets[i].y >
+            canvas.clientHeight + 30
+        ){
+
+            enemyBullets.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   انفجار
+===================================================== */
+
+function createExplosion(
+    x,
+    y
+){
+
+    explosions.push({
+
+        x:x,
+
+        y:y,
+
+        radius:4,
+
+        maxRadius:30,
+
+        life:0.45
+
+    });
+
+}
+
+
+/* =====================================================
+   Update انفجار
+===================================================== */
+
+function updateExplosions(delta){
+
+    for(
+        var i=explosions.length-1;
+        i>=0;
+        i--
+    ){
+
+        explosions[i].life -=
+            delta;
+
+
+        explosions[i].radius +=
+            65 * delta;
+
+
+        if(
+            explosions[i].life <= 0
+        ){
+
+            explosions.splice(i,1);
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   برخوردها
+===================================================== */
+
+function checkCollisions(){
+
+    /*
+       گلوله با دشمن
+    */
+
+    for(
+        var i=bullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        var bullet =
+            bullets[i];
+
+
+        var hit = false;
+
+
+        for(
+            var j=enemies.length-1;
+            j>=0;
+            j--
+        ){
+
+            var enemy =
+                enemies[j];
+
+
+            if(
+                circleRectCollision(
+                    bullet.x,
+                    bullet.y,
+                    4,
+                    enemy
+                )
+            ){
+
+                createExplosion(
+                    enemy.x,
+                    enemy.y
+                );
+
+
+                enemies.splice(
+                    j,
+                    1
+                );
+
+
+                bullets.splice(
+                    i,
+                    1
+                );
+
+
+                gameScore += 10;
+
+                coins += 1;
+
+
+                hit = true;
+
+                break;
+
+            }
+
+        }
+
+
+        if(hit){
+
+            continue;
+
+        }
+
+    }
+
+
+    /*
+       موشک با دشمن
+    */
+
+    for(
+        var m=specialMissiles.length-1;
+        m>=0;
+        m--
+    ){
+
+        var missile =
+            specialMissiles[m];
+
+
+        for(
+            var e=enemies.length-1;
+            e>=0;
+            e--
+        ){
+
+            var target =
+                enemies[e];
+
+
+            if(
+                circleRectCollision(
+                    missile.x,
+                    missile.y,
+                    7,
+                    target
+                )
+            ){
+
+                createExplosion(
+                    target.x,
+                    target.y
+                );
+
+
+                enemies.splice(
+                    e,
+                    1
+                );
+
+
+                specialMissiles.splice(
+                    m,
+                    1
+                );
+
+
+                gameScore += 25;
+
+                coins += 3;
+
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+       بمب با بازیکن
+    */
+
+    for(
+        var b=bombs.length-1;
+        b>=0;
+        b--
+    ){
+
+        if(
+            distance(
+                bombs[b].x,
+                bombs[b].y,
+                player.x,
+                player.y
+            )
+            <
+            bombs[b].radius + 17
+        ){
+
+            createExplosion(
+                player.x,
+                player.y
+            );
+
+
+            bombs.splice(
+                b,
+                1
+            );
+
+
+            loseLife();
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+       تیر دشمن
+    */
+
+    for(
+        var eb=enemyBullets.length-1;
+        eb>=0;
+        eb--
+    ){
+
+        if(
+            distance(
+                enemyBullets[eb].x,
+                enemyBullets[eb].y,
+                player.x,
+                player.y
+            )
+            <
+            17
+        ){
+
+            createExplosion(
+                player.x,
+                player.y
+            );
+
+
+            enemyBullets.splice(
+                eb,
+                1
+            );
+
+
+            loseLife();
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+       برخورد مستقیم دشمن
+    */
+
+    for(
+        var en=enemies.length-1;
+        en>=0;
+        en--
+    ){
+
+        if(
+            distance(
+                enemies[en].x,
+                enemies[en].y,
+                player.x,
+                player.y
+            )
+            <
+            25
+        ){
+
+            createExplosion(
+                player.x,
+                player.y
+            );
+
+
+            enemies.splice(
+                en,
+                1
+            );
+
+
+            loseLife();
+
+            return;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   از دست دادن جان
+===================================================== */
+
+function loseLife(){
+
+    if(!gameRunning){
+
+        return;
+
+    }
+
+
+    gameLives--;
+
+
+    if(gameLives <= 0){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    player.y =
+        canvas.clientHeight - 100;
+
+
+    player.targetY =
+        player.y;
+
+
+    bombs.splice(
+        0,
+        Math.min(
+            2,
+            bombs.length
+        )
+    );
+
+
+    enemyBullets.splice(
+        0,
+        Math.min(
+            2,
+            enemyBullets.length
+        )
+    );
+
+
+    updateGameUI();
+
+}
+
+
+/* =====================================================
+   پایان بازی
+===================================================== */
+
+function endGame(){
+
+    gameRunning = false;
+
+    gamePaused = false;
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    animationId = null;
+
+
+    totalScore += gameScore;
+
+
+    document
+        .getElementById("finalScore")
+        .textContent =
+        gameScore;
+
+
+    document
+        .getElementById("finalCoins")
+        .textContent =
+        coins;
+
+
+    document
+        .getElementById("gameOverOverlay")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("missileButton")
+        .disabled = true;
+
+
+    updateControlButtons();
+
+    updateStats();
+
+}
+
+
+/* =====================================================
+   تبلیغ برای دریافت ۳ جان
+===================================================== */
+
+function watchLifeAd(){
+
+    if(
+        !rewardedController
+    ){
+
+        alert(
+            "تبلیغ AdsGram هنوز تنظیم نشده است. بعد از قرار دادن Block ID این قسمت فعال می‌شود."
+        );
+
+        return;
+
+    }
+
+
+    gamePaused = true;
+
+
+    rewardedController
+        .show()
+
+        .then(function(result){
+
+            /*
+               تبلیغ کامل دیده شده:
+               ۳ جان جدید
+            */
+
+            adCount++;
+
+
+            gameLives = 3;
+
+
+            gameRunning = true;
+
+            gamePaused = false;
+
+
+            document
+                .getElementById(
+                    "gameOverOverlay"
+                )
+                .classList.add("hidden");
+
+
+            document
+                .getElementById(
+                    "missileButton"
+                )
+                .disabled = false;
+
+
+            lastFrameTime =
+                performance.now();
+
+
+            updateGameUI();
+
+            updateControlButtons();
+
+            updateStats();
+
+
+            animationId =
+                requestAnimationFrame(
+                    gameLoop
+                );
+
+        })
+
+        .catch(function(error){
+
+            gamePaused = false;
+
+            gameRunning = false;
+
+
+            updateControlButtons();
+
+
+            console.log(
+                "Rewarded ad error:",
+                error
+            );
+
+
+            alert(
+                "تبلیغ در دسترس نبود. دوباره تلاش کن."
+            );
+
+        });
+
+}
+
+
+/* =====================================================
+   تبلیغ دقیقه چهار
+===================================================== */
+
+function showFourMinuteAd(){
+
+    gamePaused = true;
+
+
+    updateControlButtons();
+
+
+    if(
+        !interstitialController
+    ){
+
+        gamePaused = false;
+
+        lastFrameTime =
+            performance.now();
+
+        updateControlButtons();
+
+        return;
+
+    }
+
+
+    interstitialController
+        .show()
+
+        .then(function(){
+
+            adCount++;
+
+
+            gamePaused = false;
+
+
+            lastFrameTime =
+                performance.now();
+
+
+            updateStats();
+
+            updateControlButtons();
+
+
+            animationId =
+                requestAnimationFrame(
+                    gameLoop
+                );
+
+        })
+
+        .catch(function(error){
+
+            console.log(
+                "Interstitial error:",
+                error
+            );
+
+
+            gamePaused = false;
+
+
+            lastFrameTime =
+                performance.now();
+
+
+            updateControlButtons();
+
+
+            animationId =
+                requestAnimationFrame(
+                    gameLoop
+                );
+
+        });
+
+}
+
+
+/* =====================================================
+   UI بازی
+===================================================== */
+
+function updateGameUI(){
+
+    var lives =
+        document.getElementById(
+            "gameLives"
+        );
+
+
+    var score =
+        document.getElementById(
+            "gameScore"
+        );
+
+
+    var time =
+        document.getElementById(
+            "gameTime"
+        );
+
+
+    var missileCount =
+        document.getElementById(
+            "missileCount"
+        );
+
+
+    var missileButton =
+        document.getElementById(
+            "missileButton"
+        );
+
+
+    if(lives){
+
+        lives.textContent =
+            gameLives;
+
+    }
+
+
+    if(score){
+
+        score.textContent =
+            gameScore;
+
+    }
+
+
+    if(time){
+
+        var minutes =
+            Math.floor(
+                elapsedSeconds / 60
+            );
+
+
+        var seconds =
+            Math.floor(
+                elapsedSeconds % 60
+            );
+
+
+        time.textContent =
+            minutes +
+            ":" +
+            (
+                seconds < 10
+                ? "0" + seconds
+                : seconds
+            );
+
+    }
+
+
+    if(missileCount){
+
+        missileCount.textContent =
+            missiles;
+
+    }
+
+
+    if(missileButton){
+
+        missileButton.disabled =
+            !gameRunning ||
+            gamePaused ||
+            missiles <= 0;
+
+    }
+
+}
+
+
+/* =====================================================
+   رسم بازی
+===================================================== */
+
+function drawGame(){
+
+    var width =
+        canvas.clientWidth;
+
+
+    var height =
+        canvas.clientHeight;
+
+
+    /*
+       پس زمینه آسمان
+    */
+
+    var skyGradient =
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            height
+        );
+
+
+    skyGradient.addColorStop(
+        0,
+        "#020914"
+    );
+
+
+    skyGradient.addColorStop(
+        0.65,
+        "#061625"
+    );
+
+
+    skyGradient.addColorStop(
+        1,
+        "#0a2018"
+    );
+
+
+    ctx.fillStyle =
+        skyGradient;
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+       ستاره‌ها
+    */
+
+    drawStars(
+        width,
+        height
+    );
+
+
+    /*
+       یک خط افق
+    */
+
+    var horizonY =
+        height * 0.82;
+
+
+    var horizonGradient =
+        ctx.createLinearGradient(
+            0,
+            horizonY - 35,
+            0,
+            horizonY + 20
+        );
+
+
+    horizonGradient.addColorStop(
+        0,
+        "rgba(30,70,45,0)"
+    );
+
+
+    horizonGradient.addColorStop(
+        1,
+        "rgba(30,70,45,.35)"
+    );
+
+
+    ctx.fillStyle =
+        horizonGradient;
+
+
+    ctx.fillRect(
+        0,
+        horizonY - 35,
+        width,
+        55
+    );
+
+
+    /*
+       بمب
+    */
+
+    for(
+        var i=0;
+        i<bombs.length;
+        i++
+    ){
+
+        drawBomb(
+            bombs[i]
+        );
+
+    }
+
+
+    /*
+       دشمن
+    */
+
+    for(
+        var j=0;
+        j<enemies.length;
+        j++
+    ){
+
+        drawEnemy(
+            enemies[j]
+        );
+
+    }
+
+
+    /*
+       تیر دشمن
+    */
+
+    for(
+        var k=0;
+        k<enemyBullets.length;
+        k++
+    ){
+
+        drawEnemyBullet(
+            enemyBullets[k]
+        );
+
+    }
+
+
+    /*
+       گلوله
+    */
+
+    for(
+        var q=0;
+        q<bullets.length;
+        q++
+    ){
+
+        drawBullet(
+            bullets[q]
+        );
+
+    }
+
+
+    /*
+       موشک
+    */
+
+    for(
+        var r=0;
+        r<specialMissiles.length;
+        r++
+    ){
+
+        drawMissile(
+            specialMissiles[r]
+        );
+
+    }
+
+
+    /*
+       انفجار
+    */
+
+    for(
+        var x=0;
+        x<explosions.length;
+        x++
+    ){
+
+        drawExplosion(
+            explosions[x]
+        );
+
+    }
+
+
+    /*
+       هواپیمای بازیکن
+    */
+
+    drawPlayerPlane(
+        player.x,
+        player.y
+    );
+
+}
+
+
+/* =====================================================
+   ستاره
+===================================================== */
+
+function drawStars(
+    width,
+    height
+){
+
+    ctx.fillStyle =
+        "rgba(255,255,255,.75)";
+
+
+    var count =
+        Math.floor(
+            width * height / 7000
+        );
+
+
+    for(
+        var i=0;
+        i<count;
+        i++
+    ){
+
+        var x =
+            (i * 83) % width;
+
+
+        var y =
+            (
+                i * 137 +
+                elapsedSeconds * 35
+            ) % height;
+
+
+        var size =
+            i % 5 === 0
+            ? 2
+            : 1;
+
+
+        ctx.fillRect(
+            x,
+            y,
+            size,
+            size
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   هواپیمای بازیکن
+===================================================== */
+
+function drawPlayerPlane(
+    x,
+    y
+){
+
+    ctx.save();
+
+
+    ctx.translate(
+        x,
+        y
+    );
+
+
+    /*
+       شعله
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -5,
+        20
+    );
+
+    ctx.lineTo(
+        0,
+        32 +
+        Math.sin(
+            performance.now()/80
+        ) * 3
+    );
+
+    ctx.lineTo(
+        5,
+        20
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#ff8a00";
+
+    ctx.fill();
+
+
+    /*
+       بال چپ
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -6,
+        -4
+    );
+
+    ctx.lineTo(
+        -24,
+        15
+    );
+
+    ctx.lineTo(
+        -8,
+        11
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#cbd5e1";
+
+    ctx.fill();
+
+
+    /*
+       بال راست
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        6,
+        -4
+    );
+
+    ctx.lineTo(
+        24,
+        15
+    );
+
+    ctx.lineTo(
+        8,
+        11
+    );
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    /*
+       بدنه
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -27
+    );
+
+    ctx.lineTo(
+        8,
+        8
+    );
+
+    ctx.lineTo(
+        6,
+        22
+    );
+
+    ctx.lineTo(
+        0,
+        27
+    );
+
+    ctx.lineTo(
+        -6,
+        22
+    );
+
+    ctx.lineTo(
+        -8,
+        8
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#e5e7eb";
+
+    ctx.fill();
+
+
+    /*
+       کابین
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -21
+    );
+
+    ctx.lineTo(
+        5,
+        -8
+    );
+
+    ctx.lineTo(
+        0,
+        -4
+    );
+
+    ctx.lineTo(
+        -5,
+        -8
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#294f70";
+
+    ctx.fill();
+
+
+    /*
+       دم
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -4,
+        14
+    );
+
+    ctx.lineTo(
+        -12,
+        25
+    );
+
+    ctx.lineTo(
+        -3,
+        22
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#9ca3af";
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        4,
+        14
+    );
+
+    ctx.lineTo(
+        12,
+        25
+    );
+
+    ctx.lineTo(
+        3,
+        22
+    );
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   بمب
+===================================================== */
+
+function drawBomb(
+    bomb
+){
+
+    ctx.save();
+
+
+    ctx.translate(
+        bomb.x,
+        bomb.y
+    );
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        bomb.radius,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#252525";
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -9
+    );
+
+    ctx.lineTo(
+        6,
+        -16
+    );
+
+
+    ctx.strokeStyle =
+        "#b8b8b8";
+
+    ctx.lineWidth =
+        2;
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        7,
+        -17,
+        2.5,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#ff4d4d";
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   دشمن - کوچک‌تر از نسخه قبلی
+===================================================== */
+
+function drawEnemy(
+    enemy
+){
+
+    ctx.save();
+
+
+    ctx.translate(
+        enemy.x,
+        enemy.y
+    );
+
+
+    /*
+       بال چپ
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -5,
+        3
+    );
+
+    ctx.lineTo(
+        -16,
+        12
+    );
+
+    ctx.lineTo(
+        -5,
+        9
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#c13b3b";
+
+    ctx.fill();
+
+
+    /*
+       بال راست
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        5,
+        3
+    );
+
+    ctx.lineTo(
+        16,
+        12
+    );
+
+    ctx.lineTo(
+        5,
+        9
+    );
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    /*
+       بدنه کوچک
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -19
+    );
+
+    ctx.lineTo(
+        5,
+        7
+    );
+
+    ctx.lineTo(
+        3.5,
+        18
+    );
+
+    ctx.lineTo(
+        0,
+        21
+    );
+
+    ctx.lineTo(
+        -3.5,
+        18
+    );
+
+    ctx.lineTo(
+        -5,
+        7
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#8f2020";
+
+    ctx.fill();
+
+
+    /*
+       کابین
+    */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -10,
+        4,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#351c1c";
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   گلوله
+===================================================== */
+
+function drawBullet(
+    bullet
+){
+
+    ctx.fillStyle =
+        "#65e6ff";
+
+
+    ctx.fillRect(
+        bullet.x - 2,
+        bullet.y - 7,
+        4,
+        14
+    );
+
+}
+
+
+/* =====================================================
+   موشک
+===================================================== */
+
+function drawMissile(
+    missile
+){
+
+    ctx.save();
+
+
+    ctx.translate(
+        missile.x,
+        missile.y
+    );
+
+
+    ctx.fillStyle =
+        "#ffdf70";
+
+
+    ctx.fillRect(
+        -4,
+        -11,
+        8,
+        22
+    );
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -4,
+        -11
+    );
+
+    ctx.lineTo(
+        0,
+        -19
+    );
+
+    ctx.lineTo(
+        4,
+        -11
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+        "#ff6b35";
+
+
+    ctx.fillRect(
+        -3,
+        11,
+        6,
+        7
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   تیر دشمن
+===================================================== */
+
+function drawEnemyBullet(
+    bullet
+){
+
+    ctx.beginPath();
+
+    ctx.arc(
+        bullet.x,
+        bullet.y,
+        bullet.radius,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#ff5252";
+
+    ctx.fill();
+
+}
+
+
+/* =====================================================
+   انفجار
+===================================================== */
+
+function drawExplosion(
+    exp
+){
+
+    var alpha =
+        Math.max(
+            0,
+            exp.life / 0.45
+        );
+
+
+    ctx.save();
+
+
+    ctx.globalAlpha =
+        alpha;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        exp.x,
+        exp.y,
+        exp.radius,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#ffb020";
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        exp.x,
+        exp.y,
+        exp.radius * .45,
+        0,
+        Math.PI * 2
+    );
+
+
+    ctx.fillStyle =
+        "#fff3a0";
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   برخورد دایره و مستطیل
+===================================================== */
+
+function circleRectCollision(
+    cx,
+    cy,
+    radius,
+    rect
+){
+
+    var closestX =
+        Math.max(
+            rect.x - rect.width/2,
+            Math.min(
+                cx,
+                rect.x + rect.width/2
+            )
+        );
+
+
+    var closestY =
+        Math.max(
+            rect.y - rect.height/2,
+            Math.min(
+                cy,
+                rect.y + rect.height/2
+            )
+        );
+
+
+    var dx =
+        cx - closestX;
+
+
+    var dy =
+        cy - closestY;
+
+
+    return(
+        dx * dx +
+        dy * dy <
+        radius * radius
+    );
+
+}
+
+
+/* =====================================================
+   فاصله
+===================================================== */
+
+function distance(
+    x1,
+    y1,
+    x2,
+    y2
+){
+
+    var dx =
+        x1 - x2;
+
+
+    var dy =
+        y1 - y2;
+
+
+    return Math.sqrt(
+        dx * dx +
+        dy * dy
+    );
+
+}
+
+
+/* =====================================================
+   کنترل لمسی
+===================================================== */
+
+function movePlayerFromEvent(
+    event
+){
+
+    if(!gameRunning){
+
+        return;
+
+    }
+
+
+    if(gamePaused){
+
+        return;
+
+    }
+
+
+    var rect =
+        canvas.getBoundingClientRect();
+
+
+    var clientX;
+    var clientY;
+
+
+    if(
+        event.touches &&
+        event.touches.length
+    ){
+
+        clientX =
+            event.touches[0].clientX;
+
+        clientY =
+            event.touches[0].clientY;
+
+    }else{
+
+        clientX =
+            event.clientX;
+
+        clientY =
+            event.clientY;
+
+    }
+
+
+    player.targetX =
+        clientX - rect.left;
+
+
+    player.targetY =
+        clientY - rect.top;
+
+
+    player.targetY =
+        Math.max(
+            rect.height * .42,
+            Math.min(
+                rect.height * .80,
+                player.targetY
+            )
+        );
+
+}
+
+
+/* =====================================================
+   Touch Start
+===================================================== */
+
+canvas.addEventListener(
+    "touchstart",
+    function(event){
+
+        pointerActive = true;
+
+
+        movePlayerFromEvent(
+            event
+        );
+
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =====================================================
+   Touch Move
+===================================================== */
+
+canvas.addEventListener(
+    "touchmove",
+    function(event){
+
+        if(pointerActive){
+
+            movePlayerFromEvent(
+                event
+            );
+
+        }
+
+
+        event.preventDefault();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =====================================================
+   Touch End
+===================================================== */
+
+canvas.addEventListener(
+    "touchend",
+    function(){
+
+        pointerActive = false;
+
+    }
+);
+
+
+/* =====================================================
+   موس
+===================================================== */
+
+canvas.addEventListener(
+    "mousemove",
+    function(event){
+
+        movePlayerFromEvent(
+            event
+        );
+
+    }
+);
+
+
+/* =====================================================
+   شروع اولیه
+===================================================== */
+
+updateStats();
+
+updateGameUI();
+
+updateControlButtons();
+
+</script>
+
+</body>
+</html>
