@@ -6,6 +6,10 @@
 
 <title>USDT Earn</title>
 
+<!-- Telegram WebApp -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<!-- AdsGram -->
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
 <style>
@@ -31,10 +35,6 @@ body.game-mode{
     padding-bottom:0;
     overflow:hidden;
 }
-
-/* ===============================
-   هدر اصلی
-=============================== */
 
 .header{
     padding:18px;
@@ -115,6 +115,8 @@ body.game-mode main{
     color:white;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation;
 }
 
 .button.secondary{
@@ -165,7 +167,6 @@ body.game-mode main{
     height:100vh;
 }
 
-/* هدر بازی بسیار کوچک شده */
 .game-header{
     height:30px;
     padding:2px 7px;
@@ -285,15 +286,14 @@ body.game-mode main{
 
 .game-control-button{
     min-height:43px;
-
     border:1px solid #294662;
     border-radius:10px;
-
     background:#10253b;
     color:white;
-
     font-size:12px;
     font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation;
 }
 
 .game-control-button.pause{
@@ -316,22 +316,18 @@ body.game-mode main{
     position:absolute;
     left:50%;
     bottom:62px;
-
     transform:translateX(-50%);
-
     z-index:81;
-
     min-width:155px;
     padding:10px 14px;
-
     border:1px solid #8c313a;
     border-radius:12px;
-
     background:#b52b38;
     color:white;
-
     font-size:13px;
     font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation;
 }
 
 .missile-button:disabled{
@@ -348,9 +344,7 @@ body.game-mode main{
     right:0;
     bottom:0;
     left:0;
-
     height:18%;
-
     pointer-events:none;
     z-index:5;
 
@@ -368,9 +362,7 @@ body.game-mode main{
     top:0;
     right:0;
     left:0;
-
     height:3px;
-
     background:#426b43;
 
     box-shadow:
@@ -398,9 +390,7 @@ body.game-mode main{
     position:absolute;
     left:50%;
     bottom:-15px;
-
     transform:translateX(-50%);
-
     width:25%;
     height:120%;
 
@@ -421,12 +411,9 @@ body.game-mode main{
 
 .ground-light{
     position:absolute;
-
     width:5px;
     height:5px;
-
     border-radius:50%;
-
     background:#c9d58d;
 
     box-shadow:
@@ -479,13 +466,11 @@ body.game-mode main{
 
 .nav button{
     flex:1;
-
     border:0;
-
     background:transparent;
     color:#71879f;
-
     font-size:12px;
+    cursor:pointer;
 }
 
 .nav button.active{
@@ -528,7 +513,6 @@ body.game-mode main{
         padding:9px;
         font-size:12px;
     }
-
 }
 
 </style>
@@ -552,10 +536,7 @@ body.game-mode main{
             موجودی شما
         </div>
 
-        <div
-            class="balance-number"
-            id="mainBalance"
-        >
+        <div class="balance-number" id="mainBalance">
             0.00 USDT
         </div>
 
@@ -583,6 +564,7 @@ body.game-mode main{
             </p>
 
             <button
+                type="button"
                 class="button"
                 onclick="openGame()"
             >
@@ -595,66 +577,23 @@ body.game-mode main{
         <div class="grid">
 
             <div class="stat">
-
-                <span class="stat-title">
-                    🪙 سکه
-                </span>
-
-                <span
-                    class="stat-number"
-                    id="coinStat"
-                >
-                    0
-                </span>
-
+                <span class="stat-title">🪙 سکه</span>
+                <span class="stat-number" id="coinStat">0</span>
             </div>
 
-
             <div class="stat">
-
-                <span class="stat-title">
-                    ⭐ امتیاز
-                </span>
-
-                <span
-                    class="stat-number"
-                    id="scoreStat"
-                >
-                    0
-                </span>
-
+                <span class="stat-title">⭐ امتیاز</span>
+                <span class="stat-number" id="scoreStat">0</span>
             </div>
 
-
             <div class="stat">
-
-                <span class="stat-title">
-                    👥 دعوت
-                </span>
-
-                <span
-                    class="stat-number"
-                    id="inviteStat"
-                >
-                    0
-                </span>
-
+                <span class="stat-title">👥 دعوت</span>
+                <span class="stat-number" id="inviteStat">0</span>
             </div>
 
-
             <div class="stat">
-
-                <span class="stat-title">
-                    📺 تبلیغات
-                </span>
-
-                <span
-                    class="stat-number"
-                    id="adStat"
-                >
-                    0
-                </span>
-
+                <span class="stat-title">📺 تبلیغات</span>
+                <span class="stat-number" id="adStat">0</span>
             </div>
 
         </div>
@@ -699,11 +638,6 @@ body.game-mode main{
 
                 <canvas id="gameCanvas"></canvas>
 
-
-                <!-- ================================
-                     زمین بازی
-                ================================= -->
-
                 <div class="ground-info">
 
                     <div class="ground-line"></div>
@@ -720,9 +654,7 @@ body.game-mode main{
                 </div>
 
 
-                <!-- ================================
-                     شروع
-                ================================= -->
+                <!-- شروع بازی -->
 
                 <div
                     id="startOverlay"
@@ -742,13 +674,15 @@ body.game-mode main{
                         </p>
 
                         <button
+                            type="button"
+                            id="startGameButton"
                             class="button"
-                            onclick="startGame()"
                         >
                             🚀 شروع بازی
                         </button>
 
                         <button
+                            type="button"
                             class="button secondary"
                             onclick="backHome()"
                         >
@@ -760,9 +694,7 @@ body.game-mode main{
                 </div>
 
 
-                <!-- ================================
-                     پایان بازی
-                ================================= -->
+                <!-- پایان بازی -->
 
                 <div
                     id="gameOverOverlay"
@@ -788,6 +720,7 @@ body.game-mode main{
                         </p>
 
                         <button
+                            type="button"
                             class="button"
                             onclick="watchLifeAd()"
                         >
@@ -795,6 +728,7 @@ body.game-mode main{
                         </button>
 
                         <button
+                            type="button"
                             class="button secondary"
                             onclick="restartGame()"
                         >
@@ -802,6 +736,7 @@ body.game-mode main{
                         </button>
 
                         <button
+                            type="button"
                             class="button secondary"
                             onclick="backHome()"
                         >
@@ -813,13 +748,12 @@ body.game-mode main{
                 </div>
 
 
-                <!-- ================================
-                     کنترل‌های پایین
-                ================================= -->
+                <!-- کنترل‌ها -->
 
                 <div class="game-bottom-controls">
 
                     <button
+                        type="button"
                         id="cancelGameButton"
                         class="game-control-button cancel"
                         onclick="cancelGame()"
@@ -828,6 +762,7 @@ body.game-mode main{
                     </button>
 
                     <button
+                        type="button"
                         id="pauseGameButton"
                         class="game-control-button pause"
                         onclick="pauseGame()"
@@ -836,6 +771,7 @@ body.game-mode main{
                     </button>
 
                     <button
+                        type="button"
                         id="resumeGameButton"
                         class="game-control-button resume"
                         onclick="resumeGame()"
@@ -847,11 +783,10 @@ body.game-mode main{
                 </div>
 
 
-                <!-- ================================
-                     موشک
-                ================================= -->
+                <!-- موشک -->
 
                 <button
+                    type="button"
                     id="missileButton"
                     class="missile-button"
                     onclick="fireSpecialMissile()"
@@ -885,6 +820,7 @@ body.game-mode main{
             </p>
 
             <button
+                type="button"
                 class="button"
                 onclick="copyLink()"
             >
@@ -996,12 +932,13 @@ body.game-mode main{
 
 
 <!-- =====================================================
-     منوی پایین اصلی
+     منوی پایین
 ====================================================== -->
 
 <nav class="nav" id="mainNav">
 
     <button
+        type="button"
         id="navHome"
         class="active"
         onclick="showPage('home',this)"
@@ -1011,6 +948,7 @@ body.game-mode main{
     </button>
 
     <button
+        type="button"
         id="navInvite"
         onclick="showPage('invite',this)"
     >
@@ -1019,6 +957,7 @@ body.game-mode main{
     </button>
 
     <button
+        type="button"
         id="navWallet"
         onclick="showPage('wallet',this)"
     >
@@ -1027,6 +966,7 @@ body.game-mode main{
     </button>
 
     <button
+        type="button"
         id="navProfile"
         onclick="showPage('profile',this)"
     >
@@ -1316,7 +1256,6 @@ var ADSGRAM_REWARDED_BLOCK_ID =
 var ADSGRAM_INTERSTITIAL_BLOCK_ID =
     "YOUR_INTERSTITIAL_BLOCK_ID";
 
-
 var rewardedController = null;
 var interstitialController = null;
 
@@ -1398,7 +1337,9 @@ var canvas =
     document.getElementById("gameCanvas");
 
 var ctx =
-    canvas.getContext("2d");
+    canvas ?
+    canvas.getContext("2d") :
+    null;
 
 
 var gameRunning = false;
@@ -1414,6 +1355,7 @@ var gameScore = 0;
 var gameLives = 3;
 
 var missiles = 3;
+
 
 var player = {
 
@@ -1456,6 +1398,13 @@ var pointerActive = false;
 ===================================================== */
 
 function resizeCanvas(){
+
+    if(!canvas || !ctx){
+
+        return;
+
+    }
+
 
     var rect =
         canvas.getBoundingClientRect();
@@ -1524,7 +1473,6 @@ window.addEventListener(
     resizeCanvas
 );
 
-
 resizeCanvas();
 
 
@@ -1533,6 +1481,17 @@ resizeCanvas();
 ===================================================== */
 
 function startGame(){
+
+    if(!canvas || !ctx){
+
+        alert("خطا در بارگذاری صفحه بازی");
+
+        gameRunning = false;
+
+        return;
+
+    }
+
 
     cancelAnimationFrame(animationId);
 
@@ -1548,12 +1507,9 @@ function startGame(){
 
     elapsedSeconds = 0;
 
-
     gameScore = 0;
 
-
     gameLives = 3;
-
 
     missiles = 3;
 
@@ -1597,7 +1553,6 @@ function startGame(){
 
 
     updateGameUI();
-
 
     updateControlButtons();
 
@@ -1936,10 +1891,6 @@ function updateGame(
         );
 
 
-    /*
-       شلیک خودکار
-    */
-
     if(
         timestamp - lastBulletTime >= 155
     ){
@@ -1951,10 +1902,6 @@ function updateGame(
 
     }
 
-
-    /*
-       بمب
-    */
 
     if(
         timestamp - lastBombTime >=
@@ -1969,10 +1916,6 @@ function updateGame(
     }
 
 
-    /*
-       دشمن
-    */
-
     if(
         timestamp - lastEnemyTime >=
         difficulty.enemyInterval
@@ -1985,10 +1928,6 @@ function updateGame(
 
     }
 
-
-    /*
-       تیر دشمن
-    */
 
     if(
         timestamp - lastEnemyShotTime >=
@@ -2128,7 +2067,7 @@ function createBomb(){
 
 
 /* =====================================================
-   دشمن کوچک‌تر
+   دشمن
 ===================================================== */
 
 function createEnemy(){
@@ -2432,10 +2371,6 @@ function updateExplosions(delta){
 
 function checkCollisions(){
 
-    /*
-       گلوله با دشمن
-    */
-
     for(
         var i=bullets.length-1;
         i>=0;
@@ -2444,7 +2379,6 @@ function checkCollisions(){
 
         var bullet =
             bullets[i];
-
 
         var hit = false;
 
@@ -2509,10 +2443,6 @@ function checkCollisions(){
     }
 
 
-    /*
-       موشک با دشمن
-    */
-
     for(
         var m=specialMissiles.length-1;
         m>=0;
@@ -2574,10 +2504,6 @@ function checkCollisions(){
     }
 
 
-    /*
-       بمب با بازیکن
-    */
-
     for(
         var b=bombs.length-1;
         b>=0;
@@ -2616,10 +2542,6 @@ function checkCollisions(){
     }
 
 
-    /*
-       تیر دشمن
-    */
-
     for(
         var eb=enemyBullets.length-1;
         eb>=0;
@@ -2657,10 +2579,6 @@ function checkCollisions(){
 
     }
 
-
-    /*
-       برخورد مستقیم دشمن
-    */
 
     for(
         var en=enemies.length-1;
@@ -2810,7 +2728,7 @@ function endGame(){
 
 
 /* =====================================================
-   تبلیغ برای دریافت ۳ جان
+   تبلیغ برای ۳ جان
 ===================================================== */
 
 function watchLifeAd(){
@@ -2834,18 +2752,11 @@ function watchLifeAd(){
     rewardedController
         .show()
 
-        .then(function(result){
-
-            /*
-               تبلیغ کامل دیده شده:
-               ۳ جان جدید
-            */
+        .then(function(){
 
             adCount++;
 
-
             gameLives = 3;
-
 
             gameRunning = true;
 
@@ -2944,13 +2855,10 @@ function showFourMinuteAd(){
 
             adCount++;
 
-
             gamePaused = false;
-
 
             lastFrameTime =
                 performance.now();
-
 
             updateStats();
 
@@ -2974,10 +2882,8 @@ function showFourMinuteAd(){
 
             gamePaused = false;
 
-
             lastFrameTime =
                 performance.now();
-
 
             updateControlButtons();
 
@@ -3096,6 +3002,13 @@ function updateGameUI(){
 
 function drawGame(){
 
+    if(!canvas || !ctx){
+
+        return;
+
+    }
+
+
     var width =
         canvas.clientWidth;
 
@@ -3103,10 +3016,6 @@ function drawGame(){
     var height =
         canvas.clientHeight;
 
-
-    /*
-       پس زمینه آسمان
-    */
 
     var skyGradient =
         ctx.createLinearGradient(
@@ -3147,19 +3056,11 @@ function drawGame(){
     );
 
 
-    /*
-       ستاره‌ها
-    */
-
     drawStars(
         width,
         height
     );
 
-
-    /*
-       یک خط افق
-    */
 
     var horizonY =
         height * 0.82;
@@ -3198,10 +3099,6 @@ function drawGame(){
     );
 
 
-    /*
-       بمب
-    */
-
     for(
         var i=0;
         i<bombs.length;
@@ -3214,10 +3111,6 @@ function drawGame(){
 
     }
 
-
-    /*
-       دشمن
-    */
 
     for(
         var j=0;
@@ -3232,10 +3125,6 @@ function drawGame(){
     }
 
 
-    /*
-       تیر دشمن
-    */
-
     for(
         var k=0;
         k<enemyBullets.length;
@@ -3248,10 +3137,6 @@ function drawGame(){
 
     }
 
-
-    /*
-       گلوله
-    */
 
     for(
         var q=0;
@@ -3266,10 +3151,6 @@ function drawGame(){
     }
 
 
-    /*
-       موشک
-    */
-
     for(
         var r=0;
         r<specialMissiles.length;
@@ -3283,10 +3164,6 @@ function drawGame(){
     }
 
 
-    /*
-       انفجار
-    */
-
     for(
         var x=0;
         x<explosions.length;
@@ -3299,10 +3176,6 @@ function drawGame(){
 
     }
 
-
-    /*
-       هواپیمای بازیکن
-    */
 
     drawPlayerPlane(
         player.x,
@@ -3377,16 +3250,11 @@ function drawPlayerPlane(
 
     ctx.save();
 
-
     ctx.translate(
         x,
         y
     );
 
-
-    /*
-       شعله
-    */
 
     ctx.beginPath();
 
@@ -3417,10 +3285,6 @@ function drawPlayerPlane(
     ctx.fill();
 
 
-    /*
-       بال چپ
-    */
-
     ctx.beginPath();
 
     ctx.moveTo(
@@ -3447,10 +3311,6 @@ function drawPlayerPlane(
     ctx.fill();
 
 
-    /*
-       بال راست
-    */
-
     ctx.beginPath();
 
     ctx.moveTo(
@@ -3470,13 +3330,8 @@ function drawPlayerPlane(
 
     ctx.closePath();
 
-
     ctx.fill();
 
-
-    /*
-       بدنه
-    */
 
     ctx.beginPath();
 
@@ -3519,10 +3374,6 @@ function drawPlayerPlane(
     ctx.fill();
 
 
-    /*
-       کابین
-    */
-
     ctx.beginPath();
 
     ctx.moveTo(
@@ -3553,10 +3404,6 @@ function drawPlayerPlane(
 
     ctx.fill();
 
-
-    /*
-       دم
-    */
 
     ctx.beginPath();
 
@@ -3603,7 +3450,6 @@ function drawPlayerPlane(
 
     ctx.closePath();
 
-
     ctx.fill();
 
 
@@ -3621,7 +3467,6 @@ function drawBomb(
 ){
 
     ctx.save();
-
 
     ctx.translate(
         bomb.x,
@@ -3691,7 +3536,7 @@ function drawBomb(
 
 
 /* =====================================================
-   دشمن - کوچک‌تر از نسخه قبلی
+   دشمن
 ===================================================== */
 
 function drawEnemy(
@@ -3700,16 +3545,11 @@ function drawEnemy(
 
     ctx.save();
 
-
     ctx.translate(
         enemy.x,
         enemy.y
     );
 
-
-    /*
-       بال چپ
-    */
 
     ctx.beginPath();
 
@@ -3737,10 +3577,6 @@ function drawEnemy(
     ctx.fill();
 
 
-    /*
-       بال راست
-    */
-
     ctx.beginPath();
 
     ctx.moveTo(
@@ -3760,13 +3596,8 @@ function drawEnemy(
 
     ctx.closePath();
 
-
     ctx.fill();
 
-
-    /*
-       بدنه کوچک
-    */
 
     ctx.beginPath();
 
@@ -3808,10 +3639,6 @@ function drawEnemy(
 
     ctx.fill();
 
-
-    /*
-       کابین
-    */
 
     ctx.beginPath();
 
@@ -3866,7 +3693,6 @@ function drawMissile(
 ){
 
     ctx.save();
-
 
     ctx.translate(
         missile.x,
@@ -3972,7 +3798,6 @@ function drawExplosion(
 
 
     ctx.save();
-
 
     ctx.globalAlpha =
         alpha;
@@ -4164,21 +3989,15 @@ function movePlayerFromEvent(
 }
 
 
-/* =====================================================
-   Touch Start
-===================================================== */
-
 canvas.addEventListener(
     "touchstart",
     function(event){
 
         pointerActive = true;
 
-
         movePlayerFromEvent(
             event
         );
-
 
         event.preventDefault();
 
@@ -4188,10 +4007,6 @@ canvas.addEventListener(
     }
 );
 
-
-/* =====================================================
-   Touch Move
-===================================================== */
 
 canvas.addEventListener(
     "touchmove",
@@ -4205,7 +4020,6 @@ canvas.addEventListener(
 
         }
 
-
         event.preventDefault();
 
     },
@@ -4214,10 +4028,6 @@ canvas.addEventListener(
     }
 );
 
-
-/* =====================================================
-   Touch End
-===================================================== */
 
 canvas.addEventListener(
     "touchend",
@@ -4229,10 +4039,6 @@ canvas.addEventListener(
 );
 
 
-/* =====================================================
-   موس
-===================================================== */
-
 canvas.addEventListener(
     "mousemove",
     function(event){
@@ -4243,6 +4049,47 @@ canvas.addEventListener(
 
     }
 );
+
+
+/* =====================================================
+   FIX نهایی دکمه شروع بازی
+===================================================== */
+
+window.startGame = startGame;
+window.openGame = openGame;
+window.backHome = backHome;
+window.cancelGame = cancelGame;
+window.pauseGame = pauseGame;
+window.resumeGame = resumeGame;
+window.restartGame = restartGame;
+window.fireSpecialMissile = fireSpecialMissile;
+window.watchLifeAd = watchLifeAd;
+window.showPage = showPage;
+window.copyLink = copyLink;
+
+
+var startGameButton =
+    document.getElementById(
+        "startGameButton"
+    );
+
+
+if(startGameButton){
+
+    startGameButton.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            startGame();
+
+        },
+        false
+    );
+
+}
 
 
 /* =====================================================
