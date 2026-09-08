@@ -1,1 +1,1642 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>USDT Earn</title>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#07111f;
+ color:#fff;
+ font:14px Arial,sans-serif
+}
+button,input,select{font:inherit}
+button{
+ border:0;
+ border-radius:12px;
+ padding:12px 14px;
+ font-weight:700
+}
+.top{
+ padding:16px;
+ background:#0b192b;
+ position:sticky;
+ top:0;
+ z-index:5
+}
+.row{
+ display:flex;
+ justify-content:space-between;
+ align-items:center
+}
+.logo{
+ font-size:21px;
+ font-weight:800
+}
+.muted{color:#91a4ba}
+.balance{
+ margin-top:12px;
+ padding:15px;
+ border-radius:16px;
+ background:#12243a
+}
+.balance b{font-size:25px}
+
+main{padding:15px 15px 90px}
+.page{display:none}
+.page.on{display:block}
+
+.card{
+ background:#0d1d30;
+ border:1px solid #20364f;
+ border-radius:17px;
+ padding:16px;
+ margin-bottom:13px
+}
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+.stat{
+ padding:13px;
+ background:#10253b;
+ border-radius:13px
+}
+.stat b{
+ display:block;
+ font-size:20px;
+ margin-top:5px
+}
+.primary{
+ width:100%;
+ background:#18ad5b;
+ color:#fff
+}
+.secondary{
+ width:100%;
+ background:#19314a;
+ color:#fff;
+ margin-top:8px
+}
+.danger{
+ background:#c63e3e;
+ color:#fff
+}
+input,select{
+ width:100%;
+ background:#071421;
+ border:1px solid #29435e;
+ color:#fff;
+ padding:12px;
+ border-radius:10px;
+ margin:6px 0 11px
+}
+.nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ height:70px;
+ background:#091625;
+ border-top:1px solid #20364f;
+ display:flex;
+ z-index:20
+}
+.nav button{
+ flex:1;
+ background:none;
+ color:#7890aa;
+ border-radius:0
+}
+.nav button.on{color:#20d875}
+
+#game{
+ position:fixed;
+ inset:0;
+ background:#02070d;
+ z-index:50;
+ display:none
+}
+#game.on{display:block}
+
+canvas{
+ width:100%;
+ height:100%;
+ touch-action:none
+}
+.hud{
+ position:absolute;
+ top:10px;
+ left:10px;
+ right:10px;
+ display:flex;
+ justify-content:space-between;
+ z-index:3
+}
+.hud span{
+ background:#071421dd;
+ padding:9px 11px;
+ border-radius:10px
+}
+.close{
+ background:#b83a3a;
+ color:#fff;
+ border-radius:50%;
+ width:38px;
+ height:38px;
+ padding:0
+}
+.fire{
+ position:absolute;
+ right:20px;
+ bottom:25px;
+ width:88px;
+ height:88px;
+ border-radius:50%;
+ background:#d72f35;
+ color:#fff;
+ z-index:4
+}
+.modal{
+ position:absolute;
+ inset:0;
+ background:#000b;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ z-index:6
+}
+.modal.on{display:flex}
+.modalbox{
+ background:#0d1d30;
+ border:1px solid #29435e;
+ border-radius:18px;
+ padding:22px;
+ width:100%;
+ max-width:360px;
+ text-align:center
+}
+.small{
+ font-size:12px;
+ color:#91a4ba;
+ line-height:1.5
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<div class="row">
+<div class="logo">💰 USDT Earn</div>
+<div id="user">User</div>
+</div>
+
+<div class="balance">
+<span class="muted">Balance</span>
+<br>
+<b id="balance">0.00 USDT</b>
+</div>
+
+</header>
+
+<main>
+
+<section id="home" class="page on">
+
+<div class="card">
+
+<h2>✈️ Escape from Bomb</h2>
+
+<p class="muted">
+Survive, destroy bombs and collect coins.
+</p>
+
+<button class="primary" onclick="startGame()">
+PLAY GAME
+</button>
+
+</div>
+
+<div class="grid">
+
+<div class="stat">
+🪙 Coins
+<b id="coins">0</b>
+</div>
+
+<div class="stat">
+⭐ Score
+<b id="score">0</b>
+</div>
+
+<div class="stat">
+👥 Referrals
+<b id="refs">0</b>
+</div>
+
+<div class="stat">
+📺 Ads
+<b id="ads">0</b>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>How it works</h3>
+
+<p class="small">
+Automatic firing starts immediately.
+FIRE can also be held.
+Coins are tracked as rewards.
+Real cash withdrawals require the server and admin approval.
+</p>
+
+</div>
+
+</section>
+
+
+<section id="invite" class="page">
+
+<div class="card">
+
+<h2>👥 Invite Friends</h2>
+
+<p class="muted">
+Share your referral link.
+</p>
+
+<div id="refLink" class="small"></div>
+
+<button class="primary" onclick="copyRef()">
+COPY LINK
+</button>
+
+<button class="secondary" onclick="shareRef()">
+SHARE
+</button>
+
+</div>
+
+<div class="grid">
+
+<div class="stat">
+Invited
+<b id="refs2">0</b>
+</div>
+
+<div class="stat">
+Reward
+<b id="refReward">0 USDT</b>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="wallet" class="page">
+
+<div class="card">
+
+<h2>💰 Wallet</h2>
+
+<div class="balance">
+
+<span class="muted">
+Available
+</span>
+
+<br>
+
+<b id="walletBalance">
+0.00 USDT
+</b>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Withdraw</h3>
+
+<label>Amount</label>
+
+<input
+id="amount"
+type="number"
+min="0"
+step="0.01"
+placeholder="USDT amount"
+>
+
+<label>Network</label>
+
+<select id="network">
+
+<option>BEP20</option>
+<option>TRC20</option>
+<option>ERC20</option>
+
+</select>
+
+<label>Address</label>
+
+<input
+id="address"
+placeholder="Wallet address"
+>
+
+<button
+class="primary"
+onclick="withdraw()"
+>
+REQUEST WITHDRAWAL
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Withdrawal History</h3>
+
+<div
+id="history"
+class="small"
+>
+No withdrawals yet.
+</div>
+
+</div>
+
+</section>
+
+
+<section id="profile" class="page">
+
+<div class="card">
+
+<h2>👤 Profile</h2>
+
+<div class="grid">
+
+<div class="stat">
+Telegram ID
+<b id="uid">-</b>
+</div>
+
+<div class="stat">
+Balance
+<b id="pb">0</b>
+</div>
+
+<div class="stat">
+Coins
+<b id="pc">0</b>
+</div>
+
+<div class="stat">
+Score
+<b id="ps">0</b>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="admin" class="page">
+
+<div class="card">
+
+<h2>🛠️ Admin Panel</h2>
+
+<p class="small">
+Server-side admin access is required.
+</p>
+
+<button
+class="primary"
+onclick="loadAdmin()"
+>
+REFRESH ADMIN DATA
+</button>
+
+</div>
+
+<div
+id="adminData"
+class="card small"
+>
+Admin data not loaded.
+</div>
+
+</section>
+
+</main>
+
+
+<nav class="nav">
+
+<button
+class="on"
+onclick="page('home',this)"
+>
+🏠<br>Home
+</button>
+
+<button
+onclick="page('invite',this)"
+>
+👥<br>Invite
+</button>
+
+<button
+onclick="page('wallet',this)"
+>
+💰<br>Wallet
+</button>
+
+<button
+onclick="page('profile',this)"
+>
+👤<br>Profile
+</button>
+
+</nav>
+
+
+<div id="game">
+
+<canvas id="c"></canvas>
+
+<div class="hud">
+
+<span>
+❤️ <b id="lives">3</b>
+</span>
+
+<span>
+⭐ <b id="gs">0</b>
+</span>
+
+<span>
+🪙 <b id="gc">0</b>
+</span>
+
+<button
+class="close"
+onclick="endGame()"
+>
+×
+</button>
+
+</div>
+
+
+<button
+class="fire"
+id="fire"
+>
+FIRE
+</button>
+
+
+<div
+id="gameModal"
+class="modal"
+>
+
+<div class="modalbox">
+
+<h2 id="mt">
+Game Over
+</h2>
+
+<p
+id="mx"
+class="small"
+></p>
+
+<button
+class="primary"
+id="again"
+onclick="again()"
+>
+PLAY AGAIN
+</button>
+
+<button
+class="secondary"
+onclick="endGame()"
+>
+CLOSE
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const tg =
+window.Telegram?.WebApp;
+
+tg?.ready();
+tg?.expand();
+
+
+const U =
+tg?.initDataUnsafe?.user || {};
+
+const uid =
+U.id || 0;
+
+
+document.getElementById("user").textContent =
+((U.first_name || "User") + " " +
+(U.last_name || "")).trim();
+
+
+document.getElementById("uid").textContent =
+uid || "-";
+
+
+let state = {
+
+balance:0,
+coins:0,
+score:0,
+referrals:0,
+ads:0
+
+};
+
+
+const refLink =
+location.origin + "/?ref=" + uid;
+
+
+document.getElementById("refLink").textContent =
+refLink;
+
+
+async function api(url,opt={}){
+
+const r =
+await fetch(
+url,
+{
+headers:{
+"Content-Type":"application/json",
+"X-Telegram-Init-Data":
+tg?.initData || ""
+},
+...opt
+}
+);
+
+if(!r.ok)
+throw new Error(await r.text());
+
+return r.json();
+
+}
+
+
+async function load(){
+
+try{
+
+state =
+await api("/api/me");
+
+render();
+
+}catch(e){
+
+render();
+
+}
+
+}
+
+
+function render(){
+
+document.getElementById("balance").textContent =
+state.balance.toFixed(2)+" USDT";
+
+document.getElementById("walletBalance").textContent =
+state.balance.toFixed(2)+" USDT";
+
+document.getElementById("coins").textContent =
+state.coins;
+
+document.getElementById("score").textContent =
+state.score;
+
+document.getElementById("refs").textContent =
+state.referrals;
+
+document.getElementById("refs2").textContent =
+state.referrals;
+
+document.getElementById("ads").textContent =
+state.ads;
+
+document.getElementById("pb").textContent =
+state.balance.toFixed(2);
+
+document.getElementById("pc").textContent =
+state.coins;
+
+document.getElementById("ps").textContent =
+state.score;
+
+}
+
+
+function page(id,b){
+
+document
+.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("on"));
+
+document
+.getElementById(id)
+.classList.add("on");
+
+document
+.querySelectorAll(".nav button")
+.forEach(x=>x.classList.remove("on"));
+
+b.classList.add("on");
+
+}
+
+
+function copyRef(){
+
+navigator.clipboard
+.writeText(refLink)
+.then(()=>alert("Copied"));
+
+}
+
+
+function shareRef(){
+
+if(tg){
+
+tg.openTelegramLink(
+"https://t.me/share/url?url="+
+encodeURIComponent(refLink)
+);
+
+}
+
+}
+
+
+async function withdraw(){
+
+try{
+
+const result =
+await api(
+"/api/withdraw",
+{
+method:"POST",
+body:JSON.stringify({
+
+amount:
+Number(
+document.getElementById("amount").value
+),
+
+network:
+document.getElementById("network").value,
+
+address:
+document.getElementById("address").value.trim()
+
+})
+}
+);
+
+alert(result.message);
+
+load();
+
+}catch(e){
+
+alert("Withdrawal request failed.");
+
+}
+
+}
+
+
+/* =========================
+   GAME
+========================= */
+
+
+const c =
+document.getElementById("c");
+
+const x =
+c.getContext("2d");
+
+
+let W,H;
+
+let jet;
+
+let bullets=[];
+let bombs=[];
+let coinsG=[];
+
+let lives=3;
+
+let scoreG=0;
+let coinG=0;
+
+let running=false;
+
+let last=0;
+
+let startT=0;
+
+let auto=0;
+let manual=0;
+
+let held=false;
+
+let lastBomb=0;
+let lastCoin=0;
+
+
+function size(){
+
+W=innerWidth;
+H=innerHeight;
+
+const dpr =
+window.devicePixelRatio || 1;
+
+c.width=W*dpr;
+c.height=H*dpr;
+
+c.style.width=W+"px";
+c.style.height=H+"px";
+
+x.setTransform(
+dpr,0,0,dpr,0,0
+);
+
+}
+
+addEventListener("resize",size);
+
+size();
+
+
+function diff(){
+
+const m =
+Math.floor(
+(performance.now()-startT)/60000
+);
+
+return{
+
+bs:
+Math.min(
+170+m*28,
+380
+),
+
+bi:
+Math.max(
+900-m*55,
+430
+),
+
+fi:
+Math.max(
+330-m*12,
+235
+)
+
+};
+
+}
+
+
+/*
+  AUTOMATIC FIRE
+  Starts immediately.
+*/
+
+function fireShot(){
+
+if(!running || !jet)
+return;
+
+const dual =
+(performance.now()-startT)
+>=300000;
+
+
+if(dual){
+
+bullets.push({
+x:jet.x-16,
+y:jet.y-40
+});
+
+bullets.push({
+x:jet.x+16,
+y:jet.y-40
+});
+
+}else{
+
+bullets.push({
+x:jet.x,
+y:jet.y-40
+});
+
+}
+
+}
+
+
+function startGame(){
+
+document
+.getElementById("game")
+.classList.add("on");
+
+document
+.getElementById("gameModal")
+.classList.remove("on");
+
+
+jet={
+x:W/2,
+y:H-115
+};
+
+bullets=[];
+bombs=[];
+coinsG=[];
+
+lives=3;
+
+scoreG=0;
+coinG=0;
+
+running=true;
+
+startT =
+performance.now();
+
+last=startT;
+
+
+/*
+  IMPORTANT:
+  Force the first automatic shot
+  immediately.
+*/
+
+auto =
+diff().fi;
+
+manual=0;
+
+lastBomb=0;
+lastCoin=0;
+
+requestAnimationFrame(loop);
+
+}
+
+
+function loop(t){
+
+if(!running)
+return;
+
+const dt =
+Math.min(
+(t-last)/1000,
+0.033
+);
+
+last=t;
+
+update(dt);
+draw();
+
+requestAnimationFrame(loop);
+
+}
+
+
+function update(dt){
+
+if(!running)
+return;
+
+const d=diff();
+
+auto +=
+dt*1000;
+
+
+/*
+  Automatic firing.
+*/
+
+while(
+auto >= d.fi
+){
+
+auto -= d.fi;
+
+fireShot();
+
+}
+
+
+/*
+  FIRE button.
+*/
+
+if(held){
+
+manual +=
+dt*1000;
+
+if(manual>=150){
+
+manual=0;
+
+fireShot();
+
+}
+
+}
+
+
+/*
+  Bomb spawning.
+*/
+
+if(
+performance.now()-lastBomb >
+d.bi
+){
+
+bombs.push({
+
+x:
+20+Math.random()*(W-40),
+
+y:-30,
+
+r:17,
+
+s:d.bs
+
+});
+
+lastBomb =
+performance.now();
+
+}
+
+
+/*
+  Coin packs.
+  About 25 per minute.
+*/
+
+if(
+!lastCoin ||
+performance.now()-lastCoin >
+2400
+){
+
+coinsG.push({
+
+x:
+20+Math.random()*(W-40),
+
+y:-20,
+
+r:12,
+
+s:130
+
+});
+
+lastCoin =
+performance.now();
+
+}
+
+
+/*
+  Bullets.
+*/
+
+for(
+let i=bullets.length-1;
+i>=0;
+i--
+){
+
+bullets[i].y -=
+650*dt;
+
+if(
+bullets[i].y < -20
+)
+bullets.splice(i,1);
+
+}
+
+
+/*
+  Bombs.
+*/
+
+for(
+let i=bombs.length-1;
+i>=0;
+i--
+){
+
+const b=bombs[i];
+
+b.y +=
+b.s*dt;
+
+let hit=false;
+
+
+/*
+  Bullet collision.
+*/
+
+for(
+let j=bullets.length-1;
+j>=0;
+j--
+){
+
+const q=bullets[j];
+
+if(
+Math.hypot(
+b.x-q.x,
+b.y-q.y
+)
+<
+b.r+6
+){
+
+bombs.splice(i,1);
+
+bullets.splice(j,1);
+
+scoreG +=10;
+
+hit=true;
+
+break;
+
+}
+
+}
+
+
+if(hit)
+continue;
+
+
+/*
+  Jet collision.
+*/
+
+if(
+Math.hypot(
+b.x-jet.x,
+b.y-jet.y
+)
+<
+b.r+25
+){
+
+bombs.splice(i,1);
+
+lives--;
+
+if(lives<=0)
+return gameOver();
+
+continue;
+
+}
+
+
+/*
+  Bomb passed bottom.
+*/
+
+if(
+b.y>H+30
+){
+
+bombs.splice(i,1);
+
+lives--;
+
+if(lives<=0)
+return gameOver();
+
+}
+
+}
+
+
+/*
+  Coins.
+*/
+
+for(
+let i=coinsG.length-1;
+i>=0;
+i--
+){
+
+const q=coinsG[i];
+
+q.y +=
+q.s*dt;
+
+if(
+Math.hypot(
+q.x-jet.x,
+q.y-jet.y
+)
+<
+q.r+28
+){
+
+coinsG.splice(i,1);
+
+coinG +=2;
+
+continue;
+
+}
+
+if(q.y>H+30)
+coinsG.splice(i,1);
+
+}
+
+
+document.getElementById("lives").textContent =
+lives;
+
+document.getElementById("gs").textContent =
+scoreG;
+
+document.getElementById("gc").textContent =
+coinG;
+
+}
+
+
+function draw(){
+
+x.fillStyle="#020914";
+
+x.fillRect(
+0,0,W,H
+);
+
+
+/*
+  Stars.
+*/
+
+x.fillStyle="#fff";
+
+for(
+let i=0;
+i<50;
+i++
+){
+
+x.fillRect(
+(i*97)%W,
+(i*151)%H,
+1,
+1
+);
+
+}
+
+
+/*
+  Bombs.
+*/
+
+bombs.forEach(b=>{
+
+x.fillStyle="#222";
+
+x.beginPath();
+
+x.arc(
+b.x,
+b.y,
+b.r,
+0,
+Math.PI*2
+);
+
+x.fill();
+
+x.strokeStyle="#e33";
+
+x.stroke();
+
+});
+
+
+/*
+  Coins.
+*/
+
+coinsG.forEach(q=>{
+
+x.fillStyle="#ffd83d";
+
+x.beginPath();
+
+x.arc(
+q.x,
+q.y,
+q.r,
+0,
+Math.PI*2
+);
+
+x.fill();
+
+x.fillStyle="#6b5000";
+
+x.font="bold 12px Arial";
+
+x.textAlign="center";
+
+x.fillText(
+"2",
+q.x,
+q.y+4
+);
+
+});
+
+
+/*
+  Bullets.
+*/
+
+bullets.forEach(b=>{
+
+x.fillStyle="#ffe65c";
+
+x.fillRect(
+b.x-2,
+b.y-12,
+4,
+15
+);
+
+});
+
+
+/*
+  Fighter jet.
+*/
+
+x.save();
+
+x.translate(
+jet.x,
+jet.y
+);
+
+x.fillStyle="#c8d5e2";
+
+x.beginPath();
+
+x.moveTo(0,-44);
+
+x.lineTo(10,-12);
+
+x.lineTo(30,15);
+
+x.lineTo(11,11);
+
+x.lineTo(6,35);
+
+x.lineTo(0,25);
+
+x.lineTo(-6,35);
+
+x.lineTo(-11,11);
+
+x.lineTo(-30,15);
+
+x.lineTo(-10,-12);
+
+x.closePath();
+
+x.fill();
+
+
+x.fillStyle="#3fa7ff";
+
+x.beginPath();
+
+x.moveTo(0,-30);
+
+x.lineTo(7,-10);
+
+x.lineTo(0,4);
+
+x.lineTo(-7,-10);
+
+x.closePath();
+
+x.fill();
+
+
+/*
+  Engine flame.
+*/
+
+x.fillStyle="#ff8b25";
+
+x.beginPath();
+
+x.moveTo(-5,25);
+
+x.lineTo(0,43);
+
+x.lineTo(5,25);
+
+x.closePath();
+
+x.fill();
+
+
+x.restore();
+
+}
+
+
+function gameOver(){
+
+running=false;
+
+document.getElementById("mt")
+.textContent="GAME OVER";
+
+document.getElementById("mx")
+.textContent=
+"Score "+scoreG+
+" | Coins +"+coinG;
+
+document.getElementById("gameModal")
+.classList.add("on");
+
+saveGame();
+
+}
+
+
+async function saveGame(){
+
+try{
+
+await api(
+"/api/game",
+{
+method:"POST",
+body:JSON.stringify({
+
+score:scoreG,
+coins:coinG
+
+})
+}
+);
+
+load();
+
+}catch(e){}
+
+}
+
+
+async function again(){
+
+/*
+  Server records the ad gate.
+  Replace with real AdsGram rewarded flow
+  when the real Block ID is configured.
+*/
+
+try{
+
+await api(
+"/api/ad-complete",
+{
+method:"POST",
+body:"{}"
+}
+);
+
+state.ads++;
+
+startGame();
+
+}catch(e){
+
+alert(
+"Watch the AdsGram reward ad first."
+);
+
+}
+
+}
+
+
+function endGame(){
+
+running=false;
+
+document
+.getElementById("game")
+.classList.remove("on");
+
+document
+.getElementById("gameModal")
+.classList.remove("on");
+
+}
+
+
+/*
+  Move jet with finger.
+*/
+
+function move(px){
+
+if(!running)
+return;
+
+jet.x =
+Math.max(
+35,
+Math.min(
+W-35,
+px
+)
+);
+
+}
+
+
+c.addEventListener(
+"touchmove",
+e=>{
+move(
+e.touches[0].clientX
+);
+},
+{passive:true}
+);
+
+
+c.addEventListener(
+"mousemove",
+e=>{
+move(e.clientX);
+}
+);
+
+
+/*
+  FIRE button.
+*/
+
+const fire =
+document.getElementById("fire");
+
+
+fire.addEventListener(
+"touchstart",
+e=>{
+
+e.preventDefault();
+
+held=true;
+
+manual=150;
+
+fireShot();
+
+},
+{passive:false}
+);
+
+
+fire.addEventListener(
+"touchend",
+e=>{
+
+e.preventDefault();
+
+held=false;
+
+manual=0;
+
+},
+{passive:false}
+);
+
+
+fire.addEventListener(
+"mousedown",
+()=>{
+
+held=true;
+
+manual=150;
+
+fireShot();
+
+}
+);
+
+
+addEventListener(
+"mouseup",
+()=>{
+
+held=false;
+
+manual=0;
+
+}
+);
+
+
+load();
+
+</script>
+
+</body>
+</html>
