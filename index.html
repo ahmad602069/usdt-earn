@@ -1,25 +1,145 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>USDT Earn</title>
+
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     background:#07111f;
     color:white;
-    font-family:Arial;
-    text-align:center;
-    padding-top:100px;
+    font-family:Arial,Tahoma,sans-serif;
+    padding-bottom:80px;
 }
-.box{
-    margin:20px;
-    padding:30px;
+
+.header{
+    padding:18px;
+    background:#0b192b;
+    border-bottom:1px solid #20364f;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.user{
+    margin-top:5px;
+    color:#91a4ba;
+    font-size:13px;
+}
+
+.balance{
+    margin-top:15px;
+    padding:18px;
+    background:#12243a;
+    border-radius:16px;
+}
+
+.balance-title{
+    color:#91a4ba;
+    font-size:13px;
+}
+
+.balance-number{
+    margin-top:5px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+main{
+    padding:15px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    margin-bottom:14px;
+    padding:18px;
+    background:#0d1d30;
+    border:1px solid #20364f;
+    border-radius:17px;
+}
+
+.card h2,
+.card h3{
+    margin-top:0;
+}
+
+.text{
+    color:#91a4ba;
+    line-height:1.8;
+}
+
+.button{
+    width:100%;
+    margin-top:10px;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:#16ad5a;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.stat{
+    padding:15px;
     background:#10253b;
-    border-radius:20px;
+    border-radius:14px;
 }
-h1{
+
+.stat-title{
+    color:#91a4ba;
+    font-size:12px;
+}
+
+.stat-number{
+    display:block;
+    margin-top:6px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.nav{
+    position:fixed;
+    right:0;
+    bottom:0;
+    left:0;
+    height:70px;
+    display:flex;
+    background:#091625;
+    border-top:1px solid #20364f;
+}
+
+.nav button{
+    flex:1;
+    border:0;
+    background:transparent;
+    color:#71879f;
+    font-size:12px;
+}
+
+.nav button.active{
     color:#20d875;
 }
 </style>
@@ -27,11 +147,385 @@ h1{
 
 <body>
 
-<div class="box">
-    <h1>💰 USDT Earn</h1>
-    <p>برنامه با موفقیت باز شد ✅</p>
-    <p>صفحه سفید دیگر نباید باشد.</p>
-</div>
+<header class="header">
+
+    <div class="logo">
+        💰 USDT Earn
+    </div>
+
+    <div class="user">
+        خوش آمدید 👋
+    </div>
+
+    <div class="balance">
+
+        <div class="balance-title">
+            موجودی شما
+        </div>
+
+        <div class="balance-number">
+            0.00 USDT
+        </div>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- خانه -->
+
+    <section id="home" class="page active">
+
+        <div class="card">
+
+            <h2>
+                ✈️ فرار از بمب
+            </h2>
+
+            <p class="text">
+                بازی کن، امتیاز بگیر و سکه جمع کن.
+            </p>
+
+            <button
+                class="button"
+                onclick="alert('بخش بازی در مرحله بعد فعال می‌شود')"
+            >
+                🎮 شروع بازی
+            </button>
+
+        </div>
+
+
+        <div class="grid">
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    🪙 سکه
+                </span>
+
+                <span class="stat-number">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    ⭐ امتیاز
+                </span>
+
+                <span class="stat-number">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    👥 دعوت
+                </span>
+
+                <span class="stat-number">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    📺 تبلیغات
+                </span>
+
+                <span class="stat-number">
+                    0
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- دعوت -->
+
+    <section id="invite" class="page">
+
+        <div class="card">
+
+            <h2>
+                👥 دعوت دوستان
+            </h2>
+
+            <p class="text">
+                دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.
+            </p>
+
+            <button
+                class="button"
+                onclick="copyLink()"
+            >
+                📋 کپی لینک دعوت
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- کیف پول -->
+
+    <section id="wallet" class="page">
+
+        <div class="card">
+
+            <h2>
+                💰 کیف پول
+            </h2>
+
+            <p class="text">
+                موجودی قابل برداشت
+            </p>
+
+            <div class="balance-number">
+                0.00 USDT
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                💸 برداشت
+            </h3>
+
+            <p class="text">
+                بخش برداشت در مرحله بعد به سرور متصل می‌شود.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- پروفایل -->
+
+    <section id="profile" class="page">
+
+        <div class="card">
+
+            <h2>
+                👤 پروفایل
+            </h2>
+
+            <p class="text">
+                حساب کاربری USDT Earn
+            </p>
+
+            <div class="grid">
+
+                <div class="stat">
+
+                    <span class="stat-title">
+                        شناسه
+                    </span>
+
+                    <span
+                        class="stat-number"
+                        id="userId"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="stat-title">
+                        موجودی
+                    </span>
+
+                    <span class="stat-number">
+                        0.00
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<nav class="nav">
+
+    <button
+        class="active"
+        onclick="showPage('home',this)"
+    >
+        🏠<br>
+        خانه
+    </button>
+
+    <button
+        onclick="showPage('invite',this)"
+    >
+        👥<br>
+        دعوت
+    </button>
+
+    <button
+        onclick="showPage('wallet',this)"
+    >
+        💰<br>
+        کیف پول
+    </button>
+
+    <button
+        onclick="showPage('profile',this)"
+    >
+        👤<br>
+        پروفایل
+    </button>
+
+</nav>
+
+
+<script>
+
+function showPage(id,button){
+
+    var pages =
+        document.querySelectorAll(".page");
+
+    for(
+        var i=0;
+        i<pages.length;
+        i++
+    ){
+
+        pages[i].classList.remove("active");
+
+    }
+
+
+    var page =
+        document.getElementById(id);
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+
+    var buttons =
+        document.querySelectorAll(".nav button");
+
+    for(
+        var j=0;
+        j<buttons.length;
+        j++
+    ){
+
+        buttons[j].classList.remove("active");
+
+    }
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+function copyLink(){
+
+    var link =
+        window.location.href;
+
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
+
+        navigator.clipboard.writeText(link)
+        .then(function(){
+
+            alert("لینک کپی شد ✅");
+
+        })
+        .catch(function(){
+
+            alert(link);
+
+        });
+
+    }else{
+
+        alert(link);
+
+    }
+
+}
+
+
+/* Telegram */
+
+if(
+    window.Telegram &&
+    window.Telegram.WebApp
+){
+
+    try{
+
+        var tg =
+            window.Telegram.WebApp;
+
+        tg.ready();
+        tg.expand();
+
+        if(
+            tg.initDataUnsafe &&
+            tg.initDataUnsafe.user
+        ){
+
+            var user =
+                tg.initDataUnsafe.user;
+
+            document.getElementById(
+                "userId"
+            ).textContent =
+                user.id || "-";
+
+        }
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
