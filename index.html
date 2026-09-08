@@ -1,1 +1,167 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
+<title>USDT Earn</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:#07111f;
+    color:#fff;
+    font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    color:#fff;
+    font-weight:bold;
+    font-family:inherit;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.header{
+    padding:18px 15px;
+    background:#0b192b;
+    border-bottom:1px solid #1c3047;
+}
+
+.header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:bold;
+}
+
+.user-name{
+    color:#9fb2c7;
+    font-size:13px;
+    max-width:150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.balance-box{
+    margin-top:14px;
+    padding:15px;
+    border-radius:16px;
+    background:#12243a;
+}
+
+.balance-title{
+    color:#91a4ba;
+    font-size:13px;
+}
+
+.balance{
+    font-size:27px;
+    font-weight:bold;
+    margin-top:4px;
+}
+
+main{
+    padding:15px;
+    padding-bottom:90px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.card{
+    background:#0d1d30;
+    border:1px solid #20364f;
+    border-radius:17px;
+    padding:16px;
+    margin-bottom:13px;
+}
+
+.card h2,
+.card h3{
+    margin-top:0;
+}
+
+.muted{
+    color:#91a4ba;
+}
+
+.primary{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    background:#16ad5a;
+    margin-top:8px;
+}
+
+.secondary{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    background:#19314a;
+    margin-top:8px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:13px;
+}
+
+.stat{
+    background:#10253b;
+    padding:14px;
+    border-radius:13px;
+    min-width:0;
+}
+
+.stat-title{
+    color:#91a4ba;
+    font-size:12px;
+}
+
+.stat-value{
+    display:block;
+    margin-top:5px;
+    font-size:20px;
+    font-weight:bold;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+input,
+select{
+    width:100%;
+    padding:
