@@ -1,1 +1,874 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فرار از بمب</title>
 
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #10131a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: auto;
+      padding: 14px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .sub {
+      color: #aeb6c5;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .card {
+      background: #191e28;
+      border: 1px solid #2b3341;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .stat {
+      text-align: center;
+      background: #11151d;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    canvas {
+      width: 100%;
+      display: block;
+      background: #202734;
+      border-radius: 16px;
+      touch-action: none;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 9px;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #eab308;
+      color: #111;
+    }
+
+    .secondary {
+      background: #273142;
+      color: white;
+    }
+
+    .danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .green {
+      background: #16a34a;
+      color: white;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: #0009;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    .sheet {
+      width: min(520px, 100%);
+      background: #191e28;
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .close {
+      background: #343d4d;
+      color: white;
+    }
+
+    .note {
+      color: #aeb6c5;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div>
+      <h1>💣 فرار از بمب</h1>
+      <div class="sub">بازی اصلی USDT Earn</div>
+    </div>
+
+    <div>
+      💰 <span id="balance">0.00</span>
+    </div>
+  </header>
+
+
+  <section class="card">
+
+    <div class="stats">
+
+      <div class="stat">
+        امتیاز
+        <b id="score">0</b>
+      </div>
+
+      <div class="stat">
+        رکورد
+        <b id="best">0</b>
+      </div>
+
+      <div class="stat">
+        مرحله
+        <b id="level">1</b>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <canvas
+      id="game"
+      width="480"
+      height="420">
+    </canvas>
+
+    <button
+      class="primary"
+      id="startBtn"
+      onclick="startGame()">
+
+      🎮 شروع بازی
+
+    </button>
+
+    <button
+      class="danger hidden"
+      id="stopBtn"
+      onclick="endGame()">
+
+      ⏹ پایان بازی
+
+    </button>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="menu">
+
+      <button
+        class="green"
+        onclick="openPanel('business')">
+
+        💼 کسب‌وکار
+
+      </button>
+
+
+      <button
+        class="secondary"
+        onclick="openPanel('withdraw')">
+
+        💳 برداشت
+
+      </button>
+
+
+      <button
+        class="secondary"
+        onclick="openPanel('referral')">
+
+        👥 دعوت دوستان
+
+      </button>
+
+
+      <button
+        class="secondary"
+        onclick="openPanel('profile')">
+
+        👤 پروفایل
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <section class="card note">
+
+    <b>📺 تبلیغات</b>
+
+    <br>
+
+    جایگاه تبلیغات آماده است.
+    در مرحله اتصال، AdsGram به این بخش اضافه می‌شود.
+
+  </section>
+
+</div>
+
+
+<div
+  id="modal"
+  class="modal hidden"
+  onclick="if(event.target===this)closePanel()">
+
+  <div class="sheet">
+
+    <h2 id="modalTitle"></h2>
+
+    <div id="modalBody"></div>
+
+    <button
+      class="close"
+      onclick="closePanel()">
+
+      بستن
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const tg = window.Telegram?.WebApp;
+
+if (tg) {
+
+  tg.ready();
+
+  tg.expand();
+
+}
+
+
+const canvas =
+  document.getElementById("game");
+
+const ctx =
+  canvas.getContext("2d");
+
+
+let running = false;
+
+let score = 0;
+
+let best =
+  Number(localStorage.getItem("best") || 0);
+
+let level = 1;
+
+
+let player = {
+
+  x: 240,
+
+  y: 350,
+
+  r: 15
+
+};
+
+
+let bombs = [];
+
+let raf = 0;
+
+let last = 0;
+
+let spawn = 0;
+
+
+let balance =
+  Number(localStorage.getItem("demoBalance") || 0);
+
+
+document.getElementById("best").textContent =
+  best;
+
+document.getElementById("balance").textContent =
+  balance.toFixed(2);
+
+
+
+function draw() {
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  ctx.fillStyle = "#202734";
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  ctx.fillStyle = "#3b4658";
+
+
+  for (
+    let x = 0;
+    x < canvas.width;
+    x += 40
+  ) {
+
+    ctx.fillRect(
+      x,
+      0,
+      1,
+      canvas.height
+    );
+
+  }
+
+
+  for (
+    let y = 0;
+    y < canvas.height;
+    y += 40
+  ) {
+
+    ctx.fillRect(
+      0,
+      y,
+      canvas.width,
+      1
+    );
+
+  }
+
+
+  ctx.fillStyle = "#22c55e";
+
+  ctx.beginPath();
+
+  ctx.arc(
+    player.x,
+    player.y,
+    player.r,
+    0,
+    Math.PI * 2
+  );
+
+  ctx.fill();
+
+
+  bombs.forEach(function(b) {
+
+    ctx.fillStyle = "#ef4444";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      b.x,
+      b.y,
+      b.r,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle = "#111";
+
+    ctx.fillRect(
+      b.x - 3,
+      b.y - 3,
+      6,
+      6
+    );
+
+  });
+
+}
+
+
+
+function startGame() {
+
+  running = true;
+
+  score = 0;
+
+  level = 1;
+
+  bombs = [];
+
+
+  player = {
+
+    x: 240,
+
+    y: 350,
+
+    r: 15
+
+  };
+
+
+  document.getElementById(
+    "score"
+  ).textContent = 0;
+
+
+  document.getElementById(
+    "level"
+  ).textContent = 1;
+
+
+  document.getElementById(
+    "startBtn"
+  ).classList.add("hidden");
+
+
+  document.getElementById(
+    "stopBtn"
+  ).classList.remove("hidden");
+
+
+  last = performance.now();
+
+  spawn = 0;
+
+  raf =
+    requestAnimationFrame(loop);
+
+}
+
+
+
+function endGame() {
+
+  if (!running) return;
+
+
+  running = false;
+
+  cancelAnimationFrame(raf);
+
+
+  document.getElementById(
+    "startBtn"
+  ).classList.remove("hidden");
+
+
+  document.getElementById(
+    "stopBtn"
+  ).classList.add("hidden");
+
+
+  if (score > best) {
+
+    best = score;
+
+    localStorage.setItem(
+      "best",
+      best
+    );
+
+    document.getElementById(
+      "best"
+    ).textContent = best;
+
+  }
+
+
+  if (tg) {
+
+    tg.showAlert(
+      "بازی تمام شد\nامتیاز: " + score
+    );
+
+  }
+
+}
+
+
+
+function loop(t) {
+
+  if (!running) return;
+
+
+  const dt =
+    Math.min(
+      (t - last) / 1000,
+      0.04
+    );
+
+
+  last = t;
+
+  spawn += dt;
+
+
+  const interval =
+    Math.max(
+      0.32,
+      1.05 - level * 0.07
+    );
+
+
+  if (spawn > interval) {
+
+    spawn = 0;
+
+
+    bombs.push({
+
+      x: 20 + Math.random() * 440,
+
+      y: -20,
+
+      r: 12 + Math.random() * 7,
+
+      v: 125 + level * 12
+
+    });
+
+  }
+
+
+  bombs.forEach(function(b) {
+
+    b.y += b.v * dt;
+
+  });
+
+
+  bombs =
+    bombs.filter(function(b) {
+
+      return b.y < 450;
+
+    });
+
+
+  for (const b of bombs) {
+
+    const distance =
+      Math.hypot(
+        b.x - player.x,
+        b.y - player.y
+      );
+
+
+    if (
+      distance <
+      b.r + player.r
+    ) {
+
+      endGame();
+
+      return;
+
+    }
+
+  }
+
+
+  score +=
+    Math.floor(dt * 10);
+
+
+  level =
+    Math.floor(score / 100) + 1;
+
+
+  document.getElementById(
+    "score"
+  ).textContent = score;
+
+
+  document.getElementById(
+    "level"
+  ).textContent = level;
+
+
+  draw();
+
+
+  raf =
+    requestAnimationFrame(loop);
+
+}
+
+
+
+function move(e) {
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  const point =
+    e.touches
+      ? e.touches[0]
+      : e;
+
+
+  player.x =
+    Math.max(
+      18,
+      Math.min(
+        canvas.width - 18,
+        (point.clientX - rect.left)
+        * canvas.width
+        / rect.width
+      )
+    );
+
+
+  player.y =
+    Math.max(
+      18,
+      Math.min(
+        canvas.height - 18,
+        (point.clientY - rect.top)
+        * canvas.height
+        / rect.height
+      )
+    );
+
+}
+
+
+canvas.addEventListener(
+  "pointermove",
+  function(e) {
+
+    if (running) move(e);
+
+  }
+);
+
+
+canvas.addEventListener(
+  "pointerdown",
+  function(e) {
+
+    if (running) move(e);
+
+  }
+);
+
+
+draw();
+
+
+
+function openPanel(type) {
+
+  const title =
+    document.getElementById(
+      "modalTitle"
+    );
+
+
+  const body =
+    document.getElementById(
+      "modalBody"
+    );
+
+
+  const data = {
+
+    business: [
+
+      "💼 کسب‌وکار",
+
+      "<p class='note'>بخش کسب درآمد برنامه. فعالیت‌ها و پاداش‌ها بعداً به سرور متصل می‌شوند.</p>"
+
+    ],
+
+
+    withdraw: [
+
+      "💳 برداشت",
+
+      "<p class='note'>سیستم برداشت هنوز به سرور و روش پرداخت متصل نشده است. موجودی این نسخه نمایشی قابل برداشت نیست.</p>"
+
+    ],
+
+
+    referral: [
+
+      "👥 دعوت دوستان",
+
+      "<p class='note'>لینک دعوت اختصاصی و پاداش Referral بعد از اتصال بک‌اند فعال می‌شود.</p>" +
+
+      "<button class='secondary' onclick='copyReferral()'>" +
+
+      "📋 کپی لینک دعوت" +
+
+      "</button>"
+
+    ],
+
+
+    profile: [
+
+      "👤 پروفایل",
+
+      "<p class='note'>شناسه تلگرام: " +
+
+      (
+        tg?.initDataUnsafe?.user?.id ||
+        "پس از ورود تلگرام"
+      ) +
+
+      "</p>"
+
+    ]
+
+  };
+
+
+  title.textContent =
+    data[type][0];
+
+
+  body.innerHTML =
+    data[type][1];
+
+
+  document
+    .getElementById("modal")
+    .classList
+    .remove("hidden");
+
+}
+
+
+
+function closePanel() {
+
+  document
+    .getElementById("modal")
+    .classList
+    .add("hidden");
+
+}
+
+
+
+async function copyReferral() {
+
+  const id =
+    tg?.initDataUnsafe?.user?.id ||
+    "USER_ID";
+
+
+  const link =
+    "https://t.me/YOUR_BOT?start=ref_" +
+    id;
+
+
+  try {
+
+    await navigator.clipboard.writeText(link);
+
+    if (tg) {
+
+      tg.showAlert(
+        "لینک دعوت کپی شد"
+      );
+
+    }
+
+  } catch {
+
+    if (tg) {
+
+      tg.showAlert(link);
+
+    }
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
