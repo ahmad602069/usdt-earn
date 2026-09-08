@@ -1,1 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape From Bomb</title>
 
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#07111f;
+    font-family:Arial,sans-serif;
+}
+
+#game{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+#title{
+    position:absolute;
+    top:25px;
+    left:0;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:26px;
+    font-weight:bold;
+}
+
+#info{
+    position:absolute;
+    top:70px;
+    left:0;
+    width:100%;
+    text-align:center;
+    color:#cccccc;
+    font-size:16px;
+}
+
+#jet{
+    position:absolute;
+    left:50%;
+    bottom:80px;
+    transform:translateX(-50%);
+    font-size:70px;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="game"></canvas>
+
+<div id="title">
+    ESCAPE FROM BOMB
+</div>
+
+<div id="info">
+    TEST VERSION — GAME IS WORKING
+</div>
+
+<div id="jet">
+    ✈️
+</div>
+
+<script>
+
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+function resize(){
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+function draw(){
+
+    ctx.fillStyle = "#07111f";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.fillStyle = "white";
+
+    ctx.font = "20px Arial";
+
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "GAME TEST OK",
+        canvas.width / 2,
+        canvas.height / 2
+    );
+
+}
+
+draw();
+
+</script>
+
+</body>
+</html>
