@@ -443,6 +443,7 @@ font-size:12px
 <header class="header">
 <div class="logo">💰 USDT Earn</div>
 <div class="user">خوش آمدید 👋</div>
+
 <div class="balance">
 <div class="balance-title">موجودی شما</div>
 <div class="balance-number" id="mainBalance">0.00 USDT</div>
@@ -452,17 +453,25 @@ font-size:12px
 <main>
 
 <section id="home" class="page active">
+
 <div class="card">
+
 <h2>✈️ فرار از بمب</h2>
+
 <p class="text">
 با هواپیمای جنگی از بمب‌ها فرار کن، دشمنان را نابود کن و امتیاز و سکه جمع کن.
 </p>
-<button type="button" class="button" onclick="openGame()">
+
+<button type="button"
+class="button"
+onclick="openGame()">
 🎮 شروع بازی
 </button>
+
 </div>
 
 <div class="grid">
+
 <div class="stat">
 <span class="stat-title">🪙 سکه</span>
 <span class="stat-number" id="coinStat">0</span>
@@ -482,6 +491,7 @@ font-size:12px
 <span class="stat-title">📺 تبلیغات</span>
 <span class="stat-number" id="adStat">0</span>
 </div>
+
 </div>
 </section>
 
@@ -490,6 +500,7 @@ font-size:12px
 <div class="card game-card">
 
 <div class="game-header">
+
 <div class="game-info">
 
 <div class="game-badge">
@@ -539,18 +550,23 @@ font-size:12px
 موشک ویژه از پشت هواپیما خارج شده و دشمن را مستقیم دنبال می‌کند.
 </p>
 
-<button type="button" id="startGameButton" class="button">
+<button type="button"
+id="startGameButton"
+class="button">
 🚀 شروع بازی
 </button>
 
-<button type="button" class="button secondary" onclick="cancelGame()">
+<button type="button"
+class="button secondary"
+onclick="cancelGame()">
 ❌ لغو
 </button>
 
 </div>
 </div>
 
-<div id="gameOverOverlay" class="game-overlay hidden">
+<div id="gameOverOverlay"
+class="game-overlay hidden">
 
 <div class="overlay-box">
 
@@ -562,15 +578,21 @@ font-size:12px
 سکه: <b id="finalCoins">0</b>
 </p>
 
-<button type="button" class="button" onclick="watchLifeAd()">
+<button type="button"
+class="button"
+onclick="watchLifeAd()">
 📺 دیدن تبلیغ و دریافت ۳ جان
 </button>
 
-<button type="button" class="button secondary" onclick="restartGame()">
+<button type="button"
+class="button secondary"
+onclick="restartGame()">
 🔄 شروع دوباره
 </button>
 
-<button type="button" class="button secondary" onclick="backHome()">
+<button type="button"
+class="button secondary"
+onclick="backHome()">
 🏠 بازگشت
 </button>
 
@@ -619,15 +641,19 @@ disabled>
 <section id="invite" class="page">
 
 <div class="card">
+
 <h2>👥 دعوت دوستان</h2>
 
 <p class="text">
 دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.
 </p>
 
-<button type="button" class="button" onclick="copyLink()">
+<button type="button"
+class="button"
+onclick="copyLink()">
 📋 کپی لینک دعوت
 </button>
+
 </div>
 
 </section>
@@ -635,23 +661,28 @@ disabled>
 <section id="wallet" class="page">
 
 <div class="card">
+
 <h2>💰 کیف پول</h2>
 
 <p class="text">
 موجودی قابل برداشت
 </p>
 
-<div class="balance-number" id="walletBalance">
+<div class="balance-number"
+id="walletBalance">
 0.00 USDT
 </div>
+
 </div>
 
 <div class="card">
+
 <h3>💸 برداشت</h3>
 
 <p class="text">
 بخش برداشت در مرحله بعد به سرور متصل می‌شود.
 </p>
+
 </div>
 
 </section>
@@ -724,9 +755,12 @@ onclick="showPage('profile',this)">
 
 <script>
 
-var coins=0,totalScore=0,adCount=0;
+var coins=0;
+var totalScore=0;
+var adCount=0;
 
 /* TELEGRAM */
+
 var tg=null;
 
 if(window.Telegram&&window.Telegram.WebApp){
@@ -745,7 +779,8 @@ tg.initDataUnsafe.user
 
 var user=tg.initDataUnsafe.user;
 
-var userElement=document.getElementById("userId");
+var userElement=
+document.getElementById("userId");
 
 if(userElement)
 userElement.textContent=user.id||"-";
@@ -753,7 +788,9 @@ userElement.textContent=user.id||"-";
 }
 
 }catch(error){
+
 console.log(error);
+
 }
 
 }
@@ -762,7 +799,8 @@ console.log(error);
 
 function showPage(id,button){
 
-var pages=document.querySelectorAll(".page");
+var pages=
+document.querySelectorAll(".page");
 
 for(var i=0;i<pages.length;i++)
 pages[i].classList.remove("active");
@@ -772,7 +810,8 @@ var page=document.getElementById(id);
 if(page)
 page.classList.add("active");
 
-var buttons=document.querySelectorAll(".nav button");
+var buttons=
+document.querySelectorAll(".nav button");
 
 for(var j=0;j<buttons.length;j++)
 buttons[j].classList.remove("active");
@@ -826,20 +865,28 @@ var pointerActive=false;
 
 /* CANVAS */
 
-var canvas=document.getElementById("gameCanvas");
-var ctx=canvas?canvas.getContext("2d"):null;
+var canvas=
+document.getElementById("gameCanvas");
+
+var ctx=
+canvas?canvas.getContext("2d"):null;
 
 function resizeCanvas(){
 
 if(!canvas||!ctx)
 return;
 
-var rect=canvas.getBoundingClientRect();
+var rect=
+canvas.getBoundingClientRect();
 
-var width=Math.max(300,Math.floor(rect.width));
-var height=Math.max(400,Math.floor(rect.height));
+var width=
+Math.max(300,Math.floor(rect.width));
 
-var dpr=Math.min(window.devicePixelRatio||1,2);
+var height=
+Math.max(400,Math.floor(rect.height));
+
+var dpr=
+Math.min(window.devicePixelRatio||1,2);
 
 canvas.width=width*dpr;
 canvas.height=height*dpr;
@@ -1009,12 +1056,20 @@ alert(link);
 
 function updateStats(){
 
-var coinStat=document.getElementById("coinStat");
-var scoreStat=document.getElementById("scoreStat");
-var adStat=document.getElementById("adStat");
+var coinStat=
+document.getElementById("coinStat");
 
-var walletBalance=document.getElementById("walletBalance");
-var profileBalance=document.getElementById("profileBalance");
+var scoreStat=
+document.getElementById("scoreStat");
+
+var adStat=
+document.getElementById("adStat");
+
+var walletBalance=
+document.getElementById("walletBalance");
+
+var profileBalance=
+document.getElementById("profileBalance");
 
 if(coinStat)
 coinStat.textContent=coins;
@@ -1035,8 +1090,11 @@ profileBalance.textContent="0.00";
 
 /* ADSGRAM */
 
-var ADSGRAM_REWARDED_BLOCK_ID="YOUR_REWARDED_BLOCK_ID";
-var ADSGRAM_INTERSTITIAL_BLOCK_ID="YOUR_INTERSTITIAL_BLOCK_ID";
+var ADSGRAM_REWARDED_BLOCK_ID=
+"YOUR_REWARDED_BLOCK_ID";
+
+var ADSGRAM_INTERSTITIAL_BLOCK_ID=
+"YOUR_INTERSTITIAL_BLOCK_ID";
 
 var rewardedController=null;
 var interstitialController=null;
@@ -1158,7 +1216,8 @@ updateControlButtons();
 
 lastFrameTime=performance.now();
 
-animationId=requestAnimationFrame(gameLoop);
+animationId=
+requestAnimationFrame(gameLoop);
 
 }
 
@@ -1191,7 +1250,8 @@ return;
 
 gamePaused=true;
 
-pauseStartTime=performance.now();
+pauseStartTime=
+performance.now();
 
 if(animationId!==null)
 cancelAnimationFrame(animationId);
@@ -1213,7 +1273,8 @@ return;
 var now=performance.now();
 
 if(pauseStartTime>0)
-gameStartTime+=now-pauseStartTime;
+gameStartTime+=
+now-pauseStartTime;
 
 pauseStartTime=0;
 
@@ -1225,7 +1286,8 @@ updateControlButtons();
 updateGameUI();
 
 if(animationId===null)
-animationId=requestAnimationFrame(gameLoop);
+animationId=
+requestAnimationFrame(gameLoop);
 
 }
 
@@ -1233,15 +1295,18 @@ animationId=requestAnimationFrame(gameLoop);
 
 function updateControlButtons(){
 
-var start=document.getElementById(
+var start=
+document.getElementById(
 "startBottomButton"
 );
 
-var pause=document.getElementById(
+var pause=
+document.getElementById(
 "pauseGameButton"
 );
 
-var resume=document.getElementById(
+var resume=
+document.getElementById(
 "resumeGameButton"
 );
 
@@ -1249,10 +1314,12 @@ if(start)
 start.disabled=gameRunning;
 
 if(pause)
-pause.disabled=!gameRunning||gamePaused;
+pause.disabled=
+!gameRunning||gamePaused;
 
 if(resume)
-resume.disabled=!gameRunning||!gamePaused;
+resume.disabled=
+!gameRunning||!gamePaused;
 
 }
 
@@ -1280,9 +1347,11 @@ return;
 
 }
 
-animationId=requestAnimationFrame(gameLoop);
+animationId=
+requestAnimationFrame(gameLoop);
 
-var delta=Math.min(
+var delta=
+Math.min(
 .035,
 (timestamp-lastFrameTime)/1000
 );
@@ -1318,7 +1387,8 @@ showFourMinuteAd();
 
 function getDifficulty(){
 
-var progress=Math.min(
+var progress=
+Math.min(
 elapsedSeconds/240,
 1
 );
@@ -1350,7 +1420,8 @@ enemyShotInterval:
 
 function updateGame(delta,timestamp){
 
-var difficulty=getDifficulty();
+var difficulty=
+getDifficulty();
 
 player.x+=
 (player.targetX-player.x)*
@@ -1381,7 +1452,9 @@ player.y
 
 /* گلوله خودکار */
 
-if(timestamp-lastBulletTime>=155){
+if(
+timestamp-lastBulletTime>=155
+){
 
 fireAutomaticBullet();
 
@@ -1429,10 +1502,15 @@ lastEnemyShotTime=timestamp;
 }
 
 updateBullets(delta);
+
 updateMissiles(delta);
+
 updateBombs(delta,difficulty);
+
 updateEnemies(delta,difficulty);
+
 updateEnemyBullets(delta);
+
 updateExplosions(delta);
 
 checkCollisions();
@@ -1502,7 +1580,8 @@ missiles--;
 var startX=player.x;
 var startY=player.y+25;
 
-var target=findNearestEnemy(
+var target=
+findNearestEnemy(
 startX,
 startY
 );
@@ -1552,7 +1631,9 @@ return false;
 
 }
 
-/* MISSILE UPDATE - FIXED */
+/* =====================================================
+   MISSILE UPDATE - برخورد قطعی
+   ===================================================== */
 
 function updateMissiles(delta){
 
@@ -1562,12 +1643,10 @@ i>=0;
 i--
 ){
 
-var missile=specialMissiles[i];
+var missile=
+specialMissiles[i];
 
-/*
-اگر هدف قبلی نابود شده باشد،
-موشک یک هدف جدید می‌گیرد.
-*/
+/* هدف قبلی اگر از بین رفته باشد */
 
 if(
 !enemyStillExists(missile.target)
@@ -1581,7 +1660,12 @@ missile.y
 
 }
 
+var oldX=missile.x;
+var oldY=missile.y;
+
 var target=missile.target;
+
+/* حرکت */
 
 if(target){
 
@@ -1595,61 +1679,6 @@ var distanceToTarget=
 Math.sqrt(
 dx*dx+dy*dy
 );
-
-/*
-این قسمت مهم است:
-قبل از اینکه موشک روی هواپیما بماند،
-برخورد را تشخیص می‌دهیم.
-*/
-
-var hitDistance=Math.max(
-24,
-missile.speed*delta+12
-);
-
-if(
-distanceToTarget<=hitDistance
-){
-
-/* انفجار فوری */
-
-createExplosion(
-target.x,
-target.y
-);
-
-/* حذف هواپیمای دشمن */
-
-var enemyIndex=
-enemies.indexOf(target);
-
-if(enemyIndex!==-1){
-
-enemies.splice(
-enemyIndex,
-1
-);
-
-gameScore+=25;
-coins+=3;
-
-}
-
-/* حذف فوری موشک */
-
-specialMissiles.splice(
-i,
-1
-);
-
-continue;
-
-}
-
-/*
-حرکت مستقیم به طرف هدف.
-بدون angle و بدون turnRate.
-*/
 
 if(distanceToTarget>0){
 
@@ -1673,11 +1702,6 @@ delta;
 
 }else{
 
-/*
-اگر هیچ دشمنی وجود نداشت،
-موشک مستقیم ادامه می‌دهد.
-*/
-
 missile.x+=
 missile.dirX*
 missile.speed*
@@ -1690,6 +1714,130 @@ delta;
 
 }
 
+/* =================================================
+   بررسی واقعی برخورد بعد از حرکت
+   ================================================= */
+
+var missileHit=false;
+
+for(
+var e=enemies.length-1;
+e>=0;
+e--
+){
+
+var enemy=enemies[e];
+
+/*
+شعاع برخورد موشک را کمی بزرگ گرفته‌ایم
+تا موشک از کنار هواپیما رد نشود.
+*/
+
+if(
+circleRectCollision(
+missile.x,
+missile.y,
+14,
+enemy
+)
+){
+
+/* مرکز انفجار */
+
+createBigExplosion(
+enemy.x,
+enemy.y
+);
+
+/* حذف دشمن */
+
+enemies.splice(
+e,
+1
+);
+
+/* امتیاز */
+
+gameScore+=25;
+coins+=3;
+
+/* حذف موشک */
+
+specialMissiles.splice(
+i,
+1
+);
+
+missileHit=true;
+
+break;
+
+}
+
+}
+
+/* اگر برخورد کرده، دیگر ادامه نده */
+
+if(missileHit)
+continue;
+
+/*
+بررسی مسیر بین موقعیت قبلی و جدید.
+این قسمت برای سرعت بالای موشک است.
+*/
+
+for(
+var e2=enemies.length-1;
+e2>=0;
+e2--
+){
+
+var enemy2=enemies[e2];
+
+var midX=
+(oldX+missile.x)/2;
+
+var midY=
+(oldY+missile.y)/2;
+
+if(
+circleRectCollision(
+midX,
+midY,
+18,
+enemy2
+)
+){
+
+createBigExplosion(
+enemy2.x,
+enemy2.y
+);
+
+enemies.splice(
+e2,
+1
+);
+
+gameScore+=25;
+coins+=3;
+
+specialMissiles.splice(
+i,
+1
+);
+
+missileHit=true;
+
+break;
+
+}
+
+}
+
+if(missileHit)
+continue;
+
 /* رد آتش */
 
 missile.trail.push({
@@ -1700,7 +1848,7 @@ y:missile.y
 });
 
 if(
-missile.trail.length>12
+missile.trail.length>14
 )
 missile.trail.shift();
 
@@ -1708,9 +1856,11 @@ missile.trail.shift();
 
 if(
 missile.x<-80||
-missile.x>canvas.clientWidth+80||
+missile.x>
+canvas.clientWidth+80||
 missile.y<-80||
-missile.y>canvas.clientHeight+80
+missile.y>
+canvas.clientHeight+80
 ){
 
 specialMissiles.splice(
@@ -1728,7 +1878,8 @@ i,
 
 function createBomb(){
 
-var width=canvas.clientWidth;
+var width=
+canvas.clientWidth;
 
 bombs.push({
 
@@ -1741,7 +1892,8 @@ y:-30,
 
 radius:9,
 
-speed:getDifficulty().bombSpeed
+speed:
+getDifficulty().bombSpeed
 
 });
 
@@ -1751,7 +1903,8 @@ speed:getDifficulty().bombSpeed
 
 function createEnemy(){
 
-var width=canvas.clientWidth;
+var width=
+canvas.clientWidth;
 
 enemies.push({
 
@@ -1765,7 +1918,8 @@ y:-35,
 width:28,
 height:38,
 
-speed:getDifficulty().enemySpeed,
+speed:
+getDifficulty().enemySpeed,
 
 health:1
 
@@ -1911,7 +2065,28 @@ y:y,
 
 radius:4,
 maxRadius:30,
-life:.45
+life:.45,
+
+type:"normal"
+
+});
+
+}
+
+/* انفجار بزرگ موشک */
+
+function createBigExplosion(x,y){
+
+explosions.push({
+
+x:x,
+y:y,
+
+radius:5,
+maxRadius:58,
+life:.75,
+
+type:"missile"
 
 });
 
@@ -1925,13 +2100,24 @@ i>=0;
 i--
 ){
 
-explosions[i].life-=delta;
+var exp=explosions[i];
 
-explosions[i].radius+=
+exp.life-=delta;
+
+if(exp.type==="missile"){
+
+exp.radius+=
+100*delta;
+
+}else{
+
+exp.radius+=
 65*delta;
 
+}
+
 if(
-explosions[i].life<=0
+exp.life<=0
 )
 explosions.splice(i,1);
 
@@ -2008,14 +2194,8 @@ continue;
 }
 
 /*
-برخورد موشک ویژه اینجا عمداً وجود ندارد.
-
-خود updateMissiles() برخورد موشک،
-انفجار، حذف دشمن و حذف موشک را
-کامل انجام می‌دهد.
-
-این کار باعث می‌شود موشک دوبار پردازش نشود
-و بعد از برخورد روی هواپیما نماند.
+برخورد موشک اینجا انجام نمی‌شود.
+updateMissiles() خودش برخورد قطعی را انجام می‌دهد.
 */
 
 /* بازیکن */
@@ -2411,8 +2591,11 @@ function drawGame(){
 if(!canvas||!ctx)
 return;
 
-var width=canvas.clientWidth;
-var height=canvas.clientHeight;
+var width=
+canvas.clientWidth;
+
+var height=
+canvas.clientHeight;
 
 var skyGradient=
 ctx.createLinearGradient(
@@ -2481,6 +2664,8 @@ width,
 55
 );
 
+/* بمب */
+
 for(
 var i=0;
 i<bombs.length;
@@ -2488,12 +2673,16 @@ i++
 )
 drawBomb(bombs[i]);
 
+/* دشمن */
+
 for(
 var j=0;
 j<enemies.length;
 j++
 )
 drawEnemy(enemies[j]);
+
+/* گلوله دشمن */
 
 for(
 var k=0;
@@ -2504,6 +2693,8 @@ drawEnemyBullet(
 enemyBullets[k]
 );
 
+/* گلوله خودی */
+
 for(
 var q=0;
 q<bullets.length;
@@ -2512,6 +2703,8 @@ q++
 drawBullet(
 bullets[q]
 );
+
+/* موشک */
 
 for(
 var r=0;
@@ -2522,6 +2715,19 @@ drawMissile(
 specialMissiles[r]
 );
 
+/*
+اول هواپیما رسم می‌شود،
+بعد انفجار روی آن رسم می‌شود
+تا انفجار کاملاً دیده شود.
+*/
+
+drawPlayerPlane(
+player.x,
+player.y
+);
+
+/* انفجارها */
+
 for(
 var x=0;
 x<explosions.length;
@@ -2529,11 +2735,6 @@ x++
 )
 drawExplosion(
 explosions[x]
-);
-
-drawPlayerPlane(
-player.x,
-player.y
 );
 
 }
@@ -2874,10 +3075,6 @@ ctx.fill();
 
 ctx.globalAlpha=1;
 
-/*
-جهت ظاهری موشک از جهت حرکت واقعی گرفته می‌شود.
-*/
-
 var angle=
 Math.atan2(
 missile.dirY,
@@ -2943,7 +3140,7 @@ ctx.closePath();
 
 ctx.fill();
 
-/* آتش موتور */
+/* آتش */
 
 ctx.beginPath();
 
@@ -2991,15 +3188,22 @@ ctx.fill();
 
 function drawExplosion(exp){
 
+var maxLife=
+exp.type==="missile"?
+.75:
+.45;
+
 var alpha=
 Math.max(
 0,
-exp.life/.45
+exp.life/maxLife
 );
 
 ctx.save();
 
 ctx.globalAlpha=alpha;
+
+/* هاله بیرونی */
 
 ctx.beginPath();
 
@@ -3011,20 +3215,47 @@ exp.radius,
 Math.PI*2
 );
 
-ctx.fillStyle="#ffb020";
+ctx.fillStyle=
+exp.type==="missile"?
+"#ff4a00":
+"#ffb020";
+
 ctx.fill();
+
+/* حلقه نارنجی */
+
+if(exp.type==="missile"){
 
 ctx.beginPath();
 
 ctx.arc(
 exp.x,
 exp.y,
-exp.radius*.45,
+exp.radius*.72,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="#ffb020";
+
+ctx.fill();
+
+}
+
+/* مرکز سفید */
+
+ctx.beginPath();
+
+ctx.arc(
+exp.x,
+exp.y,
+exp.radius*.40,
 0,
 Math.PI*2
 );
 
 ctx.fillStyle="#fff3a0";
+
 ctx.fill();
 
 ctx.restore();
