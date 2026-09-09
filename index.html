@@ -164,7 +164,8 @@ body.game-mode main{
     height:100vh
 }
 
-/* نوار بازی */
+/* نوار بالای بازی */
+
 .game-header{
     height:30px;
     min-height:30px;
@@ -215,6 +216,7 @@ body.game-mode main{
 }
 
 /* محیط بازی */
+
 .game-wrapper{
     position:relative;
     width:100%;
@@ -270,6 +272,7 @@ body.game-mode main{
 }
 
 /* کنترل‌های پایین */
+
 .game-bottom-controls{
     position:absolute;
     right:0;
@@ -310,10 +313,6 @@ body.game-mode main{
 
 .game-control-button.resume{
     background:#176b45
-}
-
-.game-control-button.cancel{
-    background:#632832
 }
 
 .game-control-button:disabled{
@@ -615,9 +614,7 @@ body.game-mode main{
 <div class="ground-info">
 
 <div class="ground-line"></div>
-
 <div class="ground-details"></div>
-
 <div class="ground-road"></div>
 
 <div class="ground-light one"></div>
@@ -642,7 +639,7 @@ body.game-mode main{
 <br>
 برای حرکت، انگشت خود را روی صفحه حرکت بده.
 <br>
-موشک ویژه را با دکمه پایین شلیک کن.
+موشک ویژه به صورت هدایت‌شونده به سمت دشمن می‌رود.
 
 </p>
 
@@ -716,7 +713,7 @@ onclick="backHome()"
 </div>
 
 
-<!-- کنترل‌های پایین -->
+<!-- کنترل‌ها -->
 
 <div class="game-bottom-controls">
 
@@ -939,7 +936,6 @@ try{
 tg=window.Telegram.WebApp;
 
 tg.ready();
-
 tg.expand();
 
 if(
@@ -1146,10 +1142,7 @@ document
 .getElementById("mainNav")
 .classList.add("hidden");
 
-showPage(
-"gamePage",
-null
-);
+showPage("gamePage",null);
 
 document
 .getElementById("startOverlay")
@@ -1665,6 +1658,8 @@ player.y
 );
 
 
+/* شلیک خودکار */
+
 if(
 timestamp-lastBulletTime>=155
 ){
@@ -1675,6 +1670,8 @@ lastBulletTime=timestamp;
 
 }
 
+
+/* بمب */
 
 if(
 timestamp-lastBombTime>=
@@ -1688,6 +1685,8 @@ lastBombTime=timestamp;
 }
 
 
+/* دشمن */
+
 if(
 timestamp-lastEnemyTime>=
 difficulty.enemyInterval
@@ -1699,6 +1698,8 @@ lastEnemyTime=timestamp;
 
 }
 
+
+/* شلیک دشمن */
 
 if(
 timestamp-lastEnemyShotTime>=
@@ -1753,14 +1754,65 @@ return;
 
 missiles--;
 
+var target=null;
+var bestDistance=Infinity;
+
+/* پیدا کردن نزدیک‌ترین دشمن */
+
+for(var i=0;i<enemies.length;i++){
+
+var dx=
+enemies[i].x-player.x;
+
+var dy=
+enemies[i].y-player.y;
+
+var dist=
+dx*dx+dy*dy;
+
+if(dist<bestDistance){
+
+bestDistance=dist;
+target=enemies[i];
+
+}
+
+}
+
+
+/*
+   موشک از پشت/زیر هواپیما خارج می‌شود.
+   سپس به سمت دشمن هدایت می‌شود.
+*/
+
+var initialAngle=-Math.PI/2;
+
+if(target){
+
+initialAngle=
+Math.atan2(
+target.y-(player.y+20),
+target.x-player.x
+);
+
+}
+
 specialMissiles.push({
 
 x:player.x,
-y:player.y-30,
-width:8,
-height:23,
+y:player.y+20,
+
+width:10,
+height:24,
+
 speed:7,
-power:2
+power:2,
+
+angle:initialAngle,
+
+trail:[],
+
+target:target
 
 });
 
@@ -1887,7 +1939,7 @@ bullets.splice(i,1);
 }
 
 
-/* MISSILES UPDATE */
+/* MISSILES UPDATE - هدایت شونده */
 
 function updateMissiles(delta){
 
@@ -1897,13 +1949,125 @@ i>=0;
 i--
 ){
 
-specialMissiles[i].y-=
-specialMissiles[i].speed;
+var missile=
+specialMissiles[i];
+
+/*
+   اگر هدف قبلی از بین رفته باشد،
+   نزدیک‌ترین دشمن جدید را پیدا می‌کنیم.
+*/
+
+var target=null;
+var bestDistance=Infinity;
+
+for(
+var j=0;
+j<enemies.length;
+j++
+){
+
+var dx=
+enemies[j].x-missile.x;
+
+var dy=
+enemies[j].y-missile.y;
+
+var dist=
+dx*dx+dy*dy;
+
+if(dist<bestDistance){
+
+bestDistance=dist;
+target=enemies[j];
+
+}
+
+}
+
+missile.target=target;
+
+
+/* چرخش نرم به طرف دشمن */
+
+if(target){
+
+var desiredAngle=
+Math.atan2(
+target.y-missile.y,
+target.x-missile.x
+);
+
+var angleDifference=
+Math.atan2(
+Math.sin(
+desiredAngle-missile.angle
+),
+Math.cos(
+desiredAngle-missile.angle
+)
+);
+
+/*
+   سرعت چرخش هدایت‌شونده
+*/
+
+var turnSpeed=
+Math.min(
+1,
+delta*7
+);
+
+missile.angle+=
+angleDifference*turnSpeed;
+
+}
+
+
+/* حرکت موشک */
+
+missile.x+=
+Math.cos(missile.angle)*
+missile.speed*
+60*
+delta;
+
+missile.y+=
+Math.sin(missile.angle)*
+missile.speed*
+60*
+delta;
+
+
+/* رد آتش موشک */
+
+if(!missile.trail)
+missile.trail=[];
+
+missile.trail.push({
+
+x:missile.x,
+y:missile.y
+
+});
 
 if(
-specialMissiles[i].y<-40
+missile.trail.length>12
 )
+missile.trail.shift();
+
+
+/* خروج از صفحه */
+
+if(
+missile.x<-60||
+missile.x>canvas.clientWidth+60||
+missile.y<-70||
+missile.y>canvas.clientHeight+70
+){
+
 specialMissiles.splice(i,1);
+
+}
 
 }
 
@@ -2104,7 +2268,7 @@ continue;
 }
 
 
-/* موشک */
+/* موشک هدایت‌شونده */
 
 for(
 var m=specialMissiles.length-1;
@@ -2128,7 +2292,7 @@ if(
 circleRectCollision(
 missile.x,
 missile.y,
-7,
+8,
 target
 )
 ){
@@ -2518,13 +2682,9 @@ if(lives)
 lives.textContent=
 gameLives;
 
-
 if(score)
 score.textContent=
 gameScore;
-
-
-/* نمایش زنده سکه در بازی */
 
 if(gameCoins)
 gameCoins.textContent=
@@ -3076,34 +3236,94 @@ bullet.y-7,
 }
 
 
-/* MISSILE */
+/* هدایت‌شونده */
 
 function drawMissile(missile){
 
 ctx.save();
+
+/* رد آتش */
+
+if(
+missile.trail&&
+missile.trail.length
+){
+
+for(
+var i=0;
+i<missile.trail.length;
+i++
+){
+
+var p=
+missile.trail[i];
+
+var progress=
+(i+1)/
+missile.trail.length;
+
+ctx.globalAlpha=
+progress*.45;
+
+ctx.fillStyle=
+"#ff7a18";
+
+ctx.beginPath();
+
+ctx.arc(
+p.x,
+p.y,
+Math.max(
+1.5,
+4*progress
+),
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+}
+
+}
+
+ctx.globalAlpha=1;
+
+
+/* جهت موشک */
 
 ctx.translate(
 missile.x,
 missile.y
 );
 
-ctx.fillStyle="#ffdf70";
-
-ctx.fillRect(
--4,
--11,
-8,
-22
+ctx.rotate(
+missile.angle+
+Math.PI/2
 );
 
 
+/* بدنه */
+
+ctx.fillStyle="#e5e7eb";
+
+ctx.fillRect(
+-4,
+-12,
+8,
+24
+);
+
+
+/* نوک */
+
 ctx.beginPath();
 
-ctx.moveTo(-4,-11);
+ctx.moveTo(-4,-12);
 
-ctx.lineTo(0,-19);
+ctx.lineTo(0,-21);
 
-ctx.lineTo(4,-11);
+ctx.lineTo(4,-12);
 
 ctx.closePath();
 
@@ -3112,14 +3332,58 @@ ctx.fillStyle="#ffffff";
 ctx.fill();
 
 
+/* بالچه */
+
+ctx.beginPath();
+
+ctx.moveTo(-4,5);
+
+ctx.lineTo(-9,11);
+
+ctx.lineTo(-4,10);
+
+ctx.closePath();
+
+ctx.fillStyle="#9ca3af";
+
+ctx.fill();
+
+
+ctx.beginPath();
+
+ctx.moveTo(4,5);
+
+ctx.lineTo(9,11);
+
+ctx.lineTo(4,10);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* آتش */
+
+ctx.beginPath();
+
+ctx.moveTo(-3,12);
+
+ctx.lineTo(
+0,
+21+
+Math.sin(
+performance.now()/60
+)*3
+);
+
+ctx.lineTo(3,12);
+
+ctx.closePath();
+
 ctx.fillStyle="#ff6b35";
 
-ctx.fillRect(
--3,
-11,
-6,
-7
-);
+ctx.fill();
+
 
 ctx.restore();
 
@@ -3490,11 +3754,8 @@ startGame();
 /* INITIAL */
 
 updateStats();
-
 updateGameUI();
-
 updateControlButtons();
-
 resizeCanvas();
 
 </script>
