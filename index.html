@@ -1111,15 +1111,17 @@ var lastEnemyTime=0;
 var lastEnemyShotTime=0;
 var lastFrameTime=0;
 var playerInvulnerableUntil=0;
-
-var fourMinuteAdShown=false;
 var pointerActive=false;
 
-/* RANDOM ADS */
+/* AUTO AD
+   فقط یک تبلیغ خودکار در هر بازی
+   زمان تصادفی بین 70 تا 90 ثانیه
+*/
 
-var randomAdTimer=null;
-var nextRandomAdTime=0;
-var randomAdBusy=false;
+var autoAdShown=false;
+var autoAdBusy=false;
+var autoAdTargetTime=0;
+var autoAdWaitingForSafe=false;
 
 var canvas=
 document.getElementById("gameCanvas");
@@ -1129,74 +1131,164 @@ canvas?
 canvas.getContext("2d"):
 null;
 
-function scheduleRandomAd(){
+/* انتخاب زمان تصادفی تبلیغ */
 
-clearTimeout(randomAdTimer);
+function chooseAutoAdTime(){
 
-if(!gameRunning||gamePaused){
-
-randomAdTimer=null;
-return;
-}
-
-var minDelay=45000;
-var maxDelay=90000;
-
-if(elapsedSeconds<25){
-
-minDelay=35000;
-maxDelay=55000;
-}
-
-var delay=
-minDelay+
-Math.floor(
-Math.random()*
-(maxDelay-minDelay+1)
-);
-
-nextRandomAdTime=
-performance.now()+delay;
-
-randomAdTimer=
-setTimeout(function(){
-
-if(gameRunning&&!gamePaused){
-
-showRandomAd();
-
-}else{
-
-scheduleRandomAd();
+autoAdTargetTime=
+70+
+Math.random()*20;
 
 }
 
-},delay);
+/* تشخیص وضعیت نسبتاً امن بازی */
+
+function isGameSafeForAd(){
+
+if(!gameRunning||gamePaused)
+return false;
+
+var dangerDistance=105;
+
+/* بمب‌ها */
+
+for(
+var i=0;
+i<bombs.length;
+i++
+){
+
+var bomb=bombs[i];
+
+var dx=bomb.x-player.x;
+var dy=bomb.y-player.y;
+
+var distance=
+Math.sqrt(dx*dx+dy*dy);
+
+if(distance<dangerDistance)
+return false;
+
 }
 
-function showRandomAd(){
+/* دشمن‌ها */
+
+for(
+var j=0;
+j<enemies.length;
+j++
+){
+
+var enemy=enemies[j];
+
+var dx2=enemy.x-player.x;
+var dy2=enemy.y-player.y;
+
+var distance2=
+Math.sqrt(dx2*dx2+dy2*dy2);
+
+if(distance2<dangerDistance)
+return false;
+
+}
+
+/* گلوله‌های دشمن */
+
+for(
+var k=0;
+k<enemyBullets.length;
+k++
+){
+
+var bullet=enemyBullets[k];
+
+var dx3=bullet.x-player.x;
+var dy3=bullet.y-player.y;
+
+var distance3=
+Math.sqrt(dx3*dx3+dy3*dy3);
+
+if(distance3<dangerDistance+25)
+return false;
+
+}
+
+/* اگر تازه آسیب‌پذیر شده، کمی صبر */
+
+if(
+performance.now()<
+playerInvulnerableUntil
+)
+return false;
+
+return true;
+}
+
+/* بررسی تبلیغ خودکار */
+
+function checkAutoAd(){
 
 if(
 !gameRunning||
 gamePaused||
-randomAdBusy||
-!interstitialController
-){
+autoAdShown||
+autoAdBusy
+)
+return;
 
-scheduleRandomAd();
+/* قبل از 70 ثانیه هیچ تبلیغی */
+
+if(elapsedSeconds<70)
+return;
+
+/* زمان تصادفی انتخاب‌شده هنوز نرسیده */
+
+if(elapsedSeconds<autoAdTargetTime)
+return;
+
+/* اگر خطر جدی وجود دارد، صبر کن */
+
+if(!isGameSafeForAd()){
+
+autoAdWaitingForSafe=true;
 return;
 }
 
-randomAdBusy=true;
+/* وضعیت امن شد */
+
+autoAdWaitingForSafe=false;
+
+showAutoAd();
+}
+
+/* نمایش تنها تبلیغ خودکار */
+
+function showAutoAd(){
+
+if(
+!gameRunning||
+gamePaused||
+autoAdShown||
+autoAdBusy
+)
+return;
+
+/* همین لحظه تبلیغ به عنوان تبلیغ این بازی ثبت می‌شود */
+
+autoAdShown=true;
+autoAdBusy=true;
 
 gamePaused=true;
-pauseStartTime=performance.now();
+
+pauseStartTime=
+performance.now();
 
 if(animationId!==null){
 
 cancelAnimationFrame(
 animationId
 );
+
 }
 
 animationId=null;
@@ -1204,37 +1296,45 @@ animationId=null;
 updateControlButtons();
 updateGameUI();
 
+if(!interstitialController){
+
+autoAdBusy=false;
+
+if(gameRunning)
+resumeGame();
+
+return;
+}
+
 interstitialController.show()
 
 .then(function(){
 
 adCount++;
 
-randomAdBusy=false;
+autoAdBusy=false;
 
-if(!gameRunning)return;
+if(!gameRunning)
+return;
 
 resumeGame();
 
 updateStats();
-
-scheduleRandomAd();
 
 })
 
 .catch(function(error){
 
 console.log(
-"Random interstitial error:",
+"Auto interstitial error:",
 error
 );
 
-randomAdBusy=false;
+autoAdBusy=false;
 
 if(gameRunning){
 
 resumeGame();
-scheduleRandomAd();
 
 }
 
@@ -1302,11 +1402,10 @@ function resetGameState(){
 gameRunning=false;
 gamePaused=false;
 
-clearTimeout(randomAdTimer);
-
-randomAdTimer=null;
-randomAdBusy=false;
-nextRandomAdTime=0;
+autoAdShown=false;
+autoAdBusy=false;
+autoAdTargetTime=0;
+autoAdWaitingForSafe=false;
 
 elapsedSeconds=0;
 gameScore=0;
@@ -1320,7 +1419,6 @@ lastEnemyTime=0;
 lastEnemyShotTime=0;
 
 playerInvulnerableUntil=0;
-fourMinuteAdShown=false;
 pointerActive=false;
 
 bullets=[];
@@ -1564,9 +1662,7 @@ return;
 
 if(animationId!==null){
 
-cancelAnimationFrame(
-animationId
-);
+cancelAnimationFrame(animationId);
 }
 
 animationId=null;
@@ -1610,7 +1706,16 @@ performance.now();
 lastEnemyShotTime=
 performance.now();
 
-fourMinuteAdShown=false;
+/* تبلیغ جدید برای این بازی */
+
+autoAdShown=false;
+autoAdBusy=false;
+autoAdWaitingForSafe=false;
+
+/* زمان تصادفی بین 70 تا 90 ثانیه */
+
+chooseAutoAdTime();
+
 pointerActive=false;
 
 resizeCanvas();
@@ -1646,8 +1751,6 @@ performance.now();
 
 animationId=
 requestAnimationFrame(gameLoop);
-
-scheduleRandomAd();
 }
 
 /* PAUSE */
@@ -1661,10 +1764,6 @@ gamePaused=true;
 
 pauseStartTime=
 performance.now();
-
-clearTimeout(randomAdTimer);
-
-randomAdTimer=null;
 
 if(animationId!==null)
 cancelAnimationFrame(
@@ -1709,9 +1808,6 @@ gameLoop
 );
 
 }
-
-if(!randomAdBusy)
-scheduleRandomAd();
 }
 
 /* BUTTONS */
@@ -1794,16 +1890,9 @@ drawGame();
 
 updateGameUI();
 
-if(
-elapsedSeconds>=240&&
-!fourMinuteAdShown
-){
+/* تنها محل بررسی تبلیغ خودکار */
 
-fourMinuteAdShown=true;
-
-showFourMinuteAd();
-
-}
+checkAutoAd();
 }
 
 /* DIFFICULTY */
@@ -2006,7 +2095,8 @@ if(
 !gameRunning||
 gamePaused||
 missiles<=0
-)return;
+)
+return;
 
 missiles--;
 
@@ -3012,11 +3102,7 @@ function endGame(){
 
 gameRunning=false;
 gamePaused=false;
-
-clearTimeout(randomAdTimer);
-
-randomAdTimer=null;
-randomAdBusy=false;
+autoAdBusy=false;
 
 playGameSound("gameover");
 
@@ -3098,8 +3184,6 @@ requestAnimationFrame(
 gameLoop
 );
 
-scheduleRandomAd();
-
 })
 
 .catch(function(error){
@@ -3118,65 +3202,6 @@ error
 alert(
 "تبلیغ در دسترس نبود. دوباره تلاش کن."
 );
-
-});
-}
-
-/* FOUR MINUTE AD */
-
-function showFourMinuteAd(){
-
-if(!gameRunning)return;
-
-clearTimeout(randomAdTimer);
-
-randomAdTimer=null;
-
-gamePaused=true;
-
-pauseStartTime=
-performance.now();
-
-if(animationId!==null){
-
-cancelAnimationFrame(
-animationId
-);
-
-}
-
-animationId=null;
-
-updateControlButtons();
-updateGameUI();
-
-if(!interstitialController){
-
-resumeGame();
-
-return;
-}
-
-interstitialController.show()
-
-.then(function(){
-
-adCount++;
-
-resumeGame();
-
-updateStats();
-
-})
-
-.catch(function(error){
-
-console.log(
-"Interstitial error:",
-error
-);
-
-resumeGame();
 
 });
 }
