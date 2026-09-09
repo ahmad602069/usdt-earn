@@ -272,6 +272,33 @@ body.game-mode main{
     line-height:1.8
 }
 
+/* MISSILE BUTTON */
+
+.missile-button{
+    position:absolute;
+    left:50%;
+    bottom:62px;
+    transform:translateX(-50%);
+    z-index:121;
+    min-width:155px;
+    padding:10px 14px;
+    border:1px solid #8c313a;
+    border-radius:12px;
+    background:#b52b38;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation
+}
+
+.missile-button:disabled{
+    opacity:.45;
+    cursor:not-allowed
+}
+
+/* BOTTOM CONTROLS */
+
 .game-bottom-controls{
     position:absolute;
     right:0;
@@ -471,6 +498,12 @@ body.game-mode main{
         min-height:42px;
         font-size:11px
     }
+
+    .missile-button{
+        min-width:145px;
+        padding:9px 12px;
+        font-size:12px
+    }
 }
 </style>
 </head>
@@ -662,7 +695,19 @@ body.game-mode main{
 
             </div>
 
-            <!-- فقط سه دکمه پایین بازی -->
+            <!-- دکمه شلیک موشک ویژه -->
+
+            <button
+                type="button"
+                id="missileButton"
+                class="missile-button"
+                onclick="fireSpecialMissile()"
+                disabled
+            >
+                🚀 موشک ویژه (<span id="missileCount">3</span>)
+            </button>
+
+            <!-- سه دکمه پایین بازی -->
 
             <div class="game-bottom-controls">
 
@@ -2582,9 +2627,23 @@ function updateGameUI(){
     var gameCoins=document.getElementById("gameCoins");
     var time=document.getElementById("gameTime");
 
+    var missileCount=document.getElementById("missileCount");
+    var missileButton=document.getElementById("missileButton");
+
     if(lives)lives.textContent=gameLives;
     if(score)score.textContent=gameScore;
     if(gameCoins)gameCoins.textContent=coins;
+
+    if(missileCount){
+        missileCount.textContent=missiles;
+    }
+
+    if(missileButton){
+        missileButton.disabled=
+            !gameRunning ||
+            gamePaused ||
+            missiles<=0;
+    }
 
     if(time){
 
