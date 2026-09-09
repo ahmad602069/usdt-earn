@@ -302,8 +302,8 @@ body.game-mode main{
     touch-action:manipulation
 }
 
-.game-control-button.start{
-    background:#176b45
+.game-control-button.cancel{
+    background:#7b2631
 }
 
 .game-control-button.pause{
@@ -697,10 +697,10 @@ body.game-mode main{
                 <button
                     type="button"
                     id="startBottomButton"
-                    class="game-control-button start"
-                    onclick="startGame()"
+                    class="game-control-button cancel"
+                    onclick="cancelGame()"
                 >
-                    🚀 شروع
+                    ❌ لغو بازی
                 </button>
 
                 <button
@@ -967,11 +967,6 @@ var missiles=3;
 
 var PLAYER_SCALE=.8;
 
-/*
-    Hitbox واقعی بازیکن.
-    مرکز مختصات همان مرکز هواپیماست.
-*/
-
 var player={
     x:0,
     y:0,
@@ -995,10 +990,6 @@ var lastEnemyTime=0;
 var lastEnemyShotTime=0;
 var lastFrameTime=0;
 
-/*
-    بعد از برخورد، برای مدت کوتاه هواپیما
-    دوباره ضربه نمی‌خورد.
-*/
 var playerInvulnerableUntil=0;
 
 var fourMinuteAdShown=false;
@@ -1261,9 +1252,6 @@ function startGame(){
 
     playerInvulnerableUntil=0;
 
-    /*
-        اولین شلیک فوری
-    */
     lastBulletTime=performance.now()-1000;
 
     lastBombTime=performance.now();
@@ -1280,9 +1268,6 @@ function startGame(){
     player.targetX=player.x;
     player.targetY=player.y;
 
-    /*
-        گلوله اول بلافاصله ساخته می‌شود.
-    */
     fireAutomaticBullet();
     lastBulletTime=performance.now();
 
@@ -1372,7 +1357,14 @@ function updateControlButtons(){
     var pause=document.getElementById("pauseGameButton");
     var resume=document.getElementById("resumeGameButton");
 
-    if(start)start.disabled=gameRunning;
+    /*
+        دکمه پایین همیشه «لغو بازی» است
+        و نباید هنگام اجرای بازی غیرفعال شود.
+    */
+
+    if(start){
+        start.disabled=false;
+    }
 
     if(pause){
         pause.disabled=!gameRunning || gamePaused;
@@ -1463,10 +1455,6 @@ function updateGame(delta,timestamp){
 
     var difficulty=getDifficulty();
 
-    /*
-        حرکت بازیکن
-    */
-
     player.x+=(
         player.targetX-player.x
     )*Math.min(1,player.speed*60*delta);
@@ -1494,20 +1482,12 @@ function updateGame(delta,timestamp){
         )
     );
 
-    /*
-        شلیک خودکار
-    */
-
     if(timestamp-lastBulletTime>=155){
 
         fireAutomaticBullet();
         lastBulletTime=timestamp;
 
     }
-
-    /*
-        بمب
-    */
 
     if(timestamp-lastBombTime>=difficulty.bombInterval){
 
@@ -1516,20 +1496,12 @@ function updateGame(delta,timestamp){
 
     }
 
-    /*
-        دشمن
-    */
-
     if(timestamp-lastEnemyTime>=difficulty.enemyInterval){
 
         createEnemy();
         lastEnemyTime=timestamp;
 
     }
-
-    /*
-        شلیک دشمن
-    */
 
     if(timestamp-lastEnemyShotTime>=difficulty.enemyShotInterval){
 
@@ -1538,20 +1510,12 @@ function updateGame(delta,timestamp){
 
     }
 
-    /*
-        اول همه حرکت می‌کنند.
-    */
-
     updateBullets(delta);
     updateMissiles(delta);
     updateBombs(delta);
     updateEnemies(delta);
     updateEnemyBullets(delta);
     updateExplosions(delta);
-
-    /*
-        بعد برخوردها بررسی می‌شوند.
-    */
 
     checkCollisions();
 
@@ -1682,24 +1646,12 @@ function destroyEnemy(index,kind){
 
     var enemy=enemies[index];
 
-    /*
-        ابتدا انفجار ایجاد می‌شود.
-    */
-
     createExplosion(
         enemy.x,
         enemy.y
     );
 
-    /*
-        سپس دشمن حذف می‌شود.
-    */
-
     enemies.splice(index,1);
-
-    /*
-        پاداش دقیقاً یک بار.
-    */
 
     if(kind==="missile"){
 
@@ -1728,10 +1680,6 @@ function updateMissiles(delta){
         missile.oldX=missile.x;
         missile.oldY=missile.y;
 
-        /*
-            اگر هدف قبلی حذف شده، هدف جدید پیدا شود.
-        */
-
         if(!enemyStillExists(missile.target)){
 
             missile.target=findNearestEnemy(
@@ -1759,10 +1707,6 @@ function updateMissiles(delta){
 
         }else{
 
-            /*
-                اگر دشمنی نیست، موشک مستقیم بالا برود.
-            */
-
             missile.dirX=0;
             missile.dirY=-1;
 
@@ -1779,11 +1723,6 @@ function updateMissiles(delta){
         if(missile.trail.length>14){
             missile.trail.shift();
         }
-
-        /*
-            برخورد موشک با تمام دشمنان.
-            از مسیر کامل حرکت استفاده می‌شود.
-        */
 
         var hitIndex=-1;
 
@@ -1847,12 +1786,6 @@ function updateMissiles(delta){
 function createBomb(){
 
     var width=canvas.clientWidth;
-
-    /*
-        بسیار مهم:
-        فقط یک x ساخته می‌شود.
-        oldX و x برابر هستند.
-    */
 
     var x=
         25+
@@ -1968,10 +1901,6 @@ function updateBombs(delta){
         bomb.oldY=bomb.y;
 
         bomb.y+=bomb.speed*delta;
-
-        /*
-            حرکت افقی بسیار کم.
-        */
 
         bomb.x+=Math.sin(elapsedSeconds*2+i)*.25;
 
@@ -2120,10 +2049,6 @@ function updateExplosions(delta){
 
 function getPlayerHitbox(){
 
-    /*
-        مرکز بازیکن + اندازه برخورد.
-    */
-
     return{
 
         x:player.x,
@@ -2150,10 +2075,7 @@ function getEnemyHitbox(enemy){
 
 }
 
-/*
-    Hitbox گلوله.
-    به جای یک نقطه، خود بدنه گلوله استفاده می‌شود.
-*/
+/* BULLET HITBOX */
 
 function getBulletHitbox(bullet){
 
@@ -2189,11 +2111,7 @@ function rectsOverlap(a,b){
 
 }
 
-/*
-    برخورد خط حرکت با مستطیل.
-    این روش دقیق‌تر از نمونه‌برداری است
-    و جلوی عبور سریع گلوله از داخل دشمن را می‌گیرد.
-*/
+/* SEGMENT COLLISION */
 
 function segmentRectCollision(
     x1,
@@ -2226,10 +2144,6 @@ function segmentRectCollision(
         rect.height/2+
         padding;
 
-    /*
-        اگر نقطه شروع داخل باشد.
-    */
-
     if(
         x1>=minX &&
         x1<=maxX &&
@@ -2238,10 +2152,6 @@ function segmentRectCollision(
     ){
         return true;
     }
-
-    /*
-        اگر نقطه پایان داخل باشد.
-    */
 
     if(
         x2>=minX &&
@@ -2257,10 +2167,6 @@ function segmentRectCollision(
 
     var tEnter=0;
     var tExit=1;
-
-    /*
-        محور X
-    */
 
     if(Math.abs(dx)<0.000001){
 
@@ -2289,10 +2195,6 @@ function segmentRectCollision(
         }
 
     }
-
-    /*
-        محور Y
-    */
 
     if(Math.abs(dy)<0.000001){
 
@@ -2326,27 +2228,14 @@ function segmentRectCollision(
 
 }
 
-/*
-    برخورد مسیر یک مستطیل متحرک با مستطیل هدف.
-    برای گلوله استفاده می‌شود.
-*/
+/* MOVING BULLET */
 
 function movingBulletHitsEnemy(bullet,enemy){
 
     var enemyBox=getEnemyHitbox(enemy);
 
-    /*
-        نصف عرض و ارتفاع گلوله را به
-        hitbox دشمن اضافه می‌کنیم.
-    */
-
     var paddingX=(bullet.width || 5)/2+3;
     var paddingY=(bullet.height || 20)/2+3;
-
-    /*
-        برای اینکه هر دو بعد مطمئن باشند،
-        padding بزرگ‌تر را استفاده می‌کنیم.
-    */
 
     var padding=Math.max(
         paddingX,
@@ -2364,9 +2253,7 @@ function movingBulletHitsEnemy(bullet,enemy){
 
 }
 
-/*
-    برخورد بمب/گلوله دایره‌ای با بازیکن.
-*/
+/* MOVING CIRCLE */
 
 function movingCircleHitsPlayer(
     object,
@@ -2384,18 +2271,11 @@ function movingCircleHitsPlayer(
 
 }
 
-/*
-    برخورد هواپیمای دشمن با بازیکن.
-    مسیر کامل هواپیما بررسی می‌شود.
-*/
+/* MOVING ENEMY */
 
 function movingEnemyHitsPlayer(enemy){
 
     var playerBox=getPlayerHitbox();
-
-    /*
-        برخورد مستقیم
-    */
 
     if(
         rectsOverlap(
@@ -2405,10 +2285,6 @@ function movingEnemyHitsPlayer(enemy){
     ){
         return true;
     }
-
-    /*
-        مسیر حرکت دشمن
-    */
 
     return segmentRectCollision(
         enemy.oldX,
@@ -2424,11 +2300,6 @@ function movingEnemyHitsPlayer(enemy){
 /* COLLISIONS */
 
 function checkCollisions(){
-
-    /*
-        1
-        گلوله خودی -> دشمن
-    */
 
     for(
         var i=bullets.length-1;
@@ -2464,10 +2335,6 @@ function checkCollisions(){
 
             var enemy=enemies[hitEnemyIndex];
 
-            /*
-                انفجار دقیقاً روی دشمن
-            */
-
             createExplosion(
                 enemy.x,
                 enemy.y
@@ -2478,20 +2345,11 @@ function checkCollisions(){
                 "bullet"
             );
 
-            /*
-                گلوله هم حذف شود.
-            */
-
             bullets.splice(i,1);
 
         }
 
     }
-
-    /*
-        2
-        برخورد بمب -> بازیکن
-    */
 
     if(
         performance.now()>=
@@ -2525,11 +2383,6 @@ function checkCollisions(){
 
         }
 
-        /*
-            3
-            گلوله دشمن -> بازیکن
-        */
-
         for(
             var eb=enemyBullets.length-1;
             eb>=0;
@@ -2556,11 +2409,6 @@ function checkCollisions(){
             }
 
         }
-
-        /*
-            4
-            هواپیمای دشمن -> بازیکن
-        */
 
         for(
             var e=enemies.length-1;
@@ -2596,29 +2444,16 @@ function loseLife(){
 
     if(!gameRunning)return;
 
-    /*
-        اگر هنوز آسیب‌ناپذیر باشد،
-        ضربه دوباره ثبت نمی‌شود.
-    */
-
     var now=performance.now();
 
     if(now<playerInvulnerableUntil){
         return;
     }
 
-    /*
-        حدود ۹۰۰ میلی‌ثانیه محافظت.
-    */
-
     playerInvulnerableUntil=
         now+900;
 
     gameLives--;
-
-    /*
-        اگر جان صفر شد
-    */
 
     if(gameLives<=0){
 
@@ -2630,17 +2465,8 @@ function loseLife(){
 
     }
 
-    /*
-        بازیکن به قسمت امن‌تر منتقل می‌شود.
-    */
-
     player.y=canvas.clientHeight-100;
     player.targetY=player.y;
-
-    /*
-        تمام خطرهای روی صفحه پاک می‌شوند
-        تا ضربه زنجیره‌ای ایجاد نشود.
-    */
 
     bombs.length=0;
     enemyBullets.length=0;
@@ -2944,10 +2770,6 @@ function drawStars(width,height){
 function drawPlayerPlane(x,y){
 
     ctx.save();
-
-    /*
-        چشمک زدن هنگام آسیب‌ناپذیری
-    */
 
     if(
         gameRunning &&
