@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-
 <title>USDT Earn</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -11,509 +10,430 @@
 
 <style>
 *{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent
 }
-
 html,body{
-    margin:0;
-    padding:0;
-    background:#07111f;
-    color:white;
-    font-family:Arial,Tahoma,sans-serif
+margin:0;
+padding:0;
+background:#07111f;
+color:white;
+font-family:Arial,Tahoma,sans-serif
 }
-
 body{
-    padding-bottom:80px;
-    overflow-x:hidden
+padding-bottom:80px;
+overflow-x:hidden
 }
-
 body.game-mode{
-    padding-bottom:0;
-    overflow:hidden
+padding-bottom:0;
+overflow:hidden
 }
-
 body.game-mode .header{
-    display:none
+display:none
 }
-
 .header{
-    padding:18px;
-    background:#0b192b;
-    border-bottom:1px solid #20364f
+padding:18px;
+background:#0b192b;
+border-bottom:1px solid #20364f
 }
-
 .logo{
-    font-size:22px;
-    font-weight:bold
+font-size:22px;
+font-weight:bold
 }
-
 .user{
-    margin-top:5px;
-    color:#91a4ba;
-    font-size:13px
+margin-top:5px;
+color:#91a4ba;
+font-size:13px
 }
-
 .balance{
-    margin-top:15px;
-    padding:18px;
-    background:#12243a;
-    border-radius:16px
+margin-top:15px;
+padding:18px;
+background:#12243a;
+border-radius:16px
 }
-
 .balance-title{
-    color:#91a4ba;
-    font-size:13px
+color:#91a4ba;
+font-size:13px
 }
-
 .balance-number{
-    margin-top:5px;
-    font-size:28px;
-    font-weight:bold
+margin-top:5px;
+font-size:28px;
+font-weight:bold
 }
-
 main{
-    padding:15px
+padding:15px
 }
-
 body.game-mode main{
-    padding:0
+padding:0
 }
-
 .page{
-    display:none
+display:none
 }
-
 .page.active{
-    display:block
+display:block
 }
-
 .card{
-    margin-bottom:14px;
-    padding:18px;
-    background:#0d1d30;
-    border:1px solid #20364f;
-    border-radius:17px
+margin-bottom:14px;
+padding:18px;
+background:#0d1d30;
+border:1px solid #20364f;
+border-radius:17px
 }
-
 .card h2,.card h3{
-    margin-top:0
+margin-top:0
 }
-
 .text{
-    color:#91a4ba;
-    line-height:1.8
+color:#91a4ba;
+line-height:1.8
 }
-
 .button{
-    width:100%;
-    margin-top:10px;
-    padding:14px;
-    border:0;
-    border-radius:12px;
-    background:#16ad5a;
-    color:white;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-    touch-action:manipulation
+width:100%;
+margin-top:10px;
+padding:14px;
+border:0;
+border-radius:12px;
+background:#16ad5a;
+color:white;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+touch-action:manipulation
 }
-
 .button.secondary{
-    background:#163451
+background:#163451
 }
-
 .grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
 }
-
 .stat{
-    padding:15px;
-    background:#10253b;
-    border-radius:14px
+padding:15px;
+background:#10253b;
+border-radius:14px
 }
-
 .stat-title{
-    color:#91a4ba;
-    font-size:12px
+color:#91a4ba;
+font-size:12px
 }
-
 .stat-number{
-    display:block;
-    margin-top:6px;
-    font-size:20px;
-    font-weight:bold
+display:block;
+margin-top:6px;
+font-size:20px;
+font-weight:bold
 }
 
 /* GAME */
-
 #gamePage{
-    width:100%;
-    height:100vh
+width:100%;
+height:100vh
 }
-
 .game-card{
-    padding:0;
-    margin:0;
-    border:0;
-    border-radius:0;
-    background:#020914;
-    width:100%;
-    height:100vh
+padding:0;
+margin:0;
+border:0;
+border-radius:0;
+background:#020914;
+width:100%;
+height:100vh
 }
-
-/* نوار بالای بازی */
-
 .game-header{
-    height:38px;
-    min-height:38px;
-    flex:0 0 38px;
-    padding:0 6px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#091827;
-    border-bottom:1px solid #294662;
-    position:relative;
-    z-index:20;
-    overflow:hidden
+height:38px;
+min-height:38px;
+flex:0 0 38px;
+padding:0 6px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#091827;
+border-bottom:1px solid #294662;
+position:relative;
+z-index:20;
+overflow:hidden
 }
-
 .game-title{
-    display:none
+display:none
 }
-
 .game-info{
-    width:100%;
-    height:38px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    align-items:center;
-    gap:4px;
-    min-width:0
+width:100%;
+height:38px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+align-items:center;
+gap:4px;
+min-width:0
 }
-
 .game-badge{
-    height:29px;
-    min-width:0;
-    padding:3px 4px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-    background:#102941;
-    border:1px solid #2b5275;
-    border-radius:8px;
-    font-size:12px;
-    line-height:1;
-    white-space:nowrap;
-    font-weight:bold;
-    overflow:hidden
+height:29px;
+min-width:0;
+padding:3px 4px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:3px;
+background:#102941;
+border:1px solid #2b5275;
+border-radius:8px;
+font-size:12px;
+line-height:1;
+white-space:nowrap;
+font-weight:bold;
+overflow:hidden
 }
-
-/* سکه واضح‌تر */
-
 .game-badge.coin-badge{
-    background:#3b2b08;
-    border-color:#c99724;
-    color:#ffd85a;
-    font-size:13px;
-    box-shadow:0 0 7px rgba(255,190,40,.15)
+background:#3b2b08;
+border-color:#c99724;
+color:#ffd85a;
+font-size:13px;
+box-shadow:0 0 7px rgba(255,190,40,.15)
 }
-
-/* محیط بازی */
-
 .game-wrapper{
-    position:relative;
-    width:100%;
-    height:calc(100vh - 38px);
-    min-height:430px;
-    overflow:hidden;
-    border:0;
-    border-radius:0;
-    background:#020914
+position:relative;
+width:100%;
+height:calc(100vh - 38px);
+min-height:430px;
+overflow:hidden;
+border:0;
+border-radius:0;
+background:#020914
 }
-
 #gameCanvas{
-    display:block;
-    width:100%;
-    height:100%;
-    touch-action:none
+display:block;
+width:100%;
+height:100%;
+touch-action:none
 }
-
-/* OVERLAY */
-
 .game-overlay{
-    position:absolute;
-    inset:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    background:rgba(2,9,20,.88);
-    z-index:90
+position:absolute;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+background:rgba(2,9,20,.88);
+z-index:90
 }
-
 .game-overlay.hidden{
-    display:none
+display:none
 }
-
 .overlay-box{
-    width:100%;
-    max-width:330px;
-    padding:25px 18px;
-    text-align:center;
-    background:#0d1d30;
-    border:1px solid #294662;
-    border-radius:18px
+width:100%;
+max-width:330px;
+padding:25px 18px;
+text-align:center;
+background:#0d1d30;
+border:1px solid #294662;
+border-radius:18px
 }
-
 .overlay-box h2{
-    margin-top:0
+margin-top:0
 }
-
 .overlay-text{
-    color:#91a4ba;
-    line-height:1.8
+color:#91a4ba;
+line-height:1.8
 }
-
-/* کنترل‌های پایین */
-
 .game-bottom-controls{
-    position:absolute;
-    right:0;
-    bottom:0;
-    left:0;
-    z-index:120;
-    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:6px;
-    background:linear-gradient(
-        to top,
-        rgba(2,9,20,.99),
-        rgba(2,9,20,.90),
-        rgba(2,9,20,.15)
-    )
+position:absolute;
+right:0;
+bottom:0;
+left:0;
+z-index:120;
+padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:6px;
+background:linear-gradient(
+to top,
+rgba(2,9,20,.99),
+rgba(2,9,20,.90),
+rgba(2,9,20,.15)
+)
 }
-
 .game-control-button{
-    min-height:43px;
-    border:1px solid #294662;
-    border-radius:10px;
-    background:#10253b;
-    color:white;
-    font-size:12px;
-    font-weight:bold;
-    cursor:pointer;
-    touch-action:manipulation
+min-height:43px;
+border:1px solid #294662;
+border-radius:10px;
+background:#10253b;
+color:white;
+font-size:12px;
+font-weight:bold;
+cursor:pointer;
+touch-action:manipulation
 }
-
 .game-control-button.start{
-    background:#176b45
+background:#176b45
 }
-
 .game-control-button.pause{
-    background:#6b4b18
+background:#6b4b18
 }
-
 .game-control-button.resume{
-    background:#176b45
+background:#176b45
 }
-
 .game-control-button:disabled{
-    opacity:.4;
-    cursor:not-allowed
+opacity:.4;
+cursor:not-allowed
 }
-
-/* موشک */
-
 .missile-button{
-    position:absolute;
-    left:50%;
-    bottom:62px;
-    transform:translateX(-50%);
-    z-index:121;
-    min-width:155px;
-    padding:10px 14px;
-    border:1px solid #8c313a;
-    border-radius:12px;
-    background:#b52b38;
-    color:white;
-    font-size:13px;
-    font-weight:bold;
-    cursor:pointer;
-    touch-action:manipulation
+position:absolute;
+left:50%;
+bottom:62px;
+transform:translateX(-50%);
+z-index:121;
+min-width:155px;
+padding:10px 14px;
+border:1px solid #8c313a;
+border-radius:12px;
+background:#b52b38;
+color:white;
+font-size:13px;
+font-weight:bold;
+cursor:pointer;
+touch-action:manipulation
 }
-
 .missile-button:disabled{
-    opacity:.45;
-    cursor:not-allowed
+opacity:.45;
+cursor:not-allowed
 }
 
-/* زمین */
-
+/* GROUND */
 .ground-info{
-    position:absolute;
-    right:0;
-    bottom:0;
-    left:0;
-    height:18%;
-    pointer-events:none;
-    z-index:5;
-    background:linear-gradient(
-        to bottom,
-        rgba(18,42,30,.15),
-        rgba(18,42,30,.85) 30%,
-        rgba(8,25,18,.98)
-    )
+position:absolute;
+right:0;
+bottom:0;
+left:0;
+height:18%;
+pointer-events:none;
+z-index:5;
+background:linear-gradient(
+to bottom,
+rgba(18,42,30,.15),
+rgba(18,42,30,.85) 30%,
+rgba(8,25,18,.98)
+)
 }
-
 .ground-line{
-    position:absolute;
-    top:0;
-    right:0;
-    left:0;
-    height:3px;
-    background:#426b43;
-    box-shadow:0 0 10px rgba(60,130,65,.8)
+position:absolute;
+top:0;
+right:0;
+left:0;
+height:3px;
+background:#426b43;
+box-shadow:0 0 10px rgba(60,130,65,.8)
 }
-
 .ground-details{
-    position:absolute;
-    right:0;
-    bottom:0;
-    left:0;
-    height:75%;
-    background:repeating-linear-gradient(
-        165deg,
-        transparent 0,
-        transparent 18px,
-        rgba(93,119,75,.15) 19px,
-        transparent 20px
-    )
+position:absolute;
+right:0;
+bottom:0;
+left:0;
+height:75%;
+background:repeating-linear-gradient(
+165deg,
+transparent 0,
+transparent 18px,
+rgba(93,119,75,.15) 19px,
+transparent 20px
+)
 }
-
 .ground-road{
-    position:absolute;
-    left:50%;
-    bottom:-15px;
-    transform:translateX(-50%);
-    width:25%;
-    height:120%;
-    background:linear-gradient(
-        to bottom,
-        rgba(75,83,77,.15),
-        rgba(51,55,53,.55)
-    );
-    clip-path:polygon(35% 0,65% 0,100% 100%,0 100%)
+position:absolute;
+left:50%;
+bottom:-15px;
+transform:translateX(-50%);
+width:25%;
+height:120%;
+background:linear-gradient(
+to bottom,
+rgba(75,83,77,.15),
+rgba(51,55,53,.55)
+);
+clip-path:polygon(35% 0,65% 0,100% 100%,0 100%)
 }
-
 .ground-light{
-    position:absolute;
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    background:#c9d58d;
-    box-shadow:0 0 7px #c9d58d
+position:absolute;
+width:5px;
+height:5px;
+border-radius:50%;
+background:#c9d58d;
+box-shadow:0 0 7px #c9d58d
 }
-
 .ground-light.one{
-    left:15%;
-    bottom:35%
+left:15%;
+bottom:35%
 }
-
 .ground-light.two{
-    right:15%;
-    bottom:55%
+right:15%;
+bottom:55%
 }
-
 .ground-light.three{
-    left:30%;
-    bottom:65%
+left:30%;
+bottom:65%
 }
-
 .ground-light.four{
-    right:30%;
-    bottom:25%
+right:30%;
+bottom:25%
 }
 
 /* NAV */
-
 .nav{
-    position:fixed;
-    right:0;
-    bottom:0;
-    left:0;
-    height:70px;
-    display:flex;
-    background:#091625;
-    border-top:1px solid #20364f;
-    z-index:100
+position:fixed;
+right:0;
+bottom:0;
+left:0;
+height:70px;
+display:flex;
+background:#091625;
+border-top:1px solid #20364f;
+z-index:100
 }
-
 .nav.hidden{
-    display:none
+display:none
 }
-
 .nav button{
-    flex:1;
-    border:0;
-    background:transparent;
-    color:#71879f;
-    font-size:12px;
-    cursor:pointer
+flex:1;
+border:0;
+background:transparent;
+color:#71879f;
+font-size:12px;
+cursor:pointer
 }
-
 .nav button.active{
-    color:#20d875
+color:#20d875
 }
-
-/* موبایل */
 
 @media(max-width:500px){
-
-    .game-header{
-        height:38px;
-        min-height:38px;
-        flex-basis:38px;
-        padding:0 4px
-    }
-
-    .game-info{
-        height:38px;
-        gap:3px
-    }
-
-    .game-badge{
-        height:29px;
-        padding:3px 3px;
-        font-size:11px;
-        border-radius:7px
-    }
-
-    .game-badge.coin-badge{
-        font-size:12px
-    }
-
-    .game-wrapper{
-        height:calc(100vh - 38px);
-        min-height:430px
-    }
-
-    .game-control-button{
-        min-height:42px;
-        font-size:11px
-    }
-
-    .missile-button{
-        bottom:61px;
-        min-width:145px;
-        padding:9px;
-        font-size:12px
-    }
+.game-header{
+height:38px;
+min-height:38px;
+flex-basis:38px;
+padding:0 4px
+}
+.game-info{
+height:38px;
+gap:3px
+}
+.game-badge{
+height:29px;
+padding:3px 3px;
+font-size:11px;
+border-radius:7px
+}
+.game-badge.coin-badge{
+font-size:12px
+}
+.game-wrapper{
+height:calc(100vh - 38px);
+min-height:430px
+}
+.game-control-button{
+min-height:42px;
+font-size:11px
+}
+.missile-button{
+bottom:61px;
+min-width:145px;
+padding:9px;
+font-size:12px
+}
 }
 </style>
 </head>
@@ -521,38 +441,28 @@ body.game-mode main{
 <body>
 
 <header class="header">
-
 <div class="logo">💰 USDT Earn</div>
-
 <div class="user">خوش آمدید 👋</div>
-
 <div class="balance">
 <div class="balance-title">موجودی شما</div>
 <div class="balance-number" id="mainBalance">0.00 USDT</div>
 </div>
-
 </header>
 
 <main>
 
 <section id="home" class="page active">
-
 <div class="card">
-
 <h2>✈️ فرار از بمب</h2>
-
 <p class="text">
 با هواپیمای جنگی از بمب‌ها فرار کن، دشمنان را نابود کن و امتیاز و سکه جمع کن.
 </p>
-
 <button type="button" class="button" onclick="openGame()">
 🎮 شروع بازی
 </button>
-
 </div>
 
 <div class="grid">
-
 <div class="stat">
 <span class="stat-title">🪙 سکه</span>
 <span class="stat-number" id="coinStat">0</span>
@@ -572,18 +482,14 @@ body.game-mode main{
 <span class="stat-title">📺 تبلیغات</span>
 <span class="stat-number" id="adStat">0</span>
 </div>
-
 </div>
-
 </section>
-
 
 <section id="gamePage" class="page">
 
 <div class="card game-card">
 
 <div class="game-header">
-
 <div class="game-info">
 
 <div class="game-badge">
@@ -603,30 +509,21 @@ body.game-mode main{
 </div>
 
 </div>
-
 </div>
-
 
 <div class="game-wrapper">
 
 <canvas id="gameCanvas"></canvas>
 
-
 <div class="ground-info">
-
 <div class="ground-line"></div>
-
 <div class="ground-details"></div>
-
 <div class="ground-road"></div>
-
 <div class="ground-light one"></div>
 <div class="ground-light two"></div>
 <div class="ground-light three"></div>
 <div class="ground-light four"></div>
-
 </div>
-
 
 <div id="startOverlay" class="game-overlay">
 
@@ -639,7 +536,7 @@ body.game-mode main{
 <br>
 برای حرکت، انگشت خود را روی صفحه حرکت بده.
 <br>
-موشک ویژه از پشت هواپیما خارج شده و دشمن را دنبال می‌کند.
+موشک ویژه از پشت هواپیما خارج شده و دشمن را مستقیم دنبال می‌کند.
 </p>
 
 <button type="button" id="startGameButton" class="button">
@@ -651,9 +548,7 @@ body.game-mode main{
 </button>
 
 </div>
-
 </div>
-
 
 <div id="gameOverOverlay" class="game-overlay hidden">
 
@@ -662,15 +557,9 @@ body.game-mode main{
 <h2>💥 بازی تمام شد</h2>
 
 <p class="overlay-text">
-
-امتیاز:
-<b id="finalScore">0</b>
-
+امتیاز: <b id="finalScore">0</b>
 <br>
-
-سکه:
-<b id="finalCoins">0</b>
-
+سکه: <b id="finalCoins">0</b>
 </p>
 
 <button type="button" class="button" onclick="watchLifeAd()">
@@ -686,22 +575,18 @@ body.game-mode main{
 </button>
 
 </div>
-
 </div>
-
 
 <div class="game-bottom-controls">
 
-<button
-type="button"
+<button type="button"
 id="startBottomButton"
 class="game-control-button start"
 onclick="startGame()">
 🚀 شروع
 </button>
 
-<button
-type="button"
+<button type="button"
 id="pauseGameButton"
 class="game-control-button pause"
 onclick="pauseGame()"
@@ -709,8 +594,7 @@ disabled>
 ⏸️ توقف
 </button>
 
-<button
-type="button"
+<button type="button"
 id="resumeGameButton"
 class="game-control-button resume"
 onclick="resumeGame()"
@@ -720,28 +604,21 @@ disabled>
 
 </div>
 
-
-<button
-type="button"
+<button type="button"
 id="missileButton"
 class="missile-button"
 onclick="fireSpecialMissile()"
 disabled>
-🚀 موشک ویژه
-(<span id="missileCount">3</span>)
+🚀 موشک ویژه (<span id="missileCount">3</span>)
 </button>
 
 </div>
-
 </div>
-
 </section>
-
 
 <section id="invite" class="page">
 
 <div class="card">
-
 <h2>👥 دعوت دوستان</h2>
 
 <p class="text">
@@ -751,16 +628,13 @@ disabled>
 <button type="button" class="button" onclick="copyLink()">
 📋 کپی لینک دعوت
 </button>
-
 </div>
 
 </section>
 
-
 <section id="wallet" class="page">
 
 <div class="card">
-
 <h2>💰 کیف پول</h2>
 
 <p class="text">
@@ -770,21 +644,17 @@ disabled>
 <div class="balance-number" id="walletBalance">
 0.00 USDT
 </div>
-
 </div>
 
 <div class="card">
-
 <h3>💸 برداشت</h3>
 
 <p class="text">
 بخش برداشت در مرحله بعد به سرور متصل می‌شود.
 </p>
-
 </div>
 
 </section>
-
 
 <section id="profile" class="page">
 
@@ -799,42 +669,25 @@ disabled>
 <div class="grid">
 
 <div class="stat">
-
-<span class="stat-title">
-شناسه
-</span>
-
-<span class="stat-number" id="userId">
--
-</span>
-
+<span class="stat-title">شناسه</span>
+<span class="stat-number" id="userId">-</span>
 </div>
 
 <div class="stat">
-
-<span class="stat-title">
-موجودی
-</span>
-
-<span class="stat-number" id="profileBalance">
-0.00
-</span>
-
+<span class="stat-title">موجودی</span>
+<span class="stat-number" id="profileBalance">0.00</span>
 </div>
 
 </div>
-
 </div>
 
 </section>
 
 </main>
 
-
 <nav class="nav" id="mainNav">
 
-<button
-type="button"
+<button type="button"
 id="navHome"
 class="active"
 onclick="showPage('home',this)">
@@ -843,8 +696,7 @@ onclick="showPage('home',this)">
 خانه
 </button>
 
-<button
-type="button"
+<button type="button"
 id="navInvite"
 onclick="showPage('invite',this)">
 👥
@@ -852,8 +704,7 @@ onclick="showPage('invite',this)">
 دعوت
 </button>
 
-<button
-type="button"
+<button type="button"
 id="navWallet"
 onclick="showPage('wallet',this)">
 💰
@@ -861,8 +712,7 @@ onclick="showPage('wallet',this)">
 کیف پول
 </button>
 
-<button
-type="button"
+<button type="button"
 id="navProfile"
 onclick="showPage('profile',this)">
 👤
@@ -872,14 +722,11 @@ onclick="showPage('profile',this)">
 
 </nav>
 
-
 <script>
 
 var coins=0,totalScore=0,adCount=0;
 
-
 /* TELEGRAM */
-
 var tg=null;
 
 if(window.Telegram&&window.Telegram.WebApp){
@@ -906,13 +753,10 @@ userElement.textContent=user.id||"-";
 }
 
 }catch(error){
-
-console.log(error)
-
+console.log(error);
 }
 
 }
-
 
 /* PAGE */
 
@@ -937,7 +781,6 @@ if(button)
 button.classList.add("active");
 
 }
-
 
 /* GAME STATE */
 
@@ -981,12 +824,10 @@ var lastFrameTime=0;
 var fourMinuteAdShown=false;
 var pointerActive=false;
 
-
 /* CANVAS */
 
 var canvas=document.getElementById("gameCanvas");
 var ctx=canvas?canvas.getContext("2d"):null;
-
 
 function resizeCanvas(){
 
@@ -1029,7 +870,6 @@ window.addEventListener(
 resizeCanvas
 );
 
-
 /* RESET */
 
 function resetGameState(){
@@ -1069,7 +909,6 @@ updateControlButtons();
 
 }
 
-
 /* OPEN GAME */
 
 function openGame(){
@@ -1098,7 +937,6 @@ updateGameUI();
 updateControlButtons();
 
 }
-
 
 /* HOME */
 
@@ -1129,15 +967,11 @@ updateStats();
 
 }
 
-
 /* CANCEL */
 
 function cancelGame(){
-
 backHome();
-
 }
-
 
 /* COPY LINK */
 
@@ -1171,7 +1005,6 @@ alert(link);
 
 }
 
-
 /* STATS */
 
 function updateStats(){
@@ -1200,16 +1033,13 @@ profileBalance.textContent="0.00";
 
 }
 
-
 /* ADSGRAM */
 
 var ADSGRAM_REWARDED_BLOCK_ID="YOUR_REWARDED_BLOCK_ID";
-
 var ADSGRAM_INTERSTITIAL_BLOCK_ID="YOUR_INTERSTITIAL_BLOCK_ID";
 
 var rewardedController=null;
 var interstitialController=null;
-
 
 function adsReady(){
 
@@ -1217,7 +1047,6 @@ return window.Adsgram&&
 typeof window.Adsgram.init==="function";
 
 }
-
 
 function initAds(){
 
@@ -1229,23 +1058,26 @@ try{
 if(
 ADSGRAM_REWARDED_BLOCK_ID&&
 ADSGRAM_REWARDED_BLOCK_ID!=="YOUR_REWARDED_BLOCK_ID"
-)
+){
 
 rewardedController=
 window.Adsgram.init({
 blockId:ADSGRAM_REWARDED_BLOCK_ID
 });
 
+}
 
 if(
 ADSGRAM_INTERSTITIAL_BLOCK_ID&&
 ADSGRAM_INTERSTITIAL_BLOCK_ID!=="YOUR_INTERSTITIAL_BLOCK_ID"
-)
+){
 
 interstitialController=
 window.Adsgram.init({
 blockId:ADSGRAM_INTERSTITIAL_BLOCK_ID
 });
+
+}
 
 }catch(error){
 
@@ -1259,7 +1091,6 @@ error
 }
 
 initAds();
-
 
 /* START */
 
@@ -1331,7 +1162,6 @@ animationId=requestAnimationFrame(gameLoop);
 
 }
 
-
 /* STOP */
 
 function stopGame(){
@@ -1351,7 +1181,6 @@ updateControlButtons();
 updateGameUI();
 
 }
-
 
 /* PAUSE */
 
@@ -1373,7 +1202,6 @@ updateControlButtons();
 updateGameUI();
 
 }
-
 
 /* RESUME */
 
@@ -1400,7 +1228,6 @@ if(animationId===null)
 animationId=requestAnimationFrame(gameLoop);
 
 }
-
 
 /* BUTTONS */
 
@@ -1429,15 +1256,11 @@ resume.disabled=!gameRunning||!gamePaused;
 
 }
 
-
 /* RESTART */
 
 function restartGame(){
-
 startGame();
-
 }
-
 
 /* GAME LOOP */
 
@@ -1491,7 +1314,6 @@ showFourMinuteAd();
 
 }
 
-
 /* DIFFICULTY */
 
 function getDifficulty(){
@@ -1524,13 +1346,9 @@ enemyShotInterval:
 
 }
 
-
 /* UPDATE */
 
-function updateGame(
-delta,
-timestamp
-){
+function updateGame(delta,timestamp){
 
 var difficulty=getDifficulty();
 
@@ -1561,7 +1379,6 @@ player.y
 )
 );
 
-
 /* گلوله خودکار */
 
 if(timestamp-lastBulletTime>=155){
@@ -1571,7 +1388,6 @@ fireAutomaticBullet();
 lastBulletTime=timestamp;
 
 }
-
 
 /* بمب */
 
@@ -1586,7 +1402,6 @@ lastBombTime=timestamp;
 
 }
 
-
 /* دشمن */
 
 if(
@@ -1599,7 +1414,6 @@ createEnemy();
 lastEnemyTime=timestamp;
 
 }
-
 
 /* شلیک دشمن */
 
@@ -1614,7 +1428,6 @@ lastEnemyShotTime=timestamp;
 
 }
 
-
 updateBullets(delta);
 updateMissiles(delta);
 updateBombs(delta,difficulty);
@@ -1625,7 +1438,6 @@ updateExplosions(delta);
 checkCollisions();
 
 }
-
 
 /* AUTO BULLET */
 
@@ -1643,10 +1455,10 @@ speed:8
 
 }
 
-
 /* =========================================================
-   موشک هدایت‌شونده اصلاح‌شده
-   هدف یک‌بار انتخاب می‌شود و تا برخورد حفظ می‌شود.
+   موشک هدایت‌شونده - نسخه ضد چرخش
+   موشک دیگر زاویه را دنبال نمی‌کند.
+   هر لحظه مستقیماً به سمت هدف حرکت می‌کند.
    ========================================================= */
 
 function findNearestEnemy(x,y){
@@ -1678,7 +1490,6 @@ return nearest;
 
 }
 
-
 /* SPECIAL MISSILE */
 
 function fireSpecialMissile(){
@@ -1692,12 +1503,6 @@ return;
 
 missiles--;
 
-
-/*
-موشک فقط هنگام شلیک یک هدف را انتخاب می‌کند.
-بعد از آن دیگر بین دشمن‌ها جابه‌جا نمی‌شود.
-*/
-
 var startX=player.x;
 var startY=player.y+25;
 
@@ -1706,21 +1511,9 @@ startX,
 startY
 );
 
-var angle=-Math.PI/2;
-
-if(target){
-
-angle=Math.atan2(
-target.y-startY,
-target.x-startX
-);
-
-}
-
-
 /*
-سرعت کمتر + چرخش محدود
-باعث می‌شود موشک دور هدف نچرخد.
+موشک از پشت هواپیما شروع می‌شود.
+dirX و dirY جهت فعلی حرکت هستند.
 */
 
 specialMissiles.push({
@@ -1731,13 +1524,16 @@ y:startY,
 width:10,
 height:25,
 
-speed:300,
-
-angle:angle,
-
-turnRate:3.2,
+/*
+سرعت بالاتر برای اینکه موشک
+به هدف برسد و دور آن نچرخد.
+*/
+speed:420,
 
 target:target,
+
+dirX:0,
+dirY:-1,
 
 trail:[]
 
@@ -1746,7 +1542,6 @@ trail:[]
 updateGameUI();
 
 }
-
 
 /* بررسی وجود هدف */
 
@@ -1770,7 +1565,6 @@ return false;
 
 }
 
-
 /* MISSILE UPDATE */
 
 function updateMissiles(delta){
@@ -1783,10 +1577,9 @@ i--
 
 var missile=specialMissiles[i];
 
-
 /*
-اگر هدف اولیه از بین رفته باشد،
-فقط یک هدف جدید انتخاب می‌شود.
+اگر هدف قبلی نابود شده باشد،
+یک هدف جدید انتخاب می‌شود.
 */
 
 if(
@@ -1801,86 +1594,81 @@ missile.y
 
 }
 
-
 var target=missile.target;
-
-
-/*
-هدایت نرم به سمت هدف
-*/
 
 if(target){
 
-var dx=target.x-missile.x;
-var dy=target.y-missile.y;
+var dx=
+target.x-missile.x;
 
-var distanceSquared=
-dx*dx+dy*dy;
+var dy=
+target.y-missile.y;
 
+var distance=
+Math.sqrt(
+dx*dx+dy*dy
+);
 
 /*
-اگر خیلی نزدیک شد،
-مستقیماً برخورد را آماده می‌کنیم.
-این قسمت مانع چرخیدن دور دشمن می‌شود.
+اگر فاصله خیلی کم باشد،
+موشک مستقیماً روی دشمن قرار می‌گیرد.
+این کار باعث می‌شود موشک
+از کنار دشمن رد نشود.
 */
 
-if(distanceSquared<28*28){
+var hitDistance=
+Math.max(
+20,
+missile.speed*delta+8
+);
+
+if(distance<=hitDistance){
 
 missile.x=target.x;
 missile.y=target.y;
 
-continue;
-
-}
-
-
-var desiredAngle=Math.atan2(
-dy,
-dx
-);
-
-var angleDifference=Math.atan2(
-Math.sin(
-desiredAngle-missile.angle
-),
-Math.cos(
-desiredAngle-missile.angle
-)
-);
-
+}else{
 
 /*
-حداکثر چرخش در هر فریم محدود است.
+جهت دقیق هدف.
+بدون angle
+بدون turnRate
+بدون چرخیدن دور هدف.
 */
 
-var maxTurn=
-missile.turnRate*delta;
-
-if(angleDifference>maxTurn)
-angleDifference=maxTurn;
-
-if(angleDifference<-maxTurn)
-angleDifference=-maxTurn;
-
-missile.angle+=angleDifference;
-
-}
-
-
-/*
-حرکت
-*/
+missile.dirX=dx/distance;
+missile.dirY=dy/distance;
 
 missile.x+=
-Math.cos(missile.angle)*
+missile.dirX*
 missile.speed*
 delta;
 
 missile.y+=
-Math.sin(missile.angle)*
+missile.dirY*
 missile.speed*
 delta;
 
+}
+
+}else{
+
+/*
+اگر هیچ دشمنی وجود نداشت،
+موشک مستقیم به بالا حرکت می‌کند.
+*/
+
+missile.x+=
+missile.dirX*
+missile.speed*
+delta;
+
+missile.y+=
+missile.dirY*
+missile.speed*
+delta;
+
+}
 
 /* رد آتش */
 
@@ -1893,7 +1681,6 @@ y:missile.y
 
 if(missile.trail.length>12)
 missile.trail.shift();
-
 
 /* حذف خارج صفحه */
 
@@ -1911,7 +1698,6 @@ specialMissiles.splice(i,1);
 }
 
 }
-
 
 /* BOMB */
 
@@ -1935,7 +1721,6 @@ speed:getDifficulty().bombSpeed
 });
 
 }
-
 
 /* ENEMY */
 
@@ -1962,7 +1747,6 @@ health:1
 });
 
 }
-
 
 /* ENEMY SHOOT */
 
@@ -1992,7 +1776,6 @@ getDifficulty().progress
 
 }
 
-
 /* BULLETS UPDATE */
 
 function updateBullets(delta){
@@ -2013,13 +1796,9 @@ bullets.splice(i,1);
 
 }
 
-
 /* BOMBS UPDATE */
 
-function updateBombs(
-delta,
-difficulty
-){
+function updateBombs(delta,difficulty){
 
 for(
 var i=bombs.length-1;
@@ -2046,13 +1825,9 @@ bombs.splice(i,1);
 
 }
 
-
 /* ENEMIES UPDATE */
 
-function updateEnemies(
-delta,
-difficulty
-){
+function updateEnemies(delta,difficulty){
 
 for(
 var i=enemies.length-1;
@@ -2073,7 +1848,6 @@ enemies.splice(i,1);
 }
 
 }
-
 
 /* ENEMY BULLETS */
 
@@ -2099,7 +1873,6 @@ enemyBullets.splice(i,1);
 
 }
 
-
 /* EXPLOSION */
 
 function createExplosion(x,y){
@@ -2108,6 +1881,7 @@ explosions.push({
 
 x:x,
 y:y,
+
 radius:4,
 maxRadius:30,
 life:.45
@@ -2115,7 +1889,6 @@ life:.45
 });
 
 }
-
 
 function updateExplosions(delta){
 
@@ -2137,7 +1910,6 @@ explosions.splice(i,1);
 
 }
 
-
 /* COLLISION RADIUS */
 
 function getPlayerCollisionRadius(){
@@ -2148,7 +1920,6 @@ player.height
 )*.34;
 
 }
-
 
 /* COLLISIONS */
 
@@ -2207,7 +1978,6 @@ continue;
 
 }
 
-
 /* موشک هدایت‌شونده */
 
 for(
@@ -2256,12 +2026,10 @@ break;
 
 }
 
-
 /* بازیکن */
 
 var playerRadius=
 getPlayerCollisionRadius();
-
 
 /* بمب */
 
@@ -2277,8 +2045,7 @@ bombs[b].x,
 bombs[b].y,
 player.x,
 player.y
-)
-<
+)<
 bombs[b].radius+
 playerRadius
 ){
@@ -2298,7 +2065,6 @@ return;
 
 }
 
-
 /* گلوله دشمن */
 
 for(
@@ -2313,8 +2079,7 @@ enemyBullets[eb].x,
 enemyBullets[eb].y,
 player.x,
 player.y
-)
-<
+)<
 enemyBullets[eb].radius+
 playerRadius
 ){
@@ -2333,7 +2098,6 @@ return;
 }
 
 }
-
 
 /* دشمن */
 
@@ -2355,8 +2119,7 @@ enemies[en].x,
 enemies[en].y,
 player.x,
 player.y
-)
-<
+)<
 enemyCollisionRadius+
 playerRadius
 ){
@@ -2378,7 +2141,6 @@ return;
 
 }
 
-
 /* LOSE LIFE */
 
 function loseLife(){
@@ -2399,7 +2161,8 @@ return;
 player.y=
 canvas.clientHeight-100;
 
-player.targetY=player.y;
+player.targetY=
+player.y;
 
 bombs.splice(
 0,
@@ -2414,7 +2177,6 @@ Math.min(2,enemyBullets.length)
 updateGameUI();
 
 }
-
 
 /* END */
 
@@ -2451,7 +2213,6 @@ updateStats();
 
 }
 
-
 /* REWARDED AD */
 
 function watchLifeAd(){
@@ -2466,10 +2227,12 @@ return;
 
 }
 
-var savedElapsed=elapsedSeconds;
+var savedElapsed=
+elapsedSeconds;
 
 rewardedController
 .show()
+
 .then(function(){
 
 adCount++;
@@ -2486,7 +2249,8 @@ document
 var now=performance.now();
 
 gameStartTime=
-now-savedElapsed*1000;
+now-
+savedElapsed*1000;
 
 lastFrameTime=now;
 
@@ -2498,6 +2262,7 @@ animationId=
 requestAnimationFrame(gameLoop);
 
 })
+
 .catch(function(error){
 
 gamePaused=false;
@@ -2517,7 +2282,6 @@ alert(
 });
 
 }
-
 
 /* FOUR MINUTE AD */
 
@@ -2548,6 +2312,7 @@ return;
 
 interstitialController
 .show()
+
 .then(function(){
 
 adCount++;
@@ -2557,6 +2322,7 @@ resumeGame();
 updateStats();
 
 })
+
 .catch(function(error){
 
 console.log(
@@ -2570,29 +2336,39 @@ resumeGame();
 
 }
 
-
 /* GAME UI */
 
 function updateGameUI(){
 
 var lives=
-document.getElementById("gameLives");
+document.getElementById(
+"gameLives"
+);
 
 var score=
-document.getElementById("gameScore");
+document.getElementById(
+"gameScore"
+);
 
 var gameCoins=
-document.getElementById("gameCoins");
+document.getElementById(
+"gameCoins"
+);
 
 var time=
-document.getElementById("gameTime");
+document.getElementById(
+"gameTime"
+);
 
 var missileCount=
-document.getElementById("missileCount");
+document.getElementById(
+"missileCount"
+);
 
 var missileButton=
-document.getElementById("missileButton");
-
+document.getElementById(
+"missileButton"
+);
 
 if(lives)
 lives.textContent=gameLives;
@@ -2603,14 +2379,17 @@ score.textContent=gameScore;
 if(gameCoins)
 gameCoins.textContent=coins;
 
-
 if(time){
 
 var minutes=
-Math.floor(elapsedSeconds/60);
+Math.floor(
+elapsedSeconds/60
+);
 
 var seconds=
-Math.floor(elapsedSeconds%60);
+Math.floor(
+elapsedSeconds%60
+);
 
 time.textContent=
 minutes+
@@ -2619,10 +2398,8 @@ minutes+
 
 }
 
-
 if(missileCount)
 missileCount.textContent=missiles;
-
 
 if(missileButton){
 
@@ -2634,7 +2411,6 @@ missiles<=0;
 }
 
 }
-
 
 /* DRAW GAME */
 
@@ -2678,14 +2454,13 @@ width,
 height
 );
 
-
 drawStars(
 width,
 height
 );
 
-
-var horizonY=height*.82;
+var horizonY=
+height*.82;
 
 var horizonGradient=
 ctx.createLinearGradient(
@@ -2714,7 +2489,6 @@ width,
 55
 );
 
-
 for(
 var i=0;
 i<bombs.length;
@@ -2723,7 +2497,6 @@ i++
 
 drawBomb(bombs[i]);
 
-
 for(
 var j=0;
 j<enemies.length;
@@ -2731,7 +2504,6 @@ j++
 )
 
 drawEnemy(enemies[j]);
-
 
 for(
 var k=0;
@@ -2743,7 +2515,6 @@ drawEnemyBullet(
 enemyBullets[k]
 );
 
-
 for(
 var q=0;
 q<bullets.length;
@@ -2753,7 +2524,6 @@ q++
 drawBullet(
 bullets[q]
 );
-
 
 for(
 var r=0;
@@ -2765,7 +2535,6 @@ drawMissile(
 specialMissiles[r]
 );
 
-
 for(
 var x=0;
 x<explosions.length;
@@ -2776,7 +2545,6 @@ drawExplosion(
 explosions[x]
 );
 
-
 drawPlayerPlane(
 player.x,
 player.y
@@ -2784,13 +2552,9 @@ player.y
 
 }
 
-
 /* STARS */
 
-function drawStars(
-width,
-height
-){
+function drawStars(width,height){
 
 ctx.fillStyle=
 "rgba(255,255,255,.75)";
@@ -2806,11 +2570,14 @@ i<count;
 i++
 ){
 
-var x=(i*83)%width;
+var x=
+(i*83)%width;
 
 var y=
-(i*137+
-elapsedSeconds*35)%height;
+(
+i*137+
+elapsedSeconds*35
+)%height;
 
 var size=
 i%5===0?2:1;
@@ -2826,7 +2593,6 @@ size
 
 }
 
-
 /* PLAYER */
 
 function drawPlayerPlane(x,y){
@@ -2839,7 +2605,6 @@ ctx.scale(
 PLAYER_SCALE,
 PLAYER_SCALE
 );
-
 
 /* آتش */
 
@@ -2860,9 +2625,7 @@ ctx.lineTo(5,20);
 ctx.closePath();
 
 ctx.fillStyle="#ff8a00";
-
 ctx.fill();
-
 
 /* بال چپ */
 
@@ -2875,9 +2638,7 @@ ctx.lineTo(-8,11);
 ctx.closePath();
 
 ctx.fillStyle="#cbd5e1";
-
 ctx.fill();
-
 
 /* بال راست */
 
@@ -2890,7 +2651,6 @@ ctx.lineTo(8,11);
 ctx.closePath();
 
 ctx.fill();
-
 
 /* بدنه */
 
@@ -2906,9 +2666,7 @@ ctx.lineTo(-8,8);
 ctx.closePath();
 
 ctx.fillStyle="#e5e7eb";
-
 ctx.fill();
-
 
 /* شیشه */
 
@@ -2922,9 +2680,7 @@ ctx.lineTo(-5,-8);
 ctx.closePath();
 
 ctx.fillStyle="#294f70";
-
 ctx.fill();
-
 
 /* دم چپ */
 
@@ -2937,9 +2693,7 @@ ctx.lineTo(-3,22);
 ctx.closePath();
 
 ctx.fillStyle="#9ca3af";
-
 ctx.fill();
-
 
 /* دم راست */
 
@@ -2956,7 +2710,6 @@ ctx.fill();
 ctx.restore();
 
 }
-
 
 /* BOMB */
 
@@ -2982,7 +2735,6 @@ Math.PI*2
 ctx.fillStyle="#252525";
 ctx.fill();
 
-
 ctx.beginPath();
 
 ctx.moveTo(0,-9);
@@ -2992,7 +2744,6 @@ ctx.strokeStyle="#b8b8b8";
 ctx.lineWidth=2;
 
 ctx.stroke();
-
 
 ctx.beginPath();
 
@@ -3005,13 +2756,11 @@ Math.PI*2
 );
 
 ctx.fillStyle="#ff4d4d";
-
 ctx.fill();
 
 ctx.restore();
 
 }
-
 
 /* ENEMY */
 
@@ -3035,7 +2784,6 @@ ctx.closePath();
 ctx.fillStyle="#c13b3b";
 ctx.fill();
 
-
 ctx.beginPath();
 
 ctx.moveTo(5,3);
@@ -3045,7 +2793,6 @@ ctx.lineTo(5,9);
 ctx.closePath();
 
 ctx.fill();
-
 
 ctx.beginPath();
 
@@ -3059,9 +2806,7 @@ ctx.lineTo(-5,7);
 ctx.closePath();
 
 ctx.fillStyle="#8f2020";
-
 ctx.fill();
-
 
 ctx.beginPath();
 
@@ -3074,13 +2819,11 @@ Math.PI*2
 );
 
 ctx.fillStyle="#351c1c";
-
 ctx.fill();
 
 ctx.restore();
 
 }
-
 
 /* BULLET */
 
@@ -3097,13 +2840,16 @@ bullet.y-7,
 
 }
 
-
 /* MISSILE */
+
+/*
+اینجا هم دیگر از missile.angle استفاده نمی‌شود.
+جهت ظاهری موشک از dirX و dirY گرفته می‌شود.
+*/
 
 function drawMissile(missile){
 
 ctx.save();
-
 
 /* رد آتش */
 
@@ -3134,8 +2880,7 @@ ctx.beginPath();
 ctx.arc(
 p.x,
 p.y,
-2+
-progress*3,
+2+progress*3,
 0,
 Math.PI*2
 );
@@ -3148,10 +2893,15 @@ ctx.fill();
 
 ctx.globalAlpha=1;
 
-
 /*
-جهت موشک
+جهت ظاهری موشک از جهت حرکت واقعی آن گرفته می‌شود.
 */
+
+var angle=
+Math.atan2(
+missile.dirY,
+missile.dirX
+);
 
 ctx.translate(
 missile.x,
@@ -3159,10 +2909,9 @@ missile.y
 );
 
 ctx.rotate(
-missile.angle+
+angle+
 Math.PI/2
 );
-
 
 /* بدنه */
 
@@ -3175,7 +2924,6 @@ ctx.fillRect(
 25
 );
 
-
 /* نوک */
 
 ctx.beginPath();
@@ -3187,9 +2935,7 @@ ctx.lineTo(4,-13);
 ctx.closePath();
 
 ctx.fillStyle="#ffffff";
-
 ctx.fill();
-
 
 /* بالچه چپ */
 
@@ -3202,9 +2948,7 @@ ctx.lineTo(-4,10);
 ctx.closePath();
 
 ctx.fillStyle="#9ca3af";
-
 ctx.fill();
-
 
 /* بالچه راست */
 
@@ -3217,7 +2961,6 @@ ctx.lineTo(4,10);
 ctx.closePath();
 
 ctx.fill();
-
 
 /* آتش موتور */
 
@@ -3238,13 +2981,11 @@ ctx.lineTo(3,12);
 ctx.closePath();
 
 ctx.fillStyle="#ff5a1f";
-
 ctx.fill();
 
 ctx.restore();
 
 }
-
 
 /* ENEMY BULLET */
 
@@ -3261,11 +3002,9 @@ Math.PI*2
 );
 
 ctx.fillStyle="#ff5252";
-
 ctx.fill();
 
 }
-
 
 /* EXPLOSION */
 
@@ -3292,9 +3031,7 @@ Math.PI*2
 );
 
 ctx.fillStyle="#ffb020";
-
 ctx.fill();
-
 
 ctx.beginPath();
 
@@ -3307,13 +3044,11 @@ Math.PI*2
 );
 
 ctx.fillStyle="#fff3a0";
-
 ctx.fill();
 
 ctx.restore();
 
 }
-
 
 /* COLLISION */
 
@@ -3342,8 +3077,11 @@ rect.y+rect.height/2
 )
 );
 
-var dx=cx-closestX;
-var dy=cy-closestY;
+var dx=
+cx-closestX;
+
+var dy=
+cy-closestY;
 
 return
 dx*dx+
@@ -3351,7 +3089,6 @@ dy*dy<
 radius*radius;
 
 }
-
 
 /* DISTANCE */
 
@@ -3366,12 +3103,10 @@ var dx=x1-x2;
 var dy=y1-y2;
 
 return Math.sqrt(
-dx*dx+
-dy*dy
+dx*dx+dy*dy
 );
 
 }
-
 
 /* PLAYER MOVEMENT */
 
@@ -3450,7 +3185,6 @@ y
 
 }
 
-
 /* TOUCH + MOUSE */
 
 if(canvas){
@@ -3477,7 +3211,6 @@ passive:false
 }
 );
 
-
 canvas.addEventListener(
 "touchmove",
 function(event){
@@ -3499,7 +3232,6 @@ passive:false
 }
 );
 
-
 canvas.addEventListener(
 "touchend",
 function(){
@@ -3512,7 +3244,6 @@ passive:true
 }
 );
 
-
 canvas.addEventListener(
 "touchcancel",
 function(){
@@ -3524,7 +3255,6 @@ pointerActive=false;
 passive:true
 }
 );
-
 
 canvas.addEventListener(
 "mousedown",
@@ -3543,7 +3273,6 @@ movePlayerFromEvent(event);
 }
 );
 
-
 canvas.addEventListener(
 "mousemove",
 function(event){
@@ -3560,7 +3289,6 @@ movePlayerFromEvent(event);
 }
 );
 
-
 window.addEventListener(
 "mouseup",
 function(){
@@ -3571,7 +3299,6 @@ pointerActive=false;
 );
 
 }
-
 
 /* START BUTTON */
 
@@ -3592,7 +3319,6 @@ startGame();
 );
 
 }
-
 
 /* INITIAL */
 
