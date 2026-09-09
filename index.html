@@ -213,6 +213,16 @@ body.game-mode main{
     overflow:hidden
 }
 
+/* سکه واضح‌تر */
+
+.game-badge.coin-badge{
+    background:#3b2b08;
+    border-color:#c99724;
+    color:#ffd85a;
+    font-size:13px;
+    box-shadow:0 0 7px rgba(255,190,40,.15)
+}
+
 /* محیط بازی */
 
 .game-wrapper{
@@ -484,6 +494,10 @@ body.game-mode main{
         border-radius:7px
     }
 
+    .game-badge.coin-badge{
+        font-size:12px
+    }
+
     .game-wrapper{
         height:calc(100vh - 38px);
         min-height:430px
@@ -528,8 +542,7 @@ body.game-mode main{
 <h2>✈️ فرار از بمب</h2>
 
 <p class="text">
-با هواپیمای جنگی از بمب‌ها فرار کن،
-دشمنان را نابود کن و امتیاز و سکه جمع کن.
+با هواپیمای جنگی از بمب‌ها فرار کن، دشمنان را نابود کن و امتیاز و سکه جمع کن.
 </p>
 
 <button type="button" class="button" onclick="openGame()">
@@ -577,7 +590,7 @@ body.game-mode main{
 ❤️ <span id="gameLives">3</span>
 </div>
 
-<div class="game-badge">
+<div class="game-badge coin-badge">
 🪙 <span id="gameCoins">0</span>
 </div>
 
@@ -598,10 +611,13 @@ body.game-mode main{
 
 <canvas id="gameCanvas"></canvas>
 
+
 <div class="ground-info">
 
 <div class="ground-line"></div>
+
 <div class="ground-details"></div>
+
 <div class="ground-road"></div>
 
 <div class="ground-light one"></div>
@@ -619,28 +635,18 @@ body.game-mode main{
 <h2>✈️ آماده‌ای؟</h2>
 
 <p class="overlay-text">
-
 هواپیما به صورت خودکار شلیک می‌کند.
 <br>
 برای حرکت، انگشت خود را روی صفحه حرکت بده.
 <br>
 موشک ویژه از پشت هواپیما خارج شده و دشمن را دنبال می‌کند.
-
 </p>
 
-<button
-type="button"
-id="startGameButton"
-class="button"
->
+<button type="button" id="startGameButton" class="button">
 🚀 شروع بازی
 </button>
 
-<button
-type="button"
-class="button secondary"
-onclick="cancelGame()"
->
+<button type="button" class="button secondary" onclick="cancelGame()">
 ❌ لغو
 </button>
 
@@ -667,27 +673,15 @@ onclick="cancelGame()"
 
 </p>
 
-<button
-type="button"
-class="button"
-onclick="watchLifeAd()"
->
+<button type="button" class="button" onclick="watchLifeAd()">
 📺 دیدن تبلیغ و دریافت ۳ جان
 </button>
 
-<button
-type="button"
-class="button secondary"
-onclick="restartGame()"
->
+<button type="button" class="button secondary" onclick="restartGame()">
 🔄 شروع دوباره
 </button>
 
-<button
-type="button"
-class="button secondary"
-onclick="backHome()"
->
+<button type="button" class="button secondary" onclick="backHome()">
 🏠 بازگشت
 </button>
 
@@ -702,8 +696,7 @@ onclick="backHome()"
 type="button"
 id="startBottomButton"
 class="game-control-button start"
-onclick="startGame()"
->
+onclick="startGame()">
 🚀 شروع
 </button>
 
@@ -712,8 +705,7 @@ type="button"
 id="pauseGameButton"
 class="game-control-button pause"
 onclick="pauseGame()"
-disabled
->
+disabled>
 ⏸️ توقف
 </button>
 
@@ -722,8 +714,7 @@ type="button"
 id="resumeGameButton"
 class="game-control-button resume"
 onclick="resumeGame()"
-disabled
->
+disabled>
 ▶️ ادامه
 </button>
 
@@ -735,8 +726,7 @@ type="button"
 id="missileButton"
 class="missile-button"
 onclick="fireSpecialMissile()"
-disabled
->
+disabled>
 🚀 موشک ویژه
 (<span id="missileCount">3</span>)
 </button>
@@ -758,11 +748,7 @@ disabled
 دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.
 </p>
 
-<button
-type="button"
-class="button"
-onclick="copyLink()"
->
+<button type="button" class="button" onclick="copyLink()">
 📋 کپی لینک دعوت
 </button>
 
@@ -851,8 +837,7 @@ onclick="copyLink()"
 type="button"
 id="navHome"
 class="active"
-onclick="showPage('home',this)"
->
+onclick="showPage('home',this)">
 🏠
 <br>
 خانه
@@ -861,8 +846,7 @@ onclick="showPage('home',this)"
 <button
 type="button"
 id="navInvite"
-onclick="showPage('invite',this)"
->
+onclick="showPage('invite',this)">
 👥
 <br>
 دعوت
@@ -871,8 +855,7 @@ onclick="showPage('invite',this)"
 <button
 type="button"
 id="navWallet"
-onclick="showPage('wallet',this)"
->
+onclick="showPage('wallet',this)">
 💰
 <br>
 کیف پول
@@ -881,8 +864,7 @@ onclick="showPage('wallet',this)"
 <button
 type="button"
 id="navProfile"
-onclick="showPage('profile',this)"
->
+onclick="showPage('profile',this)">
 👤
 <br>
 پروفایل
@@ -916,12 +898,10 @@ tg.initDataUnsafe.user
 
 var user=tg.initDataUnsafe.user;
 
-var userElement=
-document.getElementById("userId");
+var userElement=document.getElementById("userId");
 
 if(userElement)
-userElement.textContent=
-user.id||"-";
+userElement.textContent=user.id||"-";
 
 }
 
@@ -938,20 +918,17 @@ console.log(error)
 
 function showPage(id,button){
 
-var pages=
-document.querySelectorAll(".page");
+var pages=document.querySelectorAll(".page");
 
 for(var i=0;i<pages.length;i++)
 pages[i].classList.remove("active");
 
-var page=
-document.getElementById(id);
+var page=document.getElementById(id);
 
 if(page)
 page.classList.add("active");
 
-var buttons=
-document.querySelectorAll(".nav button");
+var buttons=document.querySelectorAll(".nav button");
 
 for(var j=0;j<buttons.length;j++)
 buttons[j].classList.remove("active");
@@ -964,17 +941,17 @@ button.classList.add("active");
 
 /* GAME STATE */
 
-var gameRunning=false,
-gamePaused=false,
-animationId=null;
+var gameRunning=false;
+var gamePaused=false;
+var animationId=null;
 
-var gameStartTime=0,
-pauseStartTime=0,
-elapsedSeconds=0;
+var gameStartTime=0;
+var pauseStartTime=0;
+var elapsedSeconds=0;
 
-var gameScore=0,
-gameLives=3,
-missiles=3;
+var gameScore=0;
+var gameLives=3;
+var missiles=3;
 
 var PLAYER_SCALE=.8;
 
@@ -988,30 +965,27 @@ height:41.6,
 speed:.18
 };
 
-var bullets=[],
-specialMissiles=[],
-bombs=[],
-enemies=[],
-enemyBullets=[],
-explosions=[];
+var bullets=[];
+var specialMissiles=[];
+var bombs=[];
+var enemies=[];
+var enemyBullets=[];
+var explosions=[];
 
-var lastBulletTime=0,
-lastBombTime=0,
-lastEnemyTime=0,
-lastEnemyShotTime=0,
-lastFrameTime=0;
+var lastBulletTime=0;
+var lastBombTime=0;
+var lastEnemyTime=0;
+var lastEnemyShotTime=0;
+var lastFrameTime=0;
 
-var fourMinuteAdShown=false,
-pointerActive=false;
+var fourMinuteAdShown=false;
+var pointerActive=false;
 
 
 /* CANVAS */
 
-var canvas=
-document.getElementById("gameCanvas");
-
-var ctx=
-canvas?canvas.getContext("2d"):null;
+var canvas=document.getElementById("gameCanvas");
+var ctx=canvas?canvas.getContext("2d"):null;
 
 
 function resizeCanvas(){
@@ -1019,17 +993,12 @@ function resizeCanvas(){
 if(!canvas||!ctx)
 return;
 
-var rect=
-canvas.getBoundingClientRect();
+var rect=canvas.getBoundingClientRect();
 
-var width=
-Math.max(300,Math.floor(rect.width));
+var width=Math.max(300,Math.floor(rect.width));
+var height=Math.max(400,Math.floor(rect.height));
 
-var height=
-Math.max(400,Math.floor(rect.height));
-
-var dpr=
-Math.min(window.devicePixelRatio||1,2);
+var dpr=Math.min(window.devicePixelRatio||1,2);
 
 canvas.width=width*dpr;
 canvas.height=height*dpr;
@@ -1137,9 +1106,7 @@ function backHome(){
 
 resetGameState();
 
-document.body.classList.remove(
-"game-mode"
-);
+document.body.classList.remove("game-mode");
 
 document
 .getElementById("mainNav")
@@ -1209,20 +1176,12 @@ alert(link);
 
 function updateStats(){
 
-var coinStat=
-document.getElementById("coinStat");
+var coinStat=document.getElementById("coinStat");
+var scoreStat=document.getElementById("scoreStat");
+var adStat=document.getElementById("adStat");
 
-var scoreStat=
-document.getElementById("scoreStat");
-
-var adStat=
-document.getElementById("adStat");
-
-var walletBalance=
-document.getElementById("walletBalance");
-
-var profileBalance=
-document.getElementById("profileBalance");
+var walletBalance=document.getElementById("walletBalance");
+var profileBalance=document.getElementById("profileBalance");
 
 if(coinStat)
 coinStat.textContent=coins;
@@ -1244,14 +1203,12 @@ profileBalance.textContent="0.00";
 
 /* ADSGRAM */
 
-var ADSGRAM_REWARDED_BLOCK_ID=
-"YOUR_REWARDED_BLOCK_ID";
+var ADSGRAM_REWARDED_BLOCK_ID="YOUR_REWARDED_BLOCK_ID";
 
-var ADSGRAM_INTERSTITIAL_BLOCK_ID=
-"YOUR_INTERSTITIAL_BLOCK_ID";
+var ADSGRAM_INTERSTITIAL_BLOCK_ID="YOUR_INTERSTITIAL_BLOCK_ID";
 
-var rewardedController=null,
-interstitialController=null;
+var rewardedController=null;
+var interstitialController=null;
 
 
 function adsReady(){
@@ -1326,8 +1283,7 @@ animationId=null;
 gameRunning=true;
 gamePaused=false;
 
-gameStartTime=
-performance.now();
+gameStartTime=performance.now();
 
 pauseStartTime=0;
 elapsedSeconds=0;
@@ -1352,11 +1308,8 @@ fourMinuteAdShown=false;
 
 resizeCanvas();
 
-player.x=
-canvas.clientWidth/2;
-
-player.y=
-canvas.clientHeight-105;
+player.x=canvas.clientWidth/2;
+player.y=canvas.clientHeight-105;
 
 player.targetX=player.x;
 player.targetY=player.y;
@@ -1372,11 +1325,9 @@ document
 updateGameUI();
 updateControlButtons();
 
-lastFrameTime=
-performance.now();
+lastFrameTime=performance.now();
 
-animationId=
-requestAnimationFrame(gameLoop);
+animationId=requestAnimationFrame(gameLoop);
 
 }
 
@@ -1411,8 +1362,7 @@ return;
 
 gamePaused=true;
 
-pauseStartTime=
-performance.now();
+pauseStartTime=performance.now();
 
 if(animationId!==null)
 cancelAnimationFrame(animationId);
@@ -1432,12 +1382,10 @@ function resumeGame(){
 if(!gameRunning||!gamePaused)
 return;
 
-var now=
-performance.now();
+var now=performance.now();
 
 if(pauseStartTime>0)
-gameStartTime+=
-now-pauseStartTime;
+gameStartTime+=now-pauseStartTime;
 
 pauseStartTime=0;
 
@@ -1449,8 +1397,7 @@ updateControlButtons();
 updateGameUI();
 
 if(animationId===null)
-animationId=
-requestAnimationFrame(gameLoop);
+animationId=requestAnimationFrame(gameLoop);
 
 }
 
@@ -1459,18 +1406,15 @@ requestAnimationFrame(gameLoop);
 
 function updateControlButtons(){
 
-var start=
-document.getElementById(
+var start=document.getElementById(
 "startBottomButton"
 );
 
-var pause=
-document.getElementById(
+var pause=document.getElementById(
 "pauseGameButton"
 );
 
-var resume=
-document.getElementById(
+var resume=document.getElementById(
 "resumeGameButton"
 );
 
@@ -1478,12 +1422,10 @@ if(start)
 start.disabled=gameRunning;
 
 if(pause)
-pause.disabled=
-!gameRunning||gamePaused;
+pause.disabled=!gameRunning||gamePaused;
 
 if(resume)
-resume.disabled=
-!gameRunning||!gamePaused;
+resume.disabled=!gameRunning||!gamePaused;
 
 }
 
@@ -1515,11 +1457,9 @@ return;
 
 }
 
-animationId=
-requestAnimationFrame(gameLoop);
+animationId=requestAnimationFrame(gameLoop);
 
-var delta=
-Math.min(
+var delta=Math.min(
 .035,
 (timestamp-lastFrameTime)/1000
 );
@@ -1556,8 +1496,7 @@ showFourMinuteAd();
 
 function getDifficulty(){
 
-var progress=
-Math.min(
+var progress=Math.min(
 elapsedSeconds/240,
 1
 );
@@ -1593,8 +1532,7 @@ delta,
 timestamp
 ){
 
-var difficulty=
-getDifficulty();
+var difficulty=getDifficulty();
 
 player.x+=
 (player.targetX-player.x)*
@@ -1604,14 +1542,10 @@ player.y+=
 (player.targetY-player.y)*
 player.speed;
 
-var width=
-canvas.clientWidth;
+var width=canvas.clientWidth;
+var height=canvas.clientHeight;
 
-var height=
-canvas.clientHeight;
-
-player.x=
-Math.max(
+player.x=Math.max(
 player.width/2,
 Math.min(
 width-player.width/2,
@@ -1619,8 +1553,7 @@ player.x
 )
 );
 
-player.y=
-Math.max(
+player.y=Math.max(
 height*.42,
 Math.min(
 height*.80,
@@ -1631,9 +1564,7 @@ player.y
 
 /* گلوله خودکار */
 
-if(
-timestamp-lastBulletTime>=155
-){
+if(timestamp-lastBulletTime>=155){
 
 fireAutomaticBullet();
 
@@ -1690,6 +1621,7 @@ updateBombs(delta,difficulty);
 updateEnemies(delta,difficulty);
 updateEnemyBullets(delta);
 updateExplosions(delta);
+
 checkCollisions();
 
 }
@@ -1712,6 +1644,41 @@ speed:8
 }
 
 
+/* =========================================================
+   موشک هدایت‌شونده اصلاح‌شده
+   هدف یک‌بار انتخاب می‌شود و تا برخورد حفظ می‌شود.
+   ========================================================= */
+
+function findNearestEnemy(x,y){
+
+var nearest=null;
+var bestDistance=Infinity;
+
+for(
+var i=0;
+i<enemies.length;
+i++
+){
+
+var dx=enemies[i].x-x;
+var dy=enemies[i].y-y;
+
+var d=dx*dx+dy*dy;
+
+if(d<bestDistance){
+
+bestDistance=d;
+nearest=enemies[i];
+
+}
+
+}
+
+return nearest;
+
+}
+
+
 /* SPECIAL MISSILE */
 
 function fireSpecialMissile(){
@@ -1725,55 +1692,36 @@ return;
 
 missiles--;
 
-var target=null;
-var bestDistance=Infinity;
-
-/* هدف اولیه: نزدیک‌ترین دشمن */
-
-for(
-var i=0;
-i<enemies.length;
-i++
-){
-
-var dx=
-enemies[i].x-player.x;
-
-var dy=
-enemies[i].y-player.y;
-
-var dist=
-dx*dx+dy*dy;
-
-if(dist<bestDistance){
-
-bestDistance=dist;
-target=enemies[i];
-
-}
-
-}
-
 
 /*
-   موشک از پشت هواپیما خارج می‌شود.
-   زاویه اولیه به طرف هدف است.
+موشک فقط هنگام شلیک یک هدف را انتخاب می‌کند.
+بعد از آن دیگر بین دشمن‌ها جابه‌جا نمی‌شود.
 */
 
 var startX=player.x;
-var startY=player.y+24;
+var startY=player.y+25;
+
+var target=findNearestEnemy(
+startX,
+startY
+);
 
 var angle=-Math.PI/2;
 
 if(target){
 
-angle=
-Math.atan2(
+angle=Math.atan2(
 target.y-startY,
 target.x-startX
 );
 
 }
+
+
+/*
+سرعت کمتر + چرخش محدود
+باعث می‌شود موشک دور هدف نچرخد.
+*/
 
 specialMissiles.push({
 
@@ -1783,15 +1731,15 @@ y:startY,
 width:10,
 height:25,
 
-speed:360,
+speed:300,
 
 angle:angle,
 
-turnRate:8,
+turnRate:3.2,
 
-trail:[],
+target:target,
 
-target:target
+trail:[]
 
 });
 
@@ -1800,29 +1748,189 @@ updateGameUI();
 }
 
 
+/* بررسی وجود هدف */
+
+function enemyStillExists(target){
+
+if(!target)
+return false;
+
+for(
+var i=0;
+i<enemies.length;
+i++
+){
+
+if(enemies[i]===target)
+return true;
+
+}
+
+return false;
+
+}
+
+
+/* MISSILE UPDATE */
+
+function updateMissiles(delta){
+
+for(
+var i=specialMissiles.length-1;
+i>=0;
+i--
+){
+
+var missile=specialMissiles[i];
+
+
+/*
+اگر هدف اولیه از بین رفته باشد،
+فقط یک هدف جدید انتخاب می‌شود.
+*/
+
+if(
+!enemyStillExists(missile.target)
+){
+
+missile.target=
+findNearestEnemy(
+missile.x,
+missile.y
+);
+
+}
+
+
+var target=missile.target;
+
+
+/*
+هدایت نرم به سمت هدف
+*/
+
+if(target){
+
+var dx=target.x-missile.x;
+var dy=target.y-missile.y;
+
+var distanceSquared=
+dx*dx+dy*dy;
+
+
+/*
+اگر خیلی نزدیک شد،
+مستقیماً برخورد را آماده می‌کنیم.
+این قسمت مانع چرخیدن دور دشمن می‌شود.
+*/
+
+if(distanceSquared<28*28){
+
+missile.x=target.x;
+missile.y=target.y;
+
+continue;
+
+}
+
+
+var desiredAngle=Math.atan2(
+dy,
+dx
+);
+
+var angleDifference=Math.atan2(
+Math.sin(
+desiredAngle-missile.angle
+),
+Math.cos(
+desiredAngle-missile.angle
+)
+);
+
+
+/*
+حداکثر چرخش در هر فریم محدود است.
+*/
+
+var maxTurn=
+missile.turnRate*delta;
+
+if(angleDifference>maxTurn)
+angleDifference=maxTurn;
+
+if(angleDifference<-maxTurn)
+angleDifference=-maxTurn;
+
+missile.angle+=angleDifference;
+
+}
+
+
+/*
+حرکت
+*/
+
+missile.x+=
+Math.cos(missile.angle)*
+missile.speed*
+delta;
+
+missile.y+=
+Math.sin(missile.angle)*
+missile.speed*
+delta;
+
+
+/* رد آتش */
+
+missile.trail.push({
+
+x:missile.x,
+y:missile.y
+
+});
+
+if(missile.trail.length>12)
+missile.trail.shift();
+
+
+/* حذف خارج صفحه */
+
+if(
+missile.x<-80||
+missile.x>canvas.clientWidth+80||
+missile.y<-80||
+missile.y>canvas.clientHeight+80
+){
+
+specialMissiles.splice(i,1);
+
+}
+
+}
+
+}
+
+
 /* BOMB */
 
 function createBomb(){
 
-var width=
-canvas.clientWidth;
+var width=canvas.clientWidth;
 
 bombs.push({
 
 x:
 25+
 Math.random()*
-Math.max(
-1,
-width-50
-),
+Math.max(1,width-50),
 
 y:-30,
 
 radius:9,
 
-speed:
-getDifficulty().bombSpeed
+speed:getDifficulty().bombSpeed
 
 });
 
@@ -1833,26 +1941,21 @@ getDifficulty().bombSpeed
 
 function createEnemy(){
 
-var width=
-canvas.clientWidth;
+var width=canvas.clientWidth;
 
 enemies.push({
 
 x:
 35+
 Math.random()*
-Math.max(
-1,
-width-70
-),
+Math.max(1,width-70),
 
 y:-35,
 
 width:28,
 height:38,
 
-speed:
-getDifficulty().enemySpeed,
+speed:getDifficulty().enemySpeed,
 
 health:1
 
@@ -1878,9 +1981,7 @@ Math.random()*enemies.length
 enemyBullets.push({
 
 x:enemy.x,
-
 y:enemy.y+17,
-
 radius:3.5,
 
 speed:
@@ -1905,169 +2006,8 @@ i--
 bullets[i].y-=
 bullets[i].speed;
 
-if(
-bullets[i].y<-30
-)
+if(bullets[i].y<-30)
 bullets.splice(i,1);
-
-}
-
-}
-
-
-/*
-====================================================
-موشک کاملاً هدایت‌شونده
-====================================================
-*/
-
-function updateMissiles(delta){
-
-for(
-var i=specialMissiles.length-1;
-i>=0;
-i--
-){
-
-var missile=
-specialMissiles[i];
-
-
-/* پیدا کردن هدف */
-
-var target=null;
-var bestDistance=Infinity;
-
-for(
-var j=0;
-j<enemies.length;
-j++
-){
-
-var enemy=
-enemies[j];
-
-var dx=
-enemy.x-missile.x;
-
-var dy=
-enemy.y-missile.y;
-
-var distanceSquared=
-dx*dx+dy*dy;
-
-
-/*
-   هدفی که نزدیک‌تر است انتخاب می‌شود.
-*/
-
-if(
-distanceSquared<bestDistance
-){
-
-bestDistance=
-distanceSquared;
-
-target=
-enemy;
-
-}
-
-}
-
-missile.target=target;
-
-
-/*
-   اگر دشمن وجود دارد:
-   موشک دائماً زاویه خود را
-   به سمت دشمن تغییر می‌دهد.
-*/
-
-if(target){
-
-var desiredAngle=
-Math.atan2(
-target.y-missile.y,
-target.x-missile.x
-);
-
-var angleDifference=
-Math.atan2(
-Math.sin(
-desiredAngle-missile.angle
-),
-Math.cos(
-desiredAngle-missile.angle
-)
-);
-
-
-/*
-   چرخش سریع و واقعی.
-   این مقدار باعث می‌شود موشک
-   واقعاً دنبال دشمن بپیچد.
-*/
-
-var maxTurn=
-missile.turnRate*delta;
-
-if(
-angleDifference>maxTurn
-)
-angleDifference=maxTurn;
-
-if(
-angleDifference<-maxTurn
-)
-angleDifference=-maxTurn;
-
-missile.angle+=
-angleDifference;
-
-}
-
-
-/* حرکت موشک */
-
-missile.x+=
-Math.cos(missile.angle)*
-missile.speed*
-delta;
-
-missile.y+=
-Math.sin(missile.angle)*
-missile.speed*
-delta;
-
-
-/* رد آتش */
-
-missile.trail.push({
-
-x:missile.x,
-y:missile.y
-
-});
-
-if(
-missile.trail.length>14
-)
-missile.trail.shift();
-
-
-/* حذف خارج صفحه */
-
-if(
-missile.x<-80||
-missile.x>canvas.clientWidth+80||
-missile.y<-80||
-missile.y>canvas.clientHeight+80
-){
-
-specialMissiles.splice(i,1);
-
-}
 
 }
 
@@ -2099,6 +2039,7 @@ if(
 bombs[i].y>
 canvas.clientHeight+40
 )
+
 bombs.splice(i,1);
 
 }
@@ -2126,6 +2067,7 @@ if(
 enemies[i].y>
 canvas.clientHeight+70
 )
+
 enemies.splice(i,1);
 
 }
@@ -2150,6 +2092,7 @@ if(
 enemyBullets[i].y>
 canvas.clientHeight+30
 )
+
 enemyBullets.splice(i,1);
 
 }
@@ -2187,9 +2130,7 @@ explosions[i].life-=delta;
 explosions[i].radius+=
 65*delta;
 
-if(
-explosions[i].life<=0
-)
+if(explosions[i].life<=0)
 explosions.splice(i,1);
 
 }
@@ -2222,6 +2163,7 @@ i--
 ){
 
 var bullet=bullets[i];
+
 var hit=false;
 
 for(
@@ -2283,14 +2225,13 @@ e>=0;
 e--
 ){
 
-var target=
-enemies[e];
+var target=enemies[e];
 
 if(
 circleRectCollision(
 missile.x,
 missile.y,
-9,
+10,
 target
 )
 ){
@@ -2301,6 +2242,7 @@ target.y
 );
 
 enemies.splice(e,1);
+
 specialMissiles.splice(m,1);
 
 gameScore+=25;
@@ -2335,7 +2277,8 @@ bombs[b].x,
 bombs[b].y,
 player.x,
 player.y
-)<
+)
+<
 bombs[b].radius+
 playerRadius
 ){
@@ -2370,7 +2313,8 @@ enemyBullets[eb].x,
 enemyBullets[eb].y,
 player.x,
 player.y
-)<
+)
+<
 enemyBullets[eb].radius+
 playerRadius
 ){
@@ -2411,7 +2355,8 @@ enemies[en].x,
 enemies[en].y,
 player.x,
 player.y
-)<
+)
+<
 enemyCollisionRadius+
 playerRadius
 ){
@@ -2454,23 +2399,16 @@ return;
 player.y=
 canvas.clientHeight-100;
 
-player.targetY=
-player.y;
+player.targetY=player.y;
 
 bombs.splice(
 0,
-Math.min(
-2,
-bombs.length
-)
+Math.min(2,bombs.length)
 );
 
 enemyBullets.splice(
 0,
-Math.min(
-2,
-enemyBullets.length
-)
+Math.min(2,enemyBullets.length)
 );
 
 updateGameUI();
@@ -2528,8 +2466,7 @@ return;
 
 }
 
-var savedElapsed=
-elapsedSeconds;
+var savedElapsed=elapsedSeconds;
 
 rewardedController
 .show()
@@ -2542,12 +2479,11 @@ gameLives=3;
 gameRunning=true;
 gamePaused=false;
 
-document.getElementById(
-"gameOverOverlay"
-).classList.add("hidden");
+document
+.getElementById("gameOverOverlay")
+.classList.add("hidden");
 
-var now=
-performance.now();
+var now=performance.now();
 
 gameStartTime=
 now-savedElapsed*1000;
@@ -2640,76 +2576,52 @@ resumeGame();
 function updateGameUI(){
 
 var lives=
-document.getElementById(
-"gameLives"
-);
+document.getElementById("gameLives");
 
 var score=
-document.getElementById(
-"gameScore"
-);
+document.getElementById("gameScore");
 
 var gameCoins=
-document.getElementById(
-"gameCoins"
-);
+document.getElementById("gameCoins");
 
 var time=
-document.getElementById(
-"gameTime"
-);
+document.getElementById("gameTime");
 
 var missileCount=
-document.getElementById(
-"missileCount"
-);
+document.getElementById("missileCount");
 
 var missileButton=
-document.getElementById(
-"missileButton"
-);
+document.getElementById("missileButton");
 
 
 if(lives)
-lives.textContent=
-gameLives;
+lives.textContent=gameLives;
 
 if(score)
-score.textContent=
-gameScore;
+score.textContent=gameScore;
 
 if(gameCoins)
-gameCoins.textContent=
-coins;
+gameCoins.textContent=coins;
 
 
 if(time){
 
 var minutes=
-Math.floor(
-elapsedSeconds/60
-);
+Math.floor(elapsedSeconds/60);
 
 var seconds=
-Math.floor(
-elapsedSeconds%60
-);
+Math.floor(elapsedSeconds%60);
 
 time.textContent=
 minutes+
 ":"+
-(
-seconds<10
-?"0"+seconds
-:seconds
-);
+(seconds<10?"0"+seconds:seconds);
 
 }
 
 
 if(missileCount)
-missileCount.textContent=
-missiles;
+missileCount.textContent=missiles;
 
 
 if(missileButton){
@@ -2731,12 +2643,8 @@ function drawGame(){
 if(!canvas||!ctx)
 return;
 
-var width=
-canvas.clientWidth;
-
-var height=
-canvas.clientHeight;
-
+var width=canvas.clientWidth;
+var height=canvas.clientHeight;
 
 var skyGradient=
 ctx.createLinearGradient(
@@ -2761,8 +2669,7 @@ skyGradient.addColorStop(
 "#0a2018"
 );
 
-ctx.fillStyle=
-skyGradient;
+ctx.fillStyle=skyGradient;
 
 ctx.fillRect(
 0,
@@ -2778,8 +2685,7 @@ height
 );
 
 
-var horizonY=
-height*.82;
+var horizonY=height*.82;
 
 var horizonGradient=
 ctx.createLinearGradient(
@@ -2799,8 +2705,7 @@ horizonGradient.addColorStop(
 "rgba(30,70,45,.35)"
 );
 
-ctx.fillStyle=
-horizonGradient;
+ctx.fillStyle=horizonGradient;
 
 ctx.fillRect(
 0,
@@ -2815,6 +2720,7 @@ var i=0;
 i<bombs.length;
 i++
 )
+
 drawBomb(bombs[i]);
 
 
@@ -2823,6 +2729,7 @@ var j=0;
 j<enemies.length;
 j++
 )
+
 drawEnemy(enemies[j]);
 
 
@@ -2831,6 +2738,7 @@ var k=0;
 k<enemyBullets.length;
 k++
 )
+
 drawEnemyBullet(
 enemyBullets[k]
 );
@@ -2841,6 +2749,7 @@ var q=0;
 q<bullets.length;
 q++
 )
+
 drawBullet(
 bullets[q]
 );
@@ -2851,6 +2760,7 @@ var r=0;
 r<specialMissiles.length;
 r++
 )
+
 drawMissile(
 specialMissiles[r]
 );
@@ -2861,6 +2771,7 @@ var x=0;
 x<explosions.length;
 x++
 )
+
 drawExplosion(
 explosions[x]
 );
@@ -2895,19 +2806,14 @@ i<count;
 i++
 ){
 
-var x=
-(i*83)%width;
+var x=(i*83)%width;
 
 var y=
-(
-i*137+
-elapsedSeconds*35
-)%height;
+(i*137+
+elapsedSeconds*35)%height;
 
 var size=
-i%5===0
-?2
-:1;
+i%5===0?2:1;
 
 ctx.fillRect(
 x,
@@ -2923,17 +2829,11 @@ size
 
 /* PLAYER */
 
-function drawPlayerPlane(
-x,
-y
-){
+function drawPlayerPlane(x,y){
 
 ctx.save();
 
-ctx.translate(
-x,
-y
-);
+ctx.translate(x,y);
 
 ctx.scale(
 PLAYER_SCALE,
@@ -2971,9 +2871,11 @@ ctx.beginPath();
 ctx.moveTo(-6,-4);
 ctx.lineTo(-24,15);
 ctx.lineTo(-8,11);
+
 ctx.closePath();
 
 ctx.fillStyle="#cbd5e1";
+
 ctx.fill();
 
 
@@ -2984,6 +2886,7 @@ ctx.beginPath();
 ctx.moveTo(6,-4);
 ctx.lineTo(24,15);
 ctx.lineTo(8,11);
+
 ctx.closePath();
 
 ctx.fill();
@@ -2999,9 +2902,11 @@ ctx.lineTo(6,22);
 ctx.lineTo(0,27);
 ctx.lineTo(-6,22);
 ctx.lineTo(-8,8);
+
 ctx.closePath();
 
 ctx.fillStyle="#e5e7eb";
+
 ctx.fill();
 
 
@@ -3013,9 +2918,11 @@ ctx.moveTo(0,-21);
 ctx.lineTo(5,-8);
 ctx.lineTo(0,-4);
 ctx.lineTo(-5,-8);
+
 ctx.closePath();
 
 ctx.fillStyle="#294f70";
+
 ctx.fill();
 
 
@@ -3026,9 +2933,11 @@ ctx.beginPath();
 ctx.moveTo(-4,14);
 ctx.lineTo(-12,25);
 ctx.lineTo(-3,22);
+
 ctx.closePath();
 
 ctx.fillStyle="#9ca3af";
+
 ctx.fill();
 
 
@@ -3039,6 +2948,7 @@ ctx.beginPath();
 ctx.moveTo(4,14);
 ctx.lineTo(12,25);
 ctx.lineTo(3,22);
+
 ctx.closePath();
 
 ctx.fill();
@@ -3072,6 +2982,7 @@ Math.PI*2
 ctx.fillStyle="#252525";
 ctx.fill();
 
+
 ctx.beginPath();
 
 ctx.moveTo(0,-9);
@@ -3079,7 +2990,9 @@ ctx.lineTo(6,-16);
 
 ctx.strokeStyle="#b8b8b8";
 ctx.lineWidth=2;
+
 ctx.stroke();
+
 
 ctx.beginPath();
 
@@ -3092,6 +3005,7 @@ Math.PI*2
 );
 
 ctx.fillStyle="#ff4d4d";
+
 ctx.fill();
 
 ctx.restore();
@@ -3115,19 +3029,23 @@ ctx.beginPath();
 ctx.moveTo(-5,3);
 ctx.lineTo(-16,12);
 ctx.lineTo(-5,9);
+
 ctx.closePath();
 
 ctx.fillStyle="#c13b3b";
 ctx.fill();
+
 
 ctx.beginPath();
 
 ctx.moveTo(5,3);
 ctx.lineTo(16,12);
 ctx.lineTo(5,9);
+
 ctx.closePath();
 
 ctx.fill();
+
 
 ctx.beginPath();
 
@@ -3137,10 +3055,13 @@ ctx.lineTo(3.5,18);
 ctx.lineTo(0,21);
 ctx.lineTo(-3.5,18);
 ctx.lineTo(-5,7);
+
 ctx.closePath();
 
 ctx.fillStyle="#8f2020";
+
 ctx.fill();
+
 
 ctx.beginPath();
 
@@ -3153,6 +3074,7 @@ Math.PI*2
 );
 
 ctx.fillStyle="#351c1c";
+
 ctx.fill();
 
 ctx.restore();
@@ -3196,8 +3118,7 @@ i<missile.trail.length;
 i++
 ){
 
-var p=
-missile.trail[i];
+var p=missile.trail[i];
 
 var progress=
 (i+1)/
@@ -3206,8 +3127,7 @@ missile.trail.length;
 ctx.globalAlpha=
 progress*.5;
 
-ctx.fillStyle=
-"#ff6b18";
+ctx.fillStyle="#ff6b18";
 
 ctx.beginPath();
 
@@ -3229,7 +3149,9 @@ ctx.fill();
 ctx.globalAlpha=1;
 
 
-/* جهت واقعی موشک */
+/*
+جهت موشک
+*/
 
 ctx.translate(
 missile.x,
@@ -3261,9 +3183,11 @@ ctx.beginPath();
 ctx.moveTo(-4,-13);
 ctx.lineTo(0,-22);
 ctx.lineTo(4,-13);
+
 ctx.closePath();
 
 ctx.fillStyle="#ffffff";
+
 ctx.fill();
 
 
@@ -3274,9 +3198,11 @@ ctx.beginPath();
 ctx.moveTo(-4,4);
 ctx.lineTo(-10,11);
 ctx.lineTo(-4,10);
+
 ctx.closePath();
 
 ctx.fillStyle="#9ca3af";
+
 ctx.fill();
 
 
@@ -3287,6 +3213,7 @@ ctx.beginPath();
 ctx.moveTo(4,4);
 ctx.lineTo(10,11);
 ctx.lineTo(4,10);
+
 ctx.closePath();
 
 ctx.fill();
@@ -3311,6 +3238,7 @@ ctx.lineTo(3,12);
 ctx.closePath();
 
 ctx.fillStyle="#ff5a1f";
+
 ctx.fill();
 
 ctx.restore();
@@ -3333,6 +3261,7 @@ Math.PI*2
 );
 
 ctx.fillStyle="#ff5252";
+
 ctx.fill();
 
 }
@@ -3363,7 +3292,9 @@ Math.PI*2
 );
 
 ctx.fillStyle="#ffb020";
+
 ctx.fill();
+
 
 ctx.beginPath();
 
@@ -3376,6 +3307,7 @@ Math.PI*2
 );
 
 ctx.fillStyle="#fff3a0";
+
 ctx.fill();
 
 ctx.restore();
@@ -3410,11 +3342,8 @@ rect.y+rect.height/2
 )
 );
 
-var dx=
-cx-closestX;
-
-var dy=
-cy-closestY;
+var dx=cx-closestX;
+var dy=cy-closestY;
 
 return
 dx*dx+
@@ -3434,7 +3363,6 @@ y2
 ){
 
 var dx=x1-x2;
-
 var dy=y1-y2;
 
 return Math.sqrt(
@@ -3459,8 +3387,7 @@ return;
 var rect=
 canvas.getBoundingClientRect();
 
-var clientX,
-clientY;
+var clientX,clientY;
 
 if(
 event.touches&&
@@ -3486,11 +3413,8 @@ event.changedTouches[0].clientY;
 
 }else{
 
-clientX=
-event.clientX;
-
-clientY=
-event.clientY;
+clientX=event.clientX;
+clientY=event.clientY;
 
 }
 
