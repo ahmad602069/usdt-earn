@@ -272,33 +272,6 @@ body.game-mode main{
     line-height:1.8
 }
 
-/* MISSILE BUTTON */
-
-.missile-button{
-    position:absolute;
-    left:50%;
-    bottom:62px;
-    transform:translateX(-50%);
-    z-index:121;
-    min-width:155px;
-    padding:10px 14px;
-    border:1px solid #8c313a;
-    border-radius:12px;
-    background:#b52b38;
-    color:white;
-    font-size:13px;
-    font-weight:bold;
-    cursor:pointer;
-    touch-action:manipulation
-}
-
-.missile-button:disabled{
-    opacity:.45;
-    cursor:not-allowed
-}
-
-/* BOTTOM CONTROLS */
-
 .game-bottom-controls{
     position:absolute;
     right:0;
@@ -343,6 +316,31 @@ body.game-mode main{
 
 .game-control-button:disabled{
     opacity:.4;
+    cursor:not-allowed
+}
+
+/* MISSILE BUTTON */
+
+.missile-button{
+    position:absolute;
+    left:50%;
+    bottom:62px;
+    transform:translateX(-50%);
+    z-index:121;
+    min-width:155px;
+    padding:10px 14px;
+    border:1px solid #8c313a;
+    border-radius:12px;
+    background:#b52b38;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation
+}
+
+.missile-button:disabled{
+    opacity:.45;
     cursor:not-allowed
 }
 
@@ -497,12 +495,6 @@ body.game-mode main{
     .game-control-button{
         min-height:42px;
         font-size:11px
-    }
-
-    .missile-button{
-        min-width:145px;
-        padding:9px 12px;
-        font-size:12px
     }
 }
 </style>
@@ -695,20 +687,6 @@ body.game-mode main{
 
             </div>
 
-            <!-- دکمه شلیک موشک ویژه -->
-
-            <button
-                type="button"
-                id="missileButton"
-                class="missile-button"
-                onclick="fireSpecialMissile()"
-                disabled
-            >
-                🚀 موشک ویژه (<span id="missileCount">3</span>)
-            </button>
-
-            <!-- سه دکمه پایین بازی -->
-
             <div class="game-bottom-controls">
 
                 <button
@@ -741,6 +719,16 @@ body.game-mode main{
                 </button>
 
             </div>
+
+            <button
+                type="button"
+                id="missileButton"
+                class="missile-button"
+                onclick="fireSpecialMissile()"
+                disabled
+            >
+                🚀 موشک ویژه (<span id="missileCount">3</span>)
+            </button>
 
         </div>
 
@@ -780,7 +768,10 @@ body.game-mode main{
             موجودی قابل برداشت
         </p>
 
-        <div class="balance-number" id="walletBalance">
+        <div
+            class="balance-number"
+            id="walletBalance"
+        >
             0.00 USDT
         </div>
 
@@ -856,9 +847,7 @@ body.game-mode main{
         class="active"
         onclick="showPage('home',this)"
     >
-        🏠
-        <br>
-        خانه
+        🏠<br>خانه
     </button>
 
     <button
@@ -866,9 +855,7 @@ body.game-mode main{
         id="navInvite"
         onclick="showPage('invite',this)"
     >
-        👥
-        <br>
-        دعوت
+        👥<br>دعوت
     </button>
 
     <button
@@ -876,9 +863,7 @@ body.game-mode main{
         id="navWallet"
         onclick="showPage('wallet',this)"
     >
-        💰
-        <br>
-        کیف پول
+        💰<br>کیف پول
     </button>
 
     <button
@@ -886,9 +871,7 @@ body.game-mode main{
         id="navProfile"
         onclick="showPage('profile',this)"
     >
-        👤
-        <br>
-        پروفایل
+        👤<br>پروفایل
     </button>
 
 </nav>
@@ -912,19 +895,26 @@ if(window.Telegram && window.Telegram.WebApp){
         tg.ready();
         tg.expand();
 
-        if(tg.initDataUnsafe && tg.initDataUnsafe.user){
+        if(
+            tg.initDataUnsafe &&
+            tg.initDataUnsafe.user
+        ){
 
             var user=tg.initDataUnsafe.user;
-            var userElement=document.getElementById("userId");
+            var userElement=
+                document.getElementById("userId");
 
             if(userElement){
-                userElement.textContent=user.id || "-";
+                userElement.textContent=
+                    user.id || "-";
             }
 
         }
 
     }catch(error){
+
         console.log(error);
+
     }
 
 }
@@ -933,10 +923,13 @@ if(window.Telegram && window.Telegram.WebApp){
 
 function showPage(id,button){
 
-    var pages=document.querySelectorAll(".page");
+    var pages=
+        document.querySelectorAll(".page");
 
     for(var i=0;i<pages.length;i++){
+
         pages[i].classList.remove("active");
+
     }
 
     var page=document.getElementById(id);
@@ -945,10 +938,13 @@ function showPage(id,button){
         page.classList.add("active");
     }
 
-    var buttons=document.querySelectorAll(".nav button");
+    var buttons=
+        document.querySelectorAll(".nav button");
 
     for(var j=0;j<buttons.length;j++){
+
         buttons[j].classList.remove("active");
+
     }
 
     if(button){
@@ -1001,8 +997,13 @@ var playerInvulnerableUntil=0;
 var fourMinuteAdShown=false;
 var pointerActive=false;
 
-var canvas=document.getElementById("gameCanvas");
-var ctx=canvas ? canvas.getContext("2d") : null;
+var canvas=
+    document.getElementById("gameCanvas");
+
+var ctx=
+    canvas ?
+    canvas.getContext("2d") :
+    null;
 
 /* CANVAS */
 
@@ -1010,17 +1011,32 @@ function resizeCanvas(){
 
     if(!canvas || !ctx)return;
 
-    var rect=canvas.getBoundingClientRect();
+    var rect=
+        canvas.getBoundingClientRect();
 
-    var width=Math.max(300,Math.floor(rect.width));
-    var height=Math.max(400,Math.floor(rect.height));
+    var width=
+        Math.max(300,Math.floor(rect.width));
 
-    var dpr=Math.min(window.devicePixelRatio || 1,2);
+    var height=
+        Math.max(400,Math.floor(rect.height));
+
+    var dpr=
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
     canvas.width=width*dpr;
     canvas.height=height*dpr;
 
-    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
 
     if(!gameRunning){
 
@@ -1034,7 +1050,10 @@ function resizeCanvas(){
 
 }
 
-window.addEventListener("resize",resizeCanvas);
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
 
 /* RESET */
 
@@ -1068,7 +1087,11 @@ function resetGameState(){
     explosions=[];
 
     if(animationId!==null){
-        cancelAnimationFrame(animationId);
+
+        cancelAnimationFrame(
+            animationId
+        );
+
     }
 
     animationId=null;
@@ -1084,14 +1107,26 @@ function openGame(){
 
     resetGameState();
 
-    document.body.classList.add("game-mode");
+    document.body.classList.add(
+        "game-mode"
+    );
 
-    document.getElementById("mainNav").classList.add("hidden");
+    document.getElementById(
+        "mainNav"
+    ).classList.add("hidden");
 
-    showPage("gamePage",null);
+    showPage(
+        "gamePage",
+        null
+    );
 
-    document.getElementById("startOverlay").classList.remove("hidden");
-    document.getElementById("gameOverOverlay").classList.add("hidden");
+    document.getElementById(
+        "startOverlay"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "gameOverOverlay"
+    ).classList.add("hidden");
 
     resizeCanvas();
 
@@ -1106,12 +1141,21 @@ function backHome(){
 
     resetGameState();
 
-    document.body.classList.remove("game-mode");
+    document.body.classList.remove(
+        "game-mode"
+    );
 
-    document.getElementById("mainNav").classList.remove("hidden");
+    document.getElementById(
+        "mainNav"
+    ).classList.remove("hidden");
 
-    document.getElementById("startOverlay").classList.remove("hidden");
-    document.getElementById("gameOverOverlay").classList.add("hidden");
+    document.getElementById(
+        "startOverlay"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "gameOverOverlay"
+    ).classList.add("hidden");
 
     showPage(
         "home",
@@ -1123,7 +1167,9 @@ function backHome(){
 }
 
 function cancelGame(){
+
     backHome();
+
 }
 
 /* COPY */
@@ -1132,18 +1178,29 @@ function copyLink(){
 
     var link=window.location.href;
 
-    if(navigator.clipboard && navigator.clipboard.writeText){
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
 
         navigator.clipboard.writeText(link)
+
         .then(function(){
+
             alert("لینک کپی شد ✅");
+
         })
+
         .catch(function(){
+
             alert(link);
+
         });
 
     }else{
+
         alert(link);
+
     }
 
 }
@@ -1152,25 +1209,47 @@ function copyLink(){
 
 function updateStats(){
 
-    var coinStat=document.getElementById("coinStat");
-    var scoreStat=document.getElementById("scoreStat");
-    var adStat=document.getElementById("adStat");
-    var walletBalance=document.getElementById("walletBalance");
-    var profileBalance=document.getElementById("profileBalance");
+    var coinStat=
+        document.getElementById("coinStat");
 
-    if(coinStat)coinStat.textContent=coins;
-    if(scoreStat)scoreStat.textContent=totalScore;
-    if(adStat)adStat.textContent=adCount;
+    var scoreStat=
+        document.getElementById("scoreStat");
 
-    if(walletBalance)walletBalance.textContent="0.00 USDT";
-    if(profileBalance)profileBalance.textContent="0.00";
+    var adStat=
+        document.getElementById("adStat");
+
+    var walletBalance=
+        document.getElementById("walletBalance");
+
+    var profileBalance=
+        document.getElementById("profileBalance");
+
+    if(coinStat)
+        coinStat.textContent=coins;
+
+    if(scoreStat)
+        scoreStat.textContent=totalScore;
+
+    if(adStat)
+        adStat.textContent=adCount;
+
+    if(walletBalance)
+        walletBalance.textContent=
+            "0.00 USDT";
+
+    if(profileBalance)
+        profileBalance.textContent=
+            "0.00";
 
 }
 
 /* ADSGRAM */
 
-var ADSGRAM_REWARDED_BLOCK_ID="YOUR_REWARDED_BLOCK_ID";
-var ADSGRAM_INTERSTITIAL_BLOCK_ID="YOUR_INTERSTITIAL_BLOCK_ID";
+var ADSGRAM_REWARDED_BLOCK_ID=
+    "YOUR_REWARDED_BLOCK_ID";
+
+var ADSGRAM_INTERSTITIAL_BLOCK_ID=
+    "YOUR_INTERSTITIAL_BLOCK_ID";
 
 var rewardedController=null;
 var interstitialController=null;
@@ -1192,28 +1271,39 @@ function initAds(){
 
         if(
             ADSGRAM_REWARDED_BLOCK_ID &&
-            ADSGRAM_REWARDED_BLOCK_ID!=="YOUR_REWARDED_BLOCK_ID"
+            ADSGRAM_REWARDED_BLOCK_ID!==
+            "YOUR_REWARDED_BLOCK_ID"
         ){
 
-            rewardedController=window.Adsgram.init({
-                blockId:ADSGRAM_REWARDED_BLOCK_ID
-            });
+            rewardedController=
+                window.Adsgram.init({
+                    blockId:
+                        ADSGRAM_REWARDED_BLOCK_ID
+                });
 
         }
 
         if(
             ADSGRAM_INTERSTITIAL_BLOCK_ID &&
-            ADSGRAM_INTERSTITIAL_BLOCK_ID!=="YOUR_INTERSTITIAL_BLOCK_ID"
+            ADSGRAM_INTERSTITIAL_BLOCK_ID!==
+            "YOUR_INTERSTITIAL_BLOCK_ID"
         ){
 
-            interstitialController=window.Adsgram.init({
-                blockId:ADSGRAM_INTERSTITIAL_BLOCK_ID
-            });
+            interstitialController=
+                window.Adsgram.init({
+                    blockId:
+                        ADSGRAM_INTERSTITIAL_BLOCK_ID
+                });
 
         }
 
     }catch(error){
-        console.log("AdsGram error:",error);
+
+        console.log(
+            "AdsGram error:",
+            error
+        );
+
     }
 
 }
@@ -1226,13 +1316,20 @@ function startGame(){
 
     if(!canvas || !ctx){
 
-        alert("خطا در بارگذاری صفحه بازی");
+        alert(
+            "خطا در بارگذاری صفحه بازی"
+        );
+
         return;
 
     }
 
     if(animationId!==null){
-        cancelAnimationFrame(animationId);
+
+        cancelAnimationFrame(
+            animationId
+        );
+
     }
 
     animationId=null;
@@ -1240,7 +1337,8 @@ function startGame(){
     gameRunning=true;
     gamePaused=false;
 
-    gameStartTime=performance.now();
+    gameStartTime=
+        performance.now();
 
     pauseStartTime=0;
     elapsedSeconds=0;
@@ -1258,34 +1356,55 @@ function startGame(){
 
     playerInvulnerableUntil=0;
 
-    lastBulletTime=performance.now()-1000;
+    lastBulletTime=
+        performance.now()-1000;
 
-    lastBombTime=performance.now();
-    lastEnemyTime=performance.now();
-    lastEnemyShotTime=performance.now();
+    lastBombTime=
+        performance.now();
+
+    lastEnemyTime=
+        performance.now();
+
+    lastEnemyShotTime=
+        performance.now();
 
     fourMinuteAdShown=false;
 
     resizeCanvas();
 
-    player.x=canvas.clientWidth/2;
-    player.y=canvas.clientHeight-105;
+    player.x=
+        canvas.clientWidth/2;
 
-    player.targetX=player.x;
-    player.targetY=player.y;
+    player.y=
+        canvas.clientHeight-105;
+
+    player.targetX=
+        player.x;
+
+    player.targetY=
+        player.y;
 
     fireAutomaticBullet();
-    lastBulletTime=performance.now();
 
-    document.getElementById("startOverlay").classList.add("hidden");
-    document.getElementById("gameOverOverlay").classList.add("hidden");
+    lastBulletTime=
+        performance.now();
+
+    document.getElementById(
+        "startOverlay"
+    ).classList.add("hidden");
+
+    document.getElementById(
+        "gameOverOverlay"
+    ).classList.add("hidden");
 
     updateGameUI();
     updateControlButtons();
 
-    lastFrameTime=performance.now();
+    lastFrameTime=
+        performance.now();
 
-    animationId=requestAnimationFrame(gameLoop);
+    animationId=
+        requestAnimationFrame(gameLoop);
 
 }
 
@@ -1297,7 +1416,11 @@ function stopGame(){
     gamePaused=false;
 
     if(animationId!==null){
-        cancelAnimationFrame(animationId);
+
+        cancelAnimationFrame(
+            animationId
+        );
+
     }
 
     animationId=null;
@@ -1313,14 +1436,24 @@ function stopGame(){
 
 function pauseGame(){
 
-    if(!gameRunning || gamePaused)return;
+    if(
+        !gameRunning ||
+        gamePaused
+    ){
+        return;
+    }
 
     gamePaused=true;
 
-    pauseStartTime=performance.now();
+    pauseStartTime=
+        performance.now();
 
     if(animationId!==null){
-        cancelAnimationFrame(animationId);
+
+        cancelAnimationFrame(
+            animationId
+        );
+
     }
 
     animationId=null;
@@ -1334,23 +1467,38 @@ function pauseGame(){
 
 function resumeGame(){
 
-    if(!gameRunning || !gamePaused)return;
+    if(
+        !gameRunning ||
+        !gamePaused
+    ){
+        return;
+    }
 
-    var now=performance.now();
+    var now=
+        performance.now();
 
     if(pauseStartTime>0){
-        gameStartTime+=now-pauseStartTime;
+
+        gameStartTime+=
+            now-pauseStartTime;
+
     }
 
     pauseStartTime=0;
     gamePaused=false;
+
     lastFrameTime=now;
 
     updateControlButtons();
     updateGameUI();
 
     if(animationId===null){
-        animationId=requestAnimationFrame(gameLoop);
+
+        animationId=
+            requestAnimationFrame(
+                gameLoop
+            );
+
     }
 
 }
@@ -1359,26 +1507,49 @@ function resumeGame(){
 
 function updateControlButtons(){
 
-    var start=document.getElementById("startBottomButton");
-    var pause=document.getElementById("pauseGameButton");
-    var resume=document.getElementById("resumeGameButton");
+    var start=
+        document.getElementById(
+            "startBottomButton"
+        );
+
+    var pause=
+        document.getElementById(
+            "pauseGameButton"
+        );
+
+    var resume=
+        document.getElementById(
+            "resumeGameButton"
+        );
 
     if(start){
+
         start.disabled=false;
+
     }
 
     if(pause){
-        pause.disabled=!gameRunning || gamePaused;
+
+        pause.disabled=
+            !gameRunning ||
+            gamePaused;
+
     }
 
     if(resume){
-        resume.disabled=!gameRunning || !gamePaused;
+
+        resume.disabled=
+            !gameRunning ||
+            !gamePaused;
+
     }
 
 }
 
 function restartGame(){
+
     startGame();
+
 }
 
 /* LOOP */
@@ -1386,28 +1557,45 @@ function restartGame(){
 function gameLoop(timestamp){
 
     if(!gameRunning){
+
         animationId=null;
         return;
+
     }
 
     if(gamePaused){
+
         animationId=null;
         return;
+
     }
 
-    animationId=requestAnimationFrame(gameLoop);
+    animationId=
+        requestAnimationFrame(
+            gameLoop
+        );
 
-    var delta=Math.min(
-        .035,
-        Math.max(0,(timestamp-lastFrameTime)/1000)
-    );
+    var delta=
+        Math.min(
+            .035,
+            Math.max(
+                0,
+                (timestamp-lastFrameTime)/1000
+            )
+        );
 
     lastFrameTime=timestamp;
 
-    elapsedSeconds=(timestamp-gameStartTime)/1000;
+    elapsedSeconds=
+        (timestamp-gameStartTime)/1000;
 
-    updateGame(delta,timestamp);
+    updateGame(
+        delta,
+        timestamp
+    );
+
     drawGame();
+
     updateGameUI();
 
     if(
@@ -1416,6 +1604,7 @@ function gameLoop(timestamp){
     ){
 
         fourMinuteAdShown=true;
+
         showFourMinuteAd();
 
     }
@@ -1426,25 +1615,35 @@ function gameLoop(timestamp){
 
 function getDifficulty(){
 
-    var progress=Math.min(elapsedSeconds/240,1);
+    var progress=
+        Math.min(
+            elapsedSeconds/240,
+            1
+        );
 
     return{
 
         progress:progress,
 
-        bombSpeed:120+progress*90,
+        bombSpeed:
+            120+progress*90,
 
-        enemySpeed:75+progress*69,
+        enemySpeed:
+            75+progress*69,
 
         bulletSpeed:520,
 
-        enemyBulletSpeed:240+progress*60,
+        enemyBulletSpeed:
+            240+progress*60,
 
-        bombInterval:1250-progress*280,
+        bombInterval:
+            1250-progress*280,
 
-        enemyInterval:2100-progress*400,
+        enemyInterval:
+            2100-progress*400,
 
-        enemyShotInterval:2100-progress*350
+        enemyShotInterval:
+            2100-progress*350
 
     };
 
@@ -1452,61 +1651,95 @@ function getDifficulty(){
 
 /* UPDATE */
 
-function updateGame(delta,timestamp){
+function updateGame(
+    delta,
+    timestamp
+){
 
-    var difficulty=getDifficulty();
+    var difficulty=
+        getDifficulty();
 
-    player.x+=(
-        player.targetX-player.x
-    )*Math.min(1,player.speed*60*delta);
-
-    player.y+=(
-        player.targetY-player.y
-    )*Math.min(1,player.speed*60*delta);
-
-    var width=canvas.clientWidth;
-    var height=canvas.clientHeight;
-
-    player.x=Math.max(
-        player.width/2,
+    player.x+=
+        (
+            player.targetX-player.x
+        )*
         Math.min(
-            width-player.width/2,
-            player.x
-        )
-    );
+            1,
+            player.speed*60*delta
+        );
 
-    player.y=Math.max(
-        height*.42,
+    player.y+=
+        (
+            player.targetY-player.y
+        )*
         Math.min(
-            height*.80,
-            player.y
-        )
-    );
+            1,
+            player.speed*60*delta
+        );
 
-    if(timestamp-lastBulletTime>=155){
+    var width=
+        canvas.clientWidth;
+
+    var height=
+        canvas.clientHeight;
+
+    player.x=
+        Math.max(
+            player.width/2,
+            Math.min(
+                width-player.width/2,
+                player.x
+            )
+        );
+
+    player.y=
+        Math.max(
+            height*.42,
+            Math.min(
+                height*.80,
+                player.y
+            )
+        );
+
+    if(
+        timestamp-lastBulletTime>=155
+    ){
 
         fireAutomaticBullet();
+
         lastBulletTime=timestamp;
 
     }
 
-    if(timestamp-lastBombTime>=difficulty.bombInterval){
+    if(
+        timestamp-lastBombTime>=
+        difficulty.bombInterval
+    ){
 
         createBomb();
+
         lastBombTime=timestamp;
 
     }
 
-    if(timestamp-lastEnemyTime>=difficulty.enemyInterval){
+    if(
+        timestamp-lastEnemyTime>=
+        difficulty.enemyInterval
+    ){
 
         createEnemy();
+
         lastEnemyTime=timestamp;
 
     }
 
-    if(timestamp-lastEnemyShotTime>=difficulty.enemyShotInterval){
+    if(
+        timestamp-lastEnemyShotTime>=
+        difficulty.enemyShotInterval
+    ){
 
         enemyShoot();
+
         lastEnemyShotTime=timestamp;
 
     }
@@ -1528,7 +1761,8 @@ function fireAutomaticBullet(){
 
     if(!gameRunning)return;
 
-    var y=player.y-35;
+    var y=
+        player.y-35;
 
     bullets.push({
 
@@ -1554,12 +1788,20 @@ function findNearestEnemy(x,y){
     var nearest=null;
     var bestDistance=Infinity;
 
-    for(var i=0;i<enemies.length;i++){
+    for(
+        var i=0;
+        i<enemies.length;
+        i++
+    ){
 
-        var dx=enemies[i].x-x;
-        var dy=enemies[i].y-y;
+        var dx=
+            enemies[i].x-x;
 
-        var d=dx*dx+dy*dy;
+        var dy=
+            enemies[i].y-y;
+
+        var d=
+            dx*dx+dy*dy;
 
         if(d<bestDistance){
 
@@ -1583,15 +1825,24 @@ function fireSpecialMissile(){
         gamePaused ||
         missiles<=0
     ){
+
         return;
+
     }
 
     missiles--;
 
-    var startX=player.x;
-    var startY=player.y+25;
+    var startX=
+        player.x;
 
-    var target=findNearestEnemy(startX,startY);
+    var startY=
+        player.y+25;
+
+    var target=
+        findNearestEnemy(
+            startX,
+            startY
+        );
 
     specialMissiles.push({
 
@@ -1625,10 +1876,18 @@ function enemyStillExists(target){
 
     if(!target)return false;
 
-    for(var i=0;i<enemies.length;i++){
+    for(
+        var i=0;
+        i<enemies.length;
+        i++
+    ){
 
-        if(enemies[i]===target){
+        if(
+            enemies[i]===target
+        ){
+
             return true;
+
         }
 
     }
@@ -1639,20 +1898,32 @@ function enemyStillExists(target){
 
 /* DESTROY ENEMY */
 
-function destroyEnemy(index,kind){
+function destroyEnemy(
+    index,
+    kind
+){
 
-    if(index<0 || index>=enemies.length){
+    if(
+        index<0 ||
+        index>=enemies.length
+    ){
+
         return false;
+
     }
 
-    var enemy=enemies[index];
+    var enemy=
+        enemies[index];
 
     createExplosion(
         enemy.x,
         enemy.y
     );
 
-    enemies.splice(index,1);
+    enemies.splice(
+        index,
+        1
+    );
 
     if(kind==="missile"){
 
@@ -1674,35 +1945,58 @@ function destroyEnemy(index,kind){
 
 function updateMissiles(delta){
 
-    for(var i=specialMissiles.length-1;i>=0;i--){
+    for(
+        var i=specialMissiles.length-1;
+        i>=0;
+        i--
+    ){
 
-        var missile=specialMissiles[i];
+        var missile=
+            specialMissiles[i];
 
-        missile.oldX=missile.x;
-        missile.oldY=missile.y;
+        missile.oldX=
+            missile.x;
 
-        if(!enemyStillExists(missile.target)){
+        missile.oldY=
+            missile.y;
 
-            missile.target=findNearestEnemy(
-                missile.x,
-                missile.y
-            );
+        if(
+            !enemyStillExists(
+                missile.target
+            )
+        ){
+
+            missile.target=
+                findNearestEnemy(
+                    missile.x,
+                    missile.y
+                );
 
         }
 
-        var target=missile.target;
+        var target=
+            missile.target;
 
         if(target){
 
-            var dx=target.x-missile.x;
-            var dy=target.y-missile.y;
+            var dx=
+                target.x-missile.x;
 
-            var d=Math.sqrt(dx*dx+dy*dy);
+            var dy=
+                target.y-missile.y;
+
+            var d=
+                Math.sqrt(
+                    dx*dx+dy*dy
+                );
 
             if(d>0){
 
-                missile.dirX=dx/d;
-                missile.dirY=dy/d;
+                missile.dirX=
+                    dx/d;
+
+                missile.dirY=
+                    dy/d;
 
             }
 
@@ -1713,21 +2007,38 @@ function updateMissiles(delta){
 
         }
 
-        missile.x+=missile.dirX*missile.speed*delta;
-        missile.y+=missile.dirY*missile.speed*delta;
+        missile.x+=
+            missile.dirX*
+            missile.speed*
+            delta;
+
+        missile.y+=
+            missile.dirY*
+            missile.speed*
+            delta;
 
         missile.trail.push({
+
             x:missile.x,
             y:missile.y
+
         });
 
-        if(missile.trail.length>14){
+        if(
+            missile.trail.length>14
+        ){
+
             missile.trail.shift();
+
         }
 
         var hitIndex=-1;
 
-        for(var e=enemies.length-1;e>=0;e--){
+        for(
+            var e=enemies.length-1;
+            e>=0;
+            e--
+        ){
 
             if(
                 segmentRectCollision(
@@ -1735,7 +2046,9 @@ function updateMissiles(delta){
                     missile.oldY,
                     missile.x,
                     missile.y,
-                    getEnemyHitbox(enemies[e]),
+                    getEnemyHitbox(
+                        enemies[e]
+                    ),
                     8
                 )
             ){
@@ -1749,7 +2062,8 @@ function updateMissiles(delta){
 
         if(hitIndex>=0){
 
-            var hitEnemy=enemies[hitIndex];
+            var hitEnemy=
+                enemies[hitIndex];
 
             createBigExplosion(
                 hitEnemy.x,
@@ -1761,7 +2075,10 @@ function updateMissiles(delta){
                 "missile"
             );
 
-            specialMissiles.splice(i,1);
+            specialMissiles.splice(
+                i,
+                1
+            );
 
             continue;
 
@@ -1769,12 +2086,17 @@ function updateMissiles(delta){
 
         if(
             missile.x<-100 ||
-            missile.x>canvas.clientWidth+100 ||
+            missile.x>
+                canvas.clientWidth+100 ||
             missile.y<-100 ||
-            missile.y>canvas.clientHeight+100
+            missile.y>
+                canvas.clientHeight+100
         ){
 
-            specialMissiles.splice(i,1);
+            specialMissiles.splice(
+                i,
+                1
+            );
 
         }
 
@@ -1786,12 +2108,16 @@ function updateMissiles(delta){
 
 function createBomb(){
 
-    var width=canvas.clientWidth;
+    var width=
+        canvas.clientWidth;
 
     var x=
         25+
         Math.random()*
-        Math.max(1,width-50);
+        Math.max(
+            1,
+            width-50
+        );
 
     bombs.push({
 
@@ -1803,7 +2129,8 @@ function createBomb(){
 
         radius:9,
 
-        speed:getDifficulty().bombSpeed
+        speed:
+            getDifficulty().bombSpeed
 
     });
 
@@ -1813,12 +2140,16 @@ function createBomb(){
 
 function createEnemy(){
 
-    var width=canvas.clientWidth;
+    var width=
+        canvas.clientWidth;
 
     var x=
         35+
         Math.random()*
-        Math.max(1,width-70);
+        Math.max(
+            1,
+            width-70
+        );
 
     enemies.push({
 
@@ -1831,7 +2162,8 @@ function createEnemy(){
         width:34,
         height:44,
 
-        speed:getDifficulty().enemySpeed,
+        speed:
+            getDifficulty().enemySpeed,
 
         health:1
 
@@ -1843,13 +2175,19 @@ function createEnemy(){
 
 function enemyShoot(){
 
-    if(enemies.length===0)return;
+    if(
+        enemies.length===0
+    ){
+        return;
+    }
 
-    var enemy=enemies[
-        Math.floor(
-            Math.random()*enemies.length
-        )
-    ];
+    var enemy=
+        enemies[
+            Math.floor(
+                Math.random()*
+                enemies.length
+            )
+        ];
 
     enemyBullets.push({
 
@@ -1861,7 +2199,9 @@ function enemyShoot(){
 
         radius:3.5,
 
-        speed:getDifficulty().enemyBulletSpeed
+        speed:
+            getDifficulty()
+            .enemyBulletSpeed
 
     });
 
@@ -1871,18 +2211,32 @@ function enemyShoot(){
 
 function updateBullets(delta){
 
-    for(var i=bullets.length-1;i>=0;i--){
+    for(
+        var i=bullets.length-1;
+        i>=0;
+        i--
+    ){
 
-        var bullet=bullets[i];
+        var bullet=
+            bullets[i];
 
-        bullet.oldX=bullet.x;
-        bullet.oldY=bullet.y;
+        bullet.oldX=
+            bullet.x;
 
-        bullet.y-=bullet.speed*delta;
+        bullet.oldY=
+            bullet.y;
 
-        if(bullet.y<-60){
+        bullet.y-=
+            bullet.speed*delta;
 
-            bullets.splice(i,1);
+        if(
+            bullet.y<-60
+        ){
+
+            bullets.splice(
+                i,
+                1
+            );
 
         }
 
@@ -1894,20 +2248,38 @@ function updateBullets(delta){
 
 function updateBombs(delta){
 
-    for(var i=bombs.length-1;i>=0;i--){
+    for(
+        var i=bombs.length-1;
+        i>=0;
+        i--
+    ){
 
-        var bomb=bombs[i];
+        var bomb=
+            bombs[i];
 
-        bomb.oldX=bomb.x;
-        bomb.oldY=bomb.y;
+        bomb.oldX=
+            bomb.x;
 
-        bomb.y+=bomb.speed*delta;
+        bomb.oldY=
+            bomb.y;
 
-        bomb.x+=Math.sin(elapsedSeconds*2+i)*.25;
+        bomb.y+=
+            bomb.speed*delta;
 
-        if(bomb.y>canvas.clientHeight+60){
+        bomb.x+=
+            Math.sin(
+                elapsedSeconds*2+i
+            )*.25;
 
-            bombs.splice(i,1);
+        if(
+            bomb.y>
+            canvas.clientHeight+60
+        ){
+
+            bombs.splice(
+                i,
+                1
+            );
 
         }
 
@@ -1919,18 +2291,33 @@ function updateBombs(delta){
 
 function updateEnemies(delta){
 
-    for(var i=enemies.length-1;i>=0;i--){
+    for(
+        var i=enemies.length-1;
+        i>=0;
+        i--
+    ){
 
-        var enemy=enemies[i];
+        var enemy=
+            enemies[i];
 
-        enemy.oldX=enemy.x;
-        enemy.oldY=enemy.y;
+        enemy.oldX=
+            enemy.x;
 
-        enemy.y+=enemy.speed*delta;
+        enemy.oldY=
+            enemy.y;
 
-        if(enemy.y>canvas.clientHeight+90){
+        enemy.y+=
+            enemy.speed*delta;
 
-            enemies.splice(i,1);
+        if(
+            enemy.y>
+            canvas.clientHeight+90
+        ){
+
+            enemies.splice(
+                i,
+                1
+            );
 
         }
 
@@ -1942,18 +2329,33 @@ function updateEnemies(delta){
 
 function updateEnemyBullets(delta){
 
-    for(var i=enemyBullets.length-1;i>=0;i--){
+    for(
+        var i=enemyBullets.length-1;
+        i>=0;
+        i--
+    ){
 
-        var bullet=enemyBullets[i];
+        var bullet=
+            enemyBullets[i];
 
-        bullet.oldX=bullet.x;
-        bullet.oldY=bullet.y;
+        bullet.oldX=
+            bullet.x;
 
-        bullet.y+=bullet.speed*delta;
+        bullet.oldY=
+            bullet.y;
 
-        if(bullet.y>canvas.clientHeight+60){
+        bullet.y+=
+            bullet.speed*delta;
 
-            enemyBullets.splice(i,1);
+        if(
+            bullet.y>
+            canvas.clientHeight+60
+        ){
+
+            enemyBullets.splice(
+                i,
+                1
+            );
 
         }
 
@@ -2019,9 +2421,14 @@ function createPlayerExplosion(){
 
 function updateExplosions(delta){
 
-    for(var i=explosions.length-1;i>=0;i--){
+    for(
+        var i=explosions.length-1;
+        i>=0;
+        i--
+    ){
 
-        var exp=explosions[i];
+        var exp=
+            explosions[i];
 
         exp.life-=delta;
 
@@ -2034,11 +2441,19 @@ function updateExplosions(delta){
 
         exp.radius=
             exp.maxRadius*
-            (1-exp.life/maxLife);
+            (
+                1-
+                exp.life/maxLife
+            );
 
-        if(exp.life<=0){
+        if(
+            exp.life<=0
+        ){
 
-            explosions.splice(i,1);
+            explosions.splice(
+                i,
+                1
+            );
 
         }
 
@@ -2085,8 +2500,11 @@ function getBulletHitbox(bullet){
         x:bullet.x,
         y:bullet.y,
 
-        width:bullet.width || 5,
-        height:bullet.height || 20
+        width:
+            bullet.width || 5,
+
+        height:
+            bullet.height || 20
 
     };
 
@@ -2151,7 +2569,9 @@ function segmentRectCollision(
         y1>=minY &&
         y1<=maxY
     ){
+
         return true;
+
     }
 
     if(
@@ -2160,7 +2580,9 @@ function segmentRectCollision(
         y2>=minY &&
         y2<=maxY
     ){
+
         return true;
+
     }
 
     var dx=x2-x1;
@@ -2169,58 +2591,106 @@ function segmentRectCollision(
     var tEnter=0;
     var tExit=1;
 
-    if(Math.abs(dx)<0.000001){
+    if(
+        Math.abs(dx)<0.000001
+    ){
 
-        if(x1<minX || x1>maxX){
+        if(
+            x1<minX ||
+            x1>maxX
+        ){
+
             return false;
+
         }
 
     }else{
 
-        var tx1=(minX-x1)/dx;
-        var tx2=(maxX-x1)/dx;
+        var tx1=
+            (minX-x1)/dx;
+
+        var tx2=
+            (maxX-x1)/dx;
 
         if(tx1>tx2){
 
             var tempX=tx1;
+
             tx1=tx2;
             tx2=tempX;
 
         }
 
-        tEnter=Math.max(tEnter,tx1);
-        tExit=Math.min(tExit,tx2);
+        tEnter=
+            Math.max(
+                tEnter,
+                tx1
+            );
 
-        if(tEnter>tExit){
+        tExit=
+            Math.min(
+                tExit,
+                tx2
+            );
+
+        if(
+            tEnter>tExit
+        ){
+
             return false;
+
         }
 
     }
 
-    if(Math.abs(dy)<0.000001){
+    if(
+        Math.abs(dy)<0.000001
+    ){
 
-        if(y1<minY || y1>maxY){
+        if(
+            y1<minY ||
+            y1>maxY
+        ){
+
             return false;
+
         }
 
     }else{
 
-        var ty1=(minY-y1)/dy;
-        var ty2=(maxY-y1)/dy;
+        var ty1=
+            (minY-y1)/dy;
+
+        var ty2=
+            (maxY-y1)/dy;
 
         if(ty1>ty2){
 
             var tempY=ty1;
+
             ty1=ty2;
             ty2=tempY;
 
         }
 
-        tEnter=Math.max(tEnter,ty1);
-        tExit=Math.min(tExit,ty2);
+        tEnter=
+            Math.max(
+                tEnter,
+                ty1
+            );
 
-        if(tEnter>tExit){
+        tExit=
+            Math.min(
+                tExit,
+                ty2
+            );
+
+        if(
+            tEnter>tExit
+        ){
+
             return false;
+
         }
 
     }
@@ -2231,17 +2701,25 @@ function segmentRectCollision(
 
 /* MOVING BULLET */
 
-function movingBulletHitsEnemy(bullet,enemy){
+function movingBulletHitsEnemy(
+    bullet,
+    enemy
+){
 
-    var enemyBox=getEnemyHitbox(enemy);
+    var enemyBox=
+        getEnemyHitbox(enemy);
 
-    var paddingX=(bullet.width || 5)/2+3;
-    var paddingY=(bullet.height || 20)/2+3;
+    var paddingX=
+        (bullet.width || 5)/2+3;
 
-    var padding=Math.max(
-        paddingX,
-        paddingY
-    );
+    var paddingY=
+        (bullet.height || 20)/2+3;
+
+    var padding=
+        Math.max(
+            paddingX,
+            paddingY
+        );
 
     return segmentRectCollision(
         bullet.oldX,
@@ -2274,9 +2752,12 @@ function movingCircleHitsPlayer(
 
 /* MOVING ENEMY */
 
-function movingEnemyHitsPlayer(enemy){
+function movingEnemyHitsPlayer(
+    enemy
+){
 
-    var playerBox=getPlayerHitbox();
+    var playerBox=
+        getPlayerHitbox();
 
     if(
         rectsOverlap(
@@ -2284,7 +2765,9 @@ function movingEnemyHitsPlayer(enemy){
             getEnemyHitbox(enemy)
         )
     ){
+
         return true;
+
     }
 
     return segmentRectCollision(
@@ -2308,7 +2791,8 @@ function checkCollisions(){
         i--
     ){
 
-        var bullet=bullets[i];
+        var bullet=
+            bullets[i];
 
         var hitEnemyIndex=-1;
 
@@ -2332,9 +2816,14 @@ function checkCollisions(){
 
         }
 
-        if(hitEnemyIndex>=0){
+        if(
+            hitEnemyIndex>=0
+        ){
 
-            var enemy=enemies[hitEnemyIndex];
+            var enemy=
+                enemies[
+                    hitEnemyIndex
+                ];
 
             createExplosion(
                 enemy.x,
@@ -2346,7 +2835,10 @@ function checkCollisions(){
                 "bullet"
             );
 
-            bullets.splice(i,1);
+            bullets.splice(
+                i,
+                1
+            );
 
         }
 
@@ -2363,7 +2855,8 @@ function checkCollisions(){
             b--
         ){
 
-            var bomb=bombs[b];
+            var bomb=
+                bombs[b];
 
             if(
                 movingCircleHitsPlayer(
@@ -2372,7 +2865,10 @@ function checkCollisions(){
                 )
             ){
 
-                bombs.splice(b,1);
+                bombs.splice(
+                    b,
+                    1
+                );
 
                 createPlayerExplosion();
 
@@ -2390,7 +2886,8 @@ function checkCollisions(){
             eb--
         ){
 
-            var enemyBullet=enemyBullets[eb];
+            var enemyBullet=
+                enemyBullets[eb];
 
             if(
                 movingCircleHitsPlayer(
@@ -2399,7 +2896,10 @@ function checkCollisions(){
                 )
             ){
 
-                enemyBullets.splice(eb,1);
+                enemyBullets.splice(
+                    eb,
+                    1
+                );
 
                 createPlayerExplosion();
 
@@ -2423,7 +2923,10 @@ function checkCollisions(){
                 )
             ){
 
-                enemies.splice(e,1);
+                enemies.splice(
+                    e,
+                    1
+                );
 
                 createPlayerExplosion();
 
@@ -2445,10 +2948,15 @@ function loseLife(){
 
     if(!gameRunning)return;
 
-    var now=performance.now();
+    var now=
+        performance.now();
 
-    if(now<playerInvulnerableUntil){
+    if(
+        now<playerInvulnerableUntil
+    ){
+
         return;
+
     }
 
     playerInvulnerableUntil=
@@ -2466,8 +2974,11 @@ function loseLife(){
 
     }
 
-    player.y=canvas.clientHeight-100;
-    player.targetY=player.y;
+    player.y=
+        canvas.clientHeight-100;
+
+    player.targetY=
+        player.y;
 
     bombs.length=0;
     enemyBullets.length=0;
@@ -2484,21 +2995,32 @@ function endGame(){
     gamePaused=false;
 
     if(animationId!==null){
-        cancelAnimationFrame(animationId);
+
+        cancelAnimationFrame(
+            animationId
+        );
+
     }
 
     animationId=null;
 
     totalScore+=gameScore;
 
-    document.getElementById("finalScore").textContent=gameScore;
-    document.getElementById("finalCoins").textContent=coins;
+    document.getElementById(
+        "finalScore"
+    ).textContent=gameScore;
 
-    document.getElementById("gameOverOverlay")
-        .classList.remove("hidden");
+    document.getElementById(
+        "finalCoins"
+    ).textContent=coins;
+
+    document.getElementById(
+        "gameOverOverlay"
+    ).classList.remove("hidden");
 
     updateControlButtons();
     updateStats();
+    updateGameUI();
 
 }
 
@@ -2516,7 +3038,8 @@ function watchLifeAd(){
 
     }
 
-    var savedElapsed=elapsedSeconds;
+    var savedElapsed=
+        elapsedSeconds;
 
     rewardedController.show()
 
@@ -2529,10 +3052,12 @@ function watchLifeAd(){
         gameRunning=true;
         gamePaused=false;
 
-        document.getElementById("gameOverOverlay")
-            .classList.add("hidden");
+        document.getElementById(
+            "gameOverOverlay"
+        ).classList.add("hidden");
 
-        var now=performance.now();
+        var now=
+            performance.now();
 
         gameStartTime=
             now-savedElapsed*1000;
@@ -2546,7 +3071,10 @@ function watchLifeAd(){
         updateControlButtons();
         updateStats();
 
-        animationId=requestAnimationFrame(gameLoop);
+        animationId=
+            requestAnimationFrame(
+                gameLoop
+            );
 
     })
 
@@ -2576,10 +3104,15 @@ function showFourMinuteAd(){
 
     gamePaused=true;
 
-    pauseStartTime=performance.now();
+    pauseStartTime=
+        performance.now();
 
     if(animationId!==null){
-        cancelAnimationFrame(animationId);
+
+        cancelAnimationFrame(
+            animationId
+        );
+
     }
 
     animationId=null;
@@ -2589,6 +3122,7 @@ function showFourMinuteAd(){
     if(!interstitialController){
 
         resumeGame();
+
         return;
 
     }
@@ -2622,38 +3156,81 @@ function showFourMinuteAd(){
 
 function updateGameUI(){
 
-    var lives=document.getElementById("gameLives");
-    var score=document.getElementById("gameScore");
-    var gameCoins=document.getElementById("gameCoins");
-    var time=document.getElementById("gameTime");
+    var lives=
+        document.getElementById(
+            "gameLives"
+        );
 
-    var missileCount=document.getElementById("missileCount");
-    var missileButton=document.getElementById("missileButton");
+    var score=
+        document.getElementById(
+            "gameScore"
+        );
 
-    if(lives)lives.textContent=gameLives;
-    if(score)score.textContent=gameScore;
-    if(gameCoins)gameCoins.textContent=coins;
+    var gameCoins=
+        document.getElementById(
+            "gameCoins"
+        );
 
-    if(missileCount){
-        missileCount.textContent=missiles;
-    }
+    var time=
+        document.getElementById(
+            "gameTime"
+        );
+
+    var missileCount=
+        document.getElementById(
+            "missileCount"
+        );
+
+    var missileButton=
+        document.getElementById(
+            "missileButton"
+        );
+
+    if(lives)
+        lives.textContent=
+            gameLives;
+
+    if(score)
+        score.textContent=
+            gameScore;
+
+    if(gameCoins)
+        gameCoins.textContent=
+            coins;
+
+    if(missileCount)
+        missileCount.textContent=
+            missiles;
 
     if(missileButton){
+
         missileButton.disabled=
             !gameRunning ||
             gamePaused ||
             missiles<=0;
+
     }
 
     if(time){
 
-        var minutes=Math.floor(elapsedSeconds/60);
-        var seconds=Math.floor(elapsedSeconds%60);
+        var minutes=
+            Math.floor(
+                elapsedSeconds/60
+            );
+
+        var seconds=
+            Math.floor(
+                elapsedSeconds%60
+            );
 
         time.textContent=
             minutes+
             ":"+
-            (seconds<10 ? "0"+seconds : seconds);
+            (
+                seconds<10
+                ? "0"+seconds
+                : seconds
+            );
 
     }
 
@@ -2665,27 +3242,60 @@ function drawGame(){
 
     if(!canvas || !ctx)return;
 
-    var width=canvas.clientWidth;
-    var height=canvas.clientHeight;
+    var width=
+        canvas.clientWidth;
 
-    var skyGradient=ctx.createLinearGradient(
-        0,0,0,height
+    var height=
+        canvas.clientHeight;
+
+    var skyGradient=
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            height
+        );
+
+    skyGradient.addColorStop(
+        0,
+        "#020914"
     );
 
-    skyGradient.addColorStop(0,"#020914");
-    skyGradient.addColorStop(.65,"#061625");
-    skyGradient.addColorStop(1,"#0a2018");
-
-    ctx.fillStyle=skyGradient;
-    ctx.fillRect(0,0,width,height);
-
-    drawStars(width,height);
-
-    var horizonY=height*.82;
-
-    var horizonGradient=ctx.createLinearGradient(
-        0,horizonY-35,0,horizonY+20
+    skyGradient.addColorStop(
+        .65,
+        "#061625"
     );
+
+    skyGradient.addColorStop(
+        1,
+        "#0a2018"
+    );
+
+    ctx.fillStyle=
+        skyGradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    drawStars(
+        width,
+        height
+    );
+
+    var horizonY=
+        height*.82;
+
+    var horizonGradient=
+        ctx.createLinearGradient(
+            0,
+            horizonY-35,
+            0,
+            horizonY+20
+        );
 
     horizonGradient.addColorStop(
         0,
@@ -2697,7 +3307,8 @@ function drawGame(){
         "rgba(30,70,45,.35)"
     );
 
-    ctx.fillStyle=horizonGradient;
+    ctx.fillStyle=
+        horizonGradient;
 
     ctx.fillRect(
         0,
@@ -2706,24 +3317,64 @@ function drawGame(){
         55
     );
 
-    for(var i=0;i<bombs.length;i++){
-        drawBomb(bombs[i]);
+    for(
+        var i=0;
+        i<bombs.length;
+        i++
+    ){
+
+        drawBomb(
+            bombs[i]
+        );
+
     }
 
-    for(var j=0;j<enemies.length;j++){
-        drawEnemy(enemies[j]);
+    for(
+        var j=0;
+        j<enemies.length;
+        j++
+    ){
+
+        drawEnemy(
+            enemies[j]
+        );
+
     }
 
-    for(var k=0;k<enemyBullets.length;k++){
-        drawEnemyBullet(enemyBullets[k]);
+    for(
+        var k=0;
+        k<enemyBullets.length;
+        k++
+    ){
+
+        drawEnemyBullet(
+            enemyBullets[k]
+        );
+
     }
 
-    for(var q=0;q<bullets.length;q++){
-        drawBullet(bullets[q]);
+    for(
+        var q=0;
+        q<bullets.length;
+        q++
+    ){
+
+        drawBullet(
+            bullets[q]
+        );
+
     }
 
-    for(var r=0;r<specialMissiles.length;r++){
-        drawMissile(specialMissiles[r]);
+    for(
+        var r=0;
+        r<specialMissiles.length;
+        r++
+    ){
+
+        drawMissile(
+            specialMissiles[r]
+        );
+
     }
 
     drawPlayerPlane(
@@ -2731,32 +3382,61 @@ function drawGame(){
         player.y
     );
 
-    for(var x=0;x<explosions.length;x++){
-        drawExplosion(explosions[x]);
+    for(
+        var x=0;
+        x<explosions.length;
+        x++
+    ){
+
+        drawExplosion(
+            explosions[x]
+        );
+
     }
 
 }
 
 /* STARS */
 
-function drawStars(width,height){
+function drawStars(
+    width,
+    height
+){
 
-    ctx.fillStyle="rgba(255,255,255,.75)";
+    ctx.fillStyle=
+        "rgba(255,255,255,.75)";
 
-    var count=Math.floor(width*height/7000);
+    var count=
+        Math.floor(
+            width*height/7000
+        );
 
-    for(var i=0;i<count;i++){
+    for(
+        var i=0;
+        i<count;
+        i++
+    ){
 
-        var x=(i*83)%width;
+        var x=
+            (i*83)%width;
 
-        var y=(
-            i*137+
-            elapsedSeconds*35
-        )%height;
+        var y=
+            (
+                i*137+
+                elapsedSeconds*35
+            )%height;
 
-        var size=i%5===0 ? 2 : 1;
+        var size=
+            i%5===0
+            ? 2
+            : 1;
 
-        ctx.fillRect(x,y,size,size);
+        ctx.fillRect(
+            x,
+            y,
+            size,
+            size
+        );
 
     }
 
@@ -2775,7 +3455,9 @@ function drawPlayerPlane(x,y){
     ){
 
         if(
-            Math.floor(performance.now()/90)%2===0
+            Math.floor(
+                performance.now()/90
+            )%2===0
         ){
 
             ctx.globalAlpha=.35;
@@ -2784,84 +3466,197 @@ function drawPlayerPlane(x,y){
 
     }
 
-    ctx.translate(x,y);
-    ctx.scale(PLAYER_SCALE,PLAYER_SCALE);
+    ctx.translate(
+        x,
+        y
+    );
+
+    ctx.scale(
+        PLAYER_SCALE,
+        PLAYER_SCALE
+    );
 
     ctx.beginPath();
 
-    ctx.moveTo(-5,20);
+    ctx.moveTo(
+        -5,
+        20
+    );
 
     ctx.lineTo(
         0,
         32+
-        Math.sin(performance.now()/80)*3
+        Math.sin(
+            performance.now()/80
+        )*3
     );
 
-    ctx.lineTo(5,20);
+    ctx.lineTo(
+        5,
+        20
+    );
 
     ctx.closePath();
 
-    ctx.fillStyle="#ff8a00";
-    ctx.fill();
-
-    ctx.beginPath();
-
-    ctx.moveTo(-6,-4);
-    ctx.lineTo(-24,15);
-    ctx.lineTo(-8,11);
-    ctx.closePath();
-
-    ctx.fillStyle="#cbd5e1";
-    ctx.fill();
-
-    ctx.beginPath();
-
-    ctx.moveTo(6,-4);
-    ctx.lineTo(24,15);
-    ctx.lineTo(8,11);
-    ctx.closePath();
+    ctx.fillStyle=
+        "#ff8a00";
 
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-27);
-    ctx.lineTo(8,8);
-    ctx.lineTo(6,22);
-    ctx.lineTo(0,27);
-    ctx.lineTo(-6,22);
-    ctx.lineTo(-8,8);
+    ctx.moveTo(
+        -6,
+        -4
+    );
+
+    ctx.lineTo(
+        -24,
+        15
+    );
+
+    ctx.lineTo(
+        -8,
+        11
+    );
+
     ctx.closePath();
 
-    ctx.fillStyle="#e5e7eb";
+    ctx.fillStyle=
+        "#cbd5e1";
+
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-21);
-    ctx.lineTo(5,-8);
-    ctx.lineTo(0,-4);
-    ctx.lineTo(-5,-8);
+    ctx.moveTo(
+        6,
+        -4
+    );
+
+    ctx.lineTo(
+        24,
+        15
+    );
+
+    ctx.lineTo(
+        8,
+        11
+    );
+
     ctx.closePath();
 
-    ctx.fillStyle="#294f70";
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(-4,14);
-    ctx.lineTo(-12,25);
-    ctx.lineTo(-3,22);
+    ctx.moveTo(
+        0,
+        -27
+    );
+
+    ctx.lineTo(
+        8,
+        8
+    );
+
+    ctx.lineTo(
+        6,
+        22
+    );
+
+    ctx.lineTo(
+        0,
+        27
+    );
+
+    ctx.lineTo(
+        -6,
+        22
+    );
+
+    ctx.lineTo(
+        -8,
+        8
+    );
+
     ctx.closePath();
 
-    ctx.fillStyle="#9ca3af";
+    ctx.fillStyle=
+        "#e5e7eb";
+
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(4,14);
-    ctx.lineTo(12,25);
-    ctx.lineTo(3,22);
+    ctx.moveTo(
+        0,
+        -21
+    );
+
+    ctx.lineTo(
+        5,
+        -8
+    );
+
+    ctx.lineTo(
+        0,
+        -4
+    );
+
+    ctx.lineTo(
+        -5,
+        -8
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle=
+        "#294f70";
+
+    ctx.fill();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -4,
+        14
+    );
+
+    ctx.lineTo(
+        -12,
+        25
+    );
+
+    ctx.lineTo(
+        -3,
+        22
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle=
+        "#9ca3af";
+
+    ctx.fill();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        4,
+        14
+    );
+
+    ctx.lineTo(
+        12,
+        25
+    );
+
+    ctx.lineTo(
+        3,
+        22
+    );
+
     ctx.closePath();
 
     ctx.fill();
@@ -2891,16 +3686,28 @@ function drawBomb(bomb){
         Math.PI*2
     );
 
-    ctx.fillStyle="#252525";
+    ctx.fillStyle=
+        "#252525";
+
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-9);
-    ctx.lineTo(6,-16);
+    ctx.moveTo(
+        0,
+        -9
+    );
 
-    ctx.strokeStyle="#b8b8b8";
+    ctx.lineTo(
+        6,
+        -16
+    );
+
+    ctx.strokeStyle=
+        "#b8b8b8";
+
     ctx.lineWidth=2;
+
     ctx.stroke();
 
     ctx.beginPath();
@@ -2913,7 +3720,9 @@ function drawBomb(bomb){
         Math.PI*2
     );
 
-    ctx.fillStyle="#ff4d4d";
+    ctx.fillStyle=
+        "#ff4d4d";
+
     ctx.fill();
 
     ctx.restore();
@@ -2933,34 +3742,86 @@ function drawEnemy(enemy){
 
     ctx.beginPath();
 
-    ctx.moveTo(-5,3);
-    ctx.lineTo(-16,12);
-    ctx.lineTo(-5,9);
+    ctx.moveTo(
+        -5,
+        3
+    );
+
+    ctx.lineTo(
+        -16,
+        12
+    );
+
+    ctx.lineTo(
+        -5,
+        9
+    );
+
     ctx.closePath();
 
-    ctx.fillStyle="#c13b3b";
+    ctx.fillStyle=
+        "#c13b3b";
+
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(5,3);
-    ctx.lineTo(16,12);
-    ctx.lineTo(5,9);
+    ctx.moveTo(
+        5,
+        3
+    );
+
+    ctx.lineTo(
+        16,
+        12
+    );
+
+    ctx.lineTo(
+        5,
+        9
+    );
+
     ctx.closePath();
 
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-19);
-    ctx.lineTo(5,7);
-    ctx.lineTo(3.5,18);
-    ctx.lineTo(0,21);
-    ctx.lineTo(-3.5,18);
-    ctx.lineTo(-5,7);
+    ctx.moveTo(
+        0,
+        -19
+    );
+
+    ctx.lineTo(
+        5,
+        7
+    );
+
+    ctx.lineTo(
+        3.5,
+        18
+    );
+
+    ctx.lineTo(
+        0,
+        21
+    );
+
+    ctx.lineTo(
+        -3.5,
+        18
+    );
+
+    ctx.lineTo(
+        -5,
+        7
+    );
+
     ctx.closePath();
 
-    ctx.fillStyle="#8f2020";
+    ctx.fillStyle=
+        "#8f2020";
+
     ctx.fill();
 
     ctx.beginPath();
@@ -2973,7 +3834,9 @@ function drawEnemy(enemy){
         Math.PI*2
     );
 
-    ctx.fillStyle="#351c1c";
+    ctx.fillStyle=
+        "#351c1c";
+
     ctx.fill();
 
     ctx.restore();
@@ -2987,9 +3850,12 @@ function drawBullet(bullet){
     ctx.save();
 
     ctx.shadowBlur=8;
-    ctx.shadowColor="#65e6ff";
 
-    ctx.fillStyle="#65e6ff";
+    ctx.shadowColor=
+        "#65e6ff";
+
+    ctx.fillStyle=
+        "#65e6ff";
 
     ctx.fillRect(
         bullet.x-2.5,
@@ -3013,17 +3879,24 @@ function drawMissile(missile){
         missile.trail.length
     ){
 
-        for(var i=0;i<missile.trail.length;i++){
+        for(
+            var i=0;
+            i<missile.trail.length;
+            i++
+        ){
 
-            var p=missile.trail[i];
+            var p=
+                missile.trail[i];
 
             var progress=
                 (i+1)/
                 missile.trail.length;
 
-            ctx.globalAlpha=progress*.5;
+            ctx.globalAlpha=
+                progress*.5;
 
-            ctx.fillStyle="#ff6b18";
+            ctx.fillStyle=
+                "#ff6b18";
 
             ctx.beginPath();
 
@@ -3043,10 +3916,11 @@ function drawMissile(missile){
 
     ctx.globalAlpha=1;
 
-    var angle=Math.atan2(
-        missile.dirY,
-        missile.dirX
-    );
+    var angle=
+        Math.atan2(
+            missile.dirY,
+            missile.dirX
+        );
 
     ctx.translate(
         missile.x,
@@ -3057,7 +3931,8 @@ function drawMissile(missile){
         angle+Math.PI/2
     );
 
-    ctx.fillStyle="#e5e7eb";
+    ctx.fillStyle=
+        "#e5e7eb";
 
     ctx.fillRect(
         -4,
@@ -3068,48 +3943,98 @@ function drawMissile(missile){
 
     ctx.beginPath();
 
-    ctx.moveTo(-4,-13);
-    ctx.lineTo(0,-22);
-    ctx.lineTo(4,-13);
+    ctx.moveTo(
+        -4,
+        -13
+    );
+
+    ctx.lineTo(
+        0,
+        -22
+    );
+
+    ctx.lineTo(
+        4,
+        -13
+    );
+
     ctx.closePath();
 
-    ctx.fillStyle="#ffffff";
-    ctx.fill();
-
-    ctx.beginPath();
-
-    ctx.moveTo(-4,4);
-    ctx.lineTo(-10,11);
-    ctx.lineTo(-4,10);
-    ctx.closePath();
-
-    ctx.fillStyle="#9ca3af";
-    ctx.fill();
-
-    ctx.beginPath();
-
-    ctx.moveTo(4,4);
-    ctx.lineTo(10,11);
-    ctx.lineTo(4,10);
-    ctx.closePath();
+    ctx.fillStyle=
+        "#ffffff";
 
     ctx.fill();
 
     ctx.beginPath();
 
-    ctx.moveTo(-3,12);
+    ctx.moveTo(
+        -4,
+        4
+    );
+
+    ctx.lineTo(
+        -10,
+        11
+    );
+
+    ctx.lineTo(
+        -4,
+        10
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle=
+        "#9ca3af";
+
+    ctx.fill();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        4,
+        4
+    );
+
+    ctx.lineTo(
+        10,
+        11
+    );
+
+    ctx.lineTo(
+        4,
+        10
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -3,
+        12
+    );
 
     ctx.lineTo(
         0,
         23+
-        Math.sin(performance.now()/50)*3
+        Math.sin(
+            performance.now()/50
+        )*3
     );
 
-    ctx.lineTo(3,12);
+    ctx.lineTo(
+        3,
+        12
+    );
 
     ctx.closePath();
 
-    ctx.fillStyle="#ff5a1f";
+    ctx.fillStyle=
+        "#ff5a1f";
+
     ctx.fill();
 
     ctx.restore();
@@ -3118,12 +4043,16 @@ function drawMissile(missile){
 
 /* ENEMY BULLET */
 
-function drawEnemyBullet(bullet){
+function drawEnemyBullet(
+    bullet
+){
 
     ctx.save();
 
     ctx.shadowBlur=10;
-    ctx.shadowColor="#ff3030";
+
+    ctx.shadowColor=
+        "#ff3030";
 
     ctx.beginPath();
 
@@ -3135,7 +4064,9 @@ function drawEnemyBullet(bullet){
         Math.PI*2
     );
 
-    ctx.fillStyle="#ff5252";
+    ctx.fillStyle=
+        "#ff5252";
+
     ctx.fill();
 
     ctx.restore();
@@ -3153,14 +4084,16 @@ function drawExplosion(exp){
         ? .85
         : .48;
 
-    var alpha=Math.max(
-        0,
-        exp.life/maxLife
-    );
+    var alpha=
+        Math.max(
+            0,
+            exp.life/maxLife
+        );
 
     ctx.save();
 
-    ctx.globalAlpha=alpha;
+    ctx.globalAlpha=
+        alpha;
 
     ctx.beginPath();
 
@@ -3172,12 +4105,25 @@ function drawExplosion(exp){
         Math.PI*2
     );
 
-    if(exp.type==="player"){
-        ctx.fillStyle="#ff2800";
-    }else if(exp.type==="missile"){
-        ctx.fillStyle="#ff4a00";
+    if(
+        exp.type==="player"
+    ){
+
+        ctx.fillStyle=
+            "#ff2800";
+
+    }else if(
+        exp.type==="missile"
+    ){
+
+        ctx.fillStyle=
+            "#ff4a00";
+
     }else{
-        ctx.fillStyle="#ffb020";
+
+        ctx.fillStyle=
+            "#ffb020";
+
     }
 
     ctx.fill();
@@ -3192,7 +4138,9 @@ function drawExplosion(exp){
         Math.PI*2
     );
 
-    ctx.fillStyle="#ffb020";
+    ctx.fillStyle=
+        "#ffb020";
+
     ctx.fill();
 
     ctx.beginPath();
@@ -3205,7 +4153,9 @@ function drawExplosion(exp){
         Math.PI*2
     );
 
-    ctx.fillStyle="#fff3a0";
+    ctx.fillStyle=
+        "#fff3a0";
+
     ctx.fill();
 
     ctx.restore();
@@ -3214,17 +4164,22 @@ function drawExplosion(exp){
 
 /* PLAYER MOVEMENT */
 
-function movePlayerFromEvent(event){
+function movePlayerFromEvent(
+    event
+){
 
     if(
         !gameRunning ||
         gamePaused ||
         !canvas
     ){
+
         return;
+
     }
 
-    var rect=canvas.getBoundingClientRect();
+    var rect=
+        canvas.getBoundingClientRect();
 
     var clientX;
     var clientY;
@@ -3234,21 +4189,30 @@ function movePlayerFromEvent(event){
         event.touches.length
     ){
 
-        clientX=event.touches[0].clientX;
-        clientY=event.touches[0].clientY;
+        clientX=
+            event.touches[0].clientX;
+
+        clientY=
+            event.touches[0].clientY;
 
     }else if(
         event.changedTouches &&
         event.changedTouches.length
     ){
 
-        clientX=event.changedTouches[0].clientX;
-        clientY=event.changedTouches[0].clientY;
+        clientX=
+            event.changedTouches[0].clientX;
+
+        clientY=
+            event.changedTouches[0].clientY;
 
     }else{
 
-        clientX=event.clientX;
-        clientY=event.clientY;
+        clientX=
+            event.clientX;
+
+        clientY=
+            event.clientY;
 
     }
 
@@ -3256,27 +4220,35 @@ function movePlayerFromEvent(event){
         typeof clientX!=="number" ||
         typeof clientY!=="number"
     ){
+
         return;
+
     }
 
-    var x=clientX-rect.left;
-    var y=clientY-rect.top;
+    var x=
+        clientX-rect.left;
 
-    player.targetX=Math.max(
-        player.width/2,
-        Math.min(
-            rect.width-player.width/2,
-            x
-        )
-    );
+    var y=
+        clientY-rect.top;
 
-    player.targetY=Math.max(
-        rect.height*.42,
-        Math.min(
-            rect.height*.80,
-            y
-        )
-    );
+    player.targetX=
+        Math.max(
+            player.width/2,
+            Math.min(
+                rect.width-
+                player.width/2,
+                x
+            )
+        );
+
+    player.targetY=
+        Math.max(
+            rect.height*.42,
+            Math.min(
+                rect.height*.80,
+                y
+            )
+        );
 
 }
 
@@ -3288,11 +4260,20 @@ if(canvas){
         "touchstart",
         function(event){
 
-            if(!gameRunning || gamePaused)return;
+            if(
+                !gameRunning ||
+                gamePaused
+            ){
+
+                return;
+
+            }
 
             pointerActive=true;
 
-            movePlayerFromEvent(event);
+            movePlayerFromEvent(
+                event
+            );
 
             event.preventDefault();
 
@@ -3309,10 +4290,14 @@ if(canvas){
                 !gameRunning ||
                 gamePaused
             ){
+
                 return;
+
             }
 
-            movePlayerFromEvent(event);
+            movePlayerFromEvent(
+                event
+            );
 
             event.preventDefault();
 
@@ -3323,7 +4308,9 @@ if(canvas){
     canvas.addEventListener(
         "touchend",
         function(){
+
             pointerActive=false;
+
         },
         {passive:true}
     );
@@ -3331,7 +4318,9 @@ if(canvas){
     canvas.addEventListener(
         "touchcancel",
         function(){
+
             pointerActive=false;
+
         },
         {passive:true}
     );
@@ -3340,11 +4329,20 @@ if(canvas){
         "mousedown",
         function(event){
 
-            if(!gameRunning || gamePaused)return;
+            if(
+                !gameRunning ||
+                gamePaused
+            ){
+
+                return;
+
+            }
 
             pointerActive=true;
 
-            movePlayerFromEvent(event);
+            movePlayerFromEvent(
+                event
+            );
 
         }
     );
@@ -3358,10 +4356,14 @@ if(canvas){
                 !gameRunning ||
                 gamePaused
             ){
+
                 return;
+
             }
 
-            movePlayerFromEvent(event);
+            movePlayerFromEvent(
+                event
+            );
 
         }
     );
@@ -3369,7 +4371,9 @@ if(canvas){
     window.addEventListener(
         "mouseup",
         function(){
+
             pointerActive=false;
+
         }
     );
 
@@ -3387,7 +4391,9 @@ if(startGameButton){
     startGameButton.addEventListener(
         "click",
         function(){
+
             startGame();
+
         }
     );
 
