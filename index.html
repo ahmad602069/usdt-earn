@@ -1279,6 +1279,333 @@ var savedLanguage=
         "language"
     ) || "fa";
 
+/* ================================================= */
+/* GAME AUDIO */
+/* ================================================= */
+
+var audioContext=null;
+var masterGain=null;
+
+var lastShotSoundTime=0;
+
+function initGameAudio(){
+
+    if(!soundEnabled)return;
+
+    try{
+
+        if(!audioContext){
+
+            var AudioContext=
+                window.AudioContext ||
+                window.webkitAudioContext;
+
+            if(!AudioContext)return;
+
+            audioContext=
+                new AudioContext();
+
+            masterGain=
+                audioContext.createGain();
+
+            masterGain.gain.value=.16;
+
+            masterGain.connect(
+                audioContext.destination
+            );
+
+        }
+
+        if(
+            audioContext.state==="suspended"
+        ){
+
+            audioContext.resume();
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "Audio error:",
+            error
+        );
+
+    }
+
+}
+
+function playTone(
+    frequency,
+    duration,
+    type,
+    volume,
+    slideTo
+){
+
+    if(!soundEnabled)return;
+
+    initGameAudio();
+
+    if(
+        !audioContext ||
+        !masterGain
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        var now=
+            audioContext.currentTime;
+
+        var oscillator=
+            audioContext.createOscillator();
+
+        var gain=
+            audioContext.createGain();
+
+        oscillator.type=
+            type || "sine";
+
+        oscillator.frequency.setValueAtTime(
+            frequency,
+            now
+        );
+
+        if(
+            slideTo &&
+            slideTo>0
+        ){
+
+            oscillator.frequency.exponentialRampToValueAtTime(
+                slideTo,
+                now+duration
+            );
+
+        }
+
+        gain.gain.setValueAtTime(
+            .0001,
+            now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            Math.max(
+                .0001,
+                volume || .05
+            ),
+            now+.01
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            now+duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(masterGain);
+
+        oscillator.start(now);
+
+        oscillator.stop(
+            now+duration+.02
+        );
+
+    }catch(error){
+
+        console.log(
+            "Tone error:",
+            error
+        );
+
+    }
+
+}
+
+function playGameSound(
+    name
+){
+
+    if(!soundEnabled)return;
+
+    switch(name){
+
+        case "start":
+
+            playTone(
+                330,
+                .12,
+                "sine",
+                .07,
+                660
+            );
+
+            setTimeout(
+                function(){
+
+                    playTone(
+                        660,
+                        .16,
+                        "sine",
+                        .06,
+                        880
+                    );
+
+                },
+                100
+            );
+
+            break;
+
+        case "shoot":
+
+            var now=
+                performance.now();
+
+            if(
+                now-lastShotSoundTime<100
+            ){
+
+                return;
+
+            }
+
+            lastShotSoundTime=now;
+
+            playTone(
+                760,
+                .045,
+                "square",
+                .025,
+                430
+            );
+
+            break;
+
+        case "enemy":
+
+            playTone(
+                180,
+                .12,
+                "sawtooth",
+                .07,
+                70
+            );
+
+            setTimeout(
+                function(){
+
+                    playTone(
+                        70,
+                        .16,
+                        "triangle",
+                        .05,
+                        35
+                    );
+
+                },
+                50
+            );
+
+            break;
+
+        case "missile":
+
+            playTone(
+                220,
+                .25,
+                "sawtooth",
+                .07,
+                720
+            );
+
+            break;
+
+        case "bigExplosion":
+
+            playTone(
+                110,
+                .25,
+                "sawtooth",
+                .09,
+                35
+            );
+
+            setTimeout(
+                function(){
+
+                    playTone(
+                        55,
+                        .35,
+                        "triangle",
+                        .07,
+                        25
+                    );
+
+                },
+                90
+            );
+
+            break;
+
+        case "hit":
+
+            playTone(
+                160,
+                .18,
+                "square",
+                .08,
+                60
+            );
+
+            break;
+
+        case "gameover":
+
+            playTone(
+                300,
+                .18,
+                "sine",
+                .07,
+                150
+            );
+
+            setTimeout(
+                function(){
+
+                    playTone(
+                        150,
+                        .35,
+                        "sine",
+                        .07,
+                        55
+                    );
+
+                },
+                160
+            );
+
+            break;
+
+        case "coin":
+
+            playTone(
+                900,
+                .07,
+                "sine",
+                .04,
+                1200
+            );
+
+            break;
+
+    }
+
+}
+
 /* TELEGRAM */
 
 var tg=null;
@@ -1556,6 +1883,20 @@ function toggleSound(){
         ? "1"
         : "0"
     );
+
+    if(soundEnabled){
+
+        initGameAudio();
+
+        playTone(
+            520,
+            .08,
+            "sine",
+            .05,
+            700
+        );
+
+    }
 
     updateSettingButtons();
 
@@ -2200,6 +2541,11 @@ function startGame(){
 
     animationId=null;
 
+    /* AUDIO START */
+
+    initGameAudio();
+    playGameSound("start");
+
     gameRunning=true;
     gamePaused=false;
 
@@ -2634,6 +2980,10 @@ function fireAutomaticBullet(){
 
     });
 
+    /* SHOOT SOUND */
+
+    playGameSound("shoot");
+
 }
 
 /* FIND ENEMY */
@@ -2691,6 +3041,10 @@ function fireSpecialMissile(){
     }
 
     missiles--;
+
+    /* MISSILE SOUND */
+
+    playGameSound("missile");
 
     var startX=
         player.x;
@@ -2794,12 +3148,24 @@ function destroyEnemy(
         gameScore+=25;
         coins+=3;
 
+        playGameSound(
+            "bigExplosion"
+        );
+
     }else{
 
         gameScore+=10;
         coins+=1;
 
+        playGameSound(
+            "enemy"
+        );
+
     }
+
+    playGameSound(
+        "coin"
+    );
 
     updateStats();
 
@@ -3850,6 +4216,10 @@ function loseLife(){
 
     gameLives--;
 
+    /* HIT SOUND */
+
+    playGameSound("hit");
+
     if(
         vibrationEnabled &&
         navigator.vibrate
@@ -3888,6 +4258,10 @@ function endGame(){
 
     gameRunning=false;
     gamePaused=false;
+
+    /* GAME OVER SOUND */
+
+    playGameSound("gameover");
 
     if(animationId!==null){
 
