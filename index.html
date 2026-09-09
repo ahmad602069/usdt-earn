@@ -3,3050 +3,1193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-
 <title>USDT Earn</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
 <style>
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:#07111f;color:white;font-family:Arial,Tahoma,sans-serif}
+body{padding-bottom:80px;overflow-x:hidden}
+body.game-mode{padding-bottom:0;overflow:hidden}
+body.game-mode .header{display:none}
 
-html,body{
-    margin:0;
-    padding:0;
-    background:#07111f;
-    color:white;
-    font-family:Arial,Tahoma,sans-serif;
-}
+.header{padding:18px;background:#0b192b;border-bottom:1px solid #20364f}
+.logo{font-size:22px;font-weight:bold}
+.user{margin-top:5px;color:#91a4ba;font-size:13px}
+.balance{margin-top:15px;padding:18px;background:#12243a;border-radius:16px}
+.balance-title{color:#91a4ba;font-size:13px}
+.balance-number{margin-top:5px;font-size:28px;font-weight:bold}
 
-body{
-    padding-bottom:80px;
-    overflow-x:hidden;
-}
+main{padding:15px}
+body.game-mode main{padding:0}
+.page{display:none}
+.page.active{display:block}
+.card{margin-bottom:14px;padding:18px;background:#0d1d30;border:1px solid #20364f;border-radius:17px}
+.card h2,.card h3{margin-top:0}
+.text{color:#91a4ba;line-height:1.8}
+.button{width:100%;margin-top:10px;padding:14px;border:0;border-radius:12px;background:#16ad5a;color:white;font-size:15px;font-weight:bold;cursor:pointer;touch-action:manipulation}
+.button.secondary{background:#163451}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:15px;background:#10253b;border-radius:14px}
+.stat-title{color:#91a4ba;font-size:12px}
+.stat-number{display:block;margin-top:6px;font-size:20px;font-weight:bold}
 
-body.game-mode{
-    padding-bottom:0;
-    overflow:hidden;
-}
+/* GAME */
+#gamePage{width:100%;height:100vh}
+.game-card{padding:0;margin:0;border:0;border-radius:0;background:#020914;width:100%;height:100vh}
 
-/* هدر اصلی هنگام بازی مخفی می‌شود */
-body.game-mode .header{
-    display:none;
-}
-
-.header{
-    padding:18px;
-    background:#0b192b;
-    border-bottom:1px solid #20364f;
-}
-
-.logo{
-    font-size:22px;
-    font-weight:bold;
-}
-
-.user{
-    margin-top:5px;
-    color:#91a4ba;
-    font-size:13px;
-}
-
-.balance{
-    margin-top:15px;
-    padding:18px;
-    background:#12243a;
-    border-radius:16px;
-}
-
-.balance-title{
-    color:#91a4ba;
-    font-size:13px;
-}
-
-.balance-number{
-    margin-top:5px;
-    font-size:28px;
-    font-weight:bold;
-}
-
-main{
-    padding:15px;
-}
-
-body.game-mode main{
-    padding:0;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.card{
-    margin-bottom:14px;
-    padding:18px;
-    background:#0d1d30;
-    border:1px solid #20364f;
-    border-radius:17px;
-}
-
-.card h2,
-.card h3{
-    margin-top:0;
-}
-
-.text{
-    color:#91a4ba;
-    line-height:1.8;
-}
-
-.button{
-    width:100%;
-    margin-top:10px;
-    padding:14px;
-    border:0;
-    border-radius:12px;
-    background:#16ad5a;
-    color:white;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-    touch-action:manipulation;
-}
-
-.button.secondary{
-    background:#163451;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-.stat{
-    padding:15px;
-    background:#10253b;
-    border-radius:14px;
-}
-
-.stat-title{
-    color:#91a4ba;
-    font-size:12px;
-}
-
-.stat-number{
-    display:block;
-    margin-top:6px;
-    font-size:20px;
-    font-weight:bold;
-}
-
-
-/* =====================================================
-   GAME
-===================================================== */
-
-#gamePage{
-    width:100%;
-    height:100vh;
-}
-
-.game-card{
-    padding:0;
-    margin:0;
-    border:0;
-    border-radius:0;
-    background:#020914;
-    width:100%;
-    height:100vh;
-}
-
-
-/* =====================================================
-   نوار بالای بازی
-   اندازه جدید: 20px
-===================================================== */
-
+/* نوار بسیار باریک */
 .game-header{
-    height:20px;
-    min-height:20px;
-    padding:0 6px;
-
+    height:10px;
+    min-height:10px;
+    flex:0 0 10px;
+    padding:0 4px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:3px;
-
+    gap:2px;
     background:#091827;
     border-bottom:1px solid #20364f;
-
     position:relative;
     z-index:20;
-
     overflow:hidden;
 }
-
-.game-title{
-    font-size:7px;
-    font-weight:bold;
-    line-height:20px;
-    white-space:nowrap;
-}
-
-.game-info{
-    height:20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:flex-end;
-
-    gap:2px;
-    flex-wrap:nowrap;
-}
-
+.game-title{font-size:5px;font-weight:bold;line-height:10px;white-space:nowrap}
+.game-info{height:10px;display:flex;align-items:center;justify-content:flex-end;gap:2px;flex-wrap:nowrap}
 .game-badge{
-    min-height:14px;
-    padding:1px 3px;
-
+    min-height:8px;
+    padding:0 2px;
     display:flex;
     align-items:center;
     justify-content:center;
-
     background:#102941;
-    border-radius:4px;
-
-    font-size:6px;
+    border-radius:2px;
+    font-size:5px;
     line-height:1;
-
     white-space:nowrap;
 }
 
-
-/* =====================================================
-   محیط بازی
-===================================================== */
-
+/* محیط بازی بزرگ‌تر */
 .game-wrapper{
     position:relative;
-
     width:100%;
-    height:calc(100vh - 20px);
-
+    height:calc(100vh - 10px);
     min-height:430px;
-
     overflow:hidden;
-
     border:0;
     border-radius:0;
-
     background:#020914;
 }
+#gameCanvas{display:block;width:100%;height:100%;touch-action:none}
 
-#gameCanvas{
-    display:block;
-
-    width:100%;
-    height:100%;
-
-    touch-action:none;
-}
-
-
-/* =====================================================
-   OVERLAYS
-===================================================== */
-
+/* OVERLAY */
 .game-overlay{
     position:absolute;
     inset:0;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     padding:20px;
-
     background:rgba(2,9,20,.88);
-
-    /* بالاتر از کنترل‌های پایین */
     z-index:90;
 }
-
-.game-overlay.hidden{
-    display:none;
-}
-
+.game-overlay.hidden{display:none}
 .overlay-box{
     width:100%;
     max-width:330px;
-
     padding:25px 18px;
-
     text-align:center;
-
     background:#0d1d30;
     border:1px solid #294662;
     border-radius:18px;
 }
+.overlay-box h2{margin-top:0}
+.overlay-text{color:#91a4ba;line-height:1.8}
 
-.overlay-box h2{
-    margin-top:0;
-}
-
-.overlay-text{
-    color:#91a4ba;
-    line-height:1.8;
-}
-
-
-/* =====================================================
-   کنترل‌های پایین
-===================================================== */
-
+/* کنترل‌های پایین — عمداً بالاتر از Overlay */
 .game-bottom-controls{
     position:absolute;
-
     right:0;
     bottom:0;
     left:0;
-
-    z-index:80;
-
-    padding:
-        7px
-        7px
-        calc(7px + env(safe-area-inset-bottom));
-
+    z-index:120;
+    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
-
     gap:6px;
-
-    background:linear-gradient(
-        to top,
-        rgba(2,9,20,.99),
-        rgba(2,9,20,.90),
-        rgba(2,9,20,.15)
-    );
+    background:linear-gradient(to top,rgba(2,9,20,.99),rgba(2,9,20,.90),rgba(2,9,20,.15));
 }
-
 .game-control-button{
     min-height:43px;
-
     border:1px solid #294662;
     border-radius:10px;
-
     background:#10253b;
     color:white;
-
     font-size:12px;
     font-weight:bold;
-
     cursor:pointer;
     touch-action:manipulation;
 }
+.game-control-button.start{background:#176b45}
+.game-control-button.pause{background:#6b4b18}
+.game-control-button.resume{background:#176b45}
+.game-control-button.cancel{background:#632832}
+.game-control-button:disabled{opacity:.4;cursor:not-allowed}
 
-.game-control-button.pause{
-    background:#6b4b18;
-}
-
-.game-control-button.resume{
-    background:#176b45;
-}
-
-.game-control-button.cancel{
-    background:#632832;
-}
-
-.game-control-button:disabled{
-    opacity:.4;
-    cursor:not-allowed;
-}
-
-
-/* =====================================================
-   موشک
-===================================================== */
-
+/* موشک */
 .missile-button{
     position:absolute;
-
     left:50%;
     bottom:62px;
-
     transform:translateX(-50%);
-
-    z-index:81;
-
+    z-index:121;
     min-width:155px;
-
     padding:10px 14px;
-
     border:1px solid #8c313a;
     border-radius:12px;
-
     background:#b52b38;
     color:white;
-
     font-size:13px;
     font-weight:bold;
-
     cursor:pointer;
     touch-action:manipulation;
 }
+.missile-button:disabled{opacity:.45;cursor:not-allowed}
 
-.missile-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
-}
+/* زمین */
+.ground-info{position:absolute;right:0;bottom:0;left:0;height:18%;pointer-events:none;z-index:5;background:linear-gradient(to bottom,rgba(18,42,30,.15),rgba(18,42,30,.85) 30%,rgba(8,25,18,.98))}
+.ground-line{position:absolute;top:0;right:0;left:0;height:3px;background:#426b43;box-shadow:0 0 10px rgba(60,130,65,.8)}
+.ground-details{position:absolute;right:0;bottom:0;left:0;height:75%;background:repeating-linear-gradient(165deg,transparent 0,transparent 18px,rgba(93,119,75,.15) 19px,transparent 20px)}
+.ground-road{position:absolute;left:50%;bottom:-15px;transform:translateX(-50%);width:25%;height:120%;background:linear-gradient(to bottom,rgba(75,83,77,.15),rgba(51,55,53,.55));clip-path:polygon(35% 0,65% 0,100% 100%,0 100%)}
+.ground-light{position:absolute;width:5px;height:5px;border-radius:50%;background:#c9d58d;box-shadow:0 0 7px #c9d58d}
+.ground-light.one{left:15%;bottom:35%}
+.ground-light.two{right:15%;bottom:55%}
+.ground-light.three{left:30%;bottom:65%}
+.ground-light.four{right:30%;bottom:25%}
 
-
-/* =====================================================
-   زمین
-===================================================== */
-
-.ground-info{
-    position:absolute;
-
-    right:0;
-    bottom:0;
-    left:0;
-
-    height:18%;
-
-    pointer-events:none;
-
-    z-index:5;
-
-    background:linear-gradient(
-        to bottom,
-        rgba(18,42,30,.15),
-        rgba(18,42,30,.85) 30%,
-        rgba(8,25,18,.98)
-    );
-}
-
-.ground-line{
-    position:absolute;
-
-    top:0;
-    right:0;
-    left:0;
-
-    height:3px;
-
-    background:#426b43;
-
-    box-shadow:
-        0 0 10px rgba(60,130,65,.8);
-}
-
-.ground-details{
-    position:absolute;
-
-    right:0;
-    bottom:0;
-    left:0;
-
-    height:75%;
-
-    background:repeating-linear-gradient(
-        165deg,
-        transparent 0,
-        transparent 18px,
-        rgba(93,119,75,.15) 19px,
-        transparent 20px
-    );
-}
-
-.ground-road{
-    position:absolute;
-
-    left:50%;
-    bottom:-15px;
-
-    transform:translateX(-50%);
-
-    width:25%;
-    height:120%;
-
-    background:linear-gradient(
-        to bottom,
-        rgba(75,83,77,.15),
-        rgba(51,55,53,.55)
-    );
-
-    clip-path:polygon(
-        35% 0,
-        65% 0,
-        100% 100%,
-        0 100%
-    );
-}
-
-.ground-light{
-    position:absolute;
-
-    width:5px;
-    height:5px;
-
-    border-radius:50%;
-
-    background:#c9d58d;
-
-    box-shadow:
-        0 0 7px #c9d58d;
-}
-
-.ground-light.one{
-    left:15%;
-    bottom:35%;
-}
-
-.ground-light.two{
-    right:15%;
-    bottom:55%;
-}
-
-.ground-light.three{
-    left:30%;
-    bottom:65%;
-}
-
-.ground-light.four{
-    right:30%;
-    bottom:25%;
-}
-
-
-/* =====================================================
-   NAV
-===================================================== */
-
-.nav{
-    position:fixed;
-
-    right:0;
-    bottom:0;
-    left:0;
-
-    height:70px;
-
-    display:flex;
-
-    background:#091625;
-
-    border-top:1px solid #20364f;
-
-    z-index:100;
-}
-
-.nav.hidden{
-    display:none;
-}
-
-.nav button{
-    flex:1;
-
-    border:0;
-
-    background:transparent;
-
-    color:#71879f;
-
-    font-size:12px;
-
-    cursor:pointer;
-}
-
-.nav button.active{
-    color:#20d875;
-}
-
-
-/* =====================================================
-   موبایل
-===================================================== */
+/* NAV */
+.nav{position:fixed;right:0;bottom:0;left:0;height:70px;display:flex;background:#091625;border-top:1px solid #20364f;z-index:100}
+.nav.hidden{display:none}
+.nav button{flex:1;border:0;background:transparent;color:#71879f;font-size:12px;cursor:pointer}
+.nav button.active{color:#20d875}
 
 @media(max-width:500px){
-
-    .game-header{
-        height:20px;
-        min-height:20px;
-    }
-
-    .game-wrapper{
-        height:calc(100vh - 20px);
-        min-height:430px;
-    }
-
-    .game-title{
-        font-size:7px;
-    }
-
-    .game-badge{
-        padding:1px 3px;
-        font-size:6px;
-    }
-
-    .game-control-button{
-        min-height:42px;
-        font-size:11px;
-    }
-
-    .missile-button{
-        bottom:61px;
-        min-width:145px;
-        padding:9px;
-        font-size:12px;
-    }
+    .game-header{height:10px;min-height:10px;flex-basis:10px}
+    .game-wrapper{height:calc(100vh - 10px);min-height:430px}
+    .game-title{font-size:5px}
+    .game-badge{padding:0 2px;font-size:5px}
+    .game-control-button{min-height:42px;font-size:11px}
+    .missile-button{bottom:61px;min-width:145px;padding:9px;font-size:12px}
 }
 </style>
 </head>
 
 <body>
 
-
-<!-- =================================================
-     HEADER
-================================================= -->
-
 <header class="header">
-
-    <div class="logo">
-        💰 USDT Earn
-    </div>
-
-    <div class="user">
-        خوش آمدید 👋
-    </div>
-
-    <div class="balance">
-
-        <div class="balance-title">
-            موجودی شما
-        </div>
-
-        <div
-            class="balance-number"
-            id="mainBalance"
-        >
-            0.00 USDT
-        </div>
-
-    </div>
-
+<div class="logo">💰 USDT Earn</div>
+<div class="user">خوش آمدید 👋</div>
+<div class="balance">
+<div class="balance-title">موجودی شما</div>
+<div class="balance-number" id="mainBalance">0.00 USDT</div>
+</div>
 </header>
-
 
 <main>
 
+<section id="home" class="page active">
+<div class="card">
+<h2>✈️ فرار از بمب</h2>
+<p class="text">با هواپیمای جنگی از بمب‌ها فرار کن، دشمنان را نابود کن و امتیاز و سکه جمع کن.</p>
+<button type="button" class="button" onclick="openGame()">🎮 شروع بازی</button>
+</div>
 
-<!-- =================================================
-     خانه
-================================================= -->
-
-<section
-    id="home"
-    class="page active"
->
-
-    <div class="card">
-
-        <h2>
-            ✈️ فرار از بمب
-        </h2>
-
-        <p class="text">
-            با هواپیمای جنگی از بمب‌ها فرار کن،
-            دشمنان را نابود کن و امتیاز و سکه جمع کن.
-        </p>
-
-        <button
-            type="button"
-            class="button"
-            onclick="openGame()"
-        >
-            🎮 شروع بازی
-        </button>
-
-    </div>
-
-
-    <div class="grid">
-
-        <div class="stat">
-
-            <span class="stat-title">
-                🪙 سکه
-            </span>
-
-            <span
-                class="stat-number"
-                id="coinStat"
-            >
-                0
-            </span>
-
-        </div>
-
-
-        <div class="stat">
-
-            <span class="stat-title">
-                ⭐ امتیاز
-            </span>
-
-            <span
-                class="stat-number"
-                id="scoreStat"
-            >
-                0
-            </span>
-
-        </div>
-
-
-        <div class="stat">
-
-            <span class="stat-title">
-                👥 دعوت
-            </span>
-
-            <span
-                class="stat-number"
-                id="inviteStat"
-            >
-                0
-            </span>
-
-        </div>
-
-
-        <div class="stat">
-
-            <span class="stat-title">
-                📺 تبلیغات
-            </span>
-
-            <span
-                class="stat-number"
-                id="adStat"
-            >
-                0
-            </span>
-
-        </div>
-
-    </div>
-
+<div class="grid">
+<div class="stat"><span class="stat-title">🪙 سکه</span><span class="stat-number" id="coinStat">0</span></div>
+<div class="stat"><span class="stat-title">⭐ امتیاز</span><span class="stat-number" id="scoreStat">0</span></div>
+<div class="stat"><span class="stat-title">👥 دعوت</span><span class="stat-number" id="inviteStat">0</span></div>
+<div class="stat"><span class="stat-title">📺 تبلیغات</span><span class="stat-number" id="adStat">0</span></div>
+</div>
 </section>
 
-
-<!-- =================================================
-     بازی
-================================================= -->
-
-<section
-    id="gamePage"
-    class="page"
->
-
-    <div class="card game-card">
-
-
-        <!-- نوار بالای بازی -->
-
-        <div class="game-header">
-
-            <div class="game-title">
-                ✈️ فرار از بمب
-            </div>
-
-
-            <div class="game-info">
-
-                <div class="game-badge">
-
-                    ❤️
-
-                    <span id="gameLives">
-                        3
-                    </span>
-
-                </div>
-
-
-                <div class="game-badge">
-
-                    ⭐
-
-                    <span id="gameScore">
-                        0
-                    </span>
-
-                </div>
-
-
-                <div class="game-badge">
-
-                    ⏱️
-
-                    <span id="gameTime">
-                        0:00
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="game-wrapper">
-
-            <canvas
-                id="gameCanvas"
-            ></canvas>
-
-
-            <!-- زمین -->
-
-            <div class="ground-info">
-
-                <div class="ground-line"></div>
-
-                <div class="ground-details"></div>
-
-                <div class="ground-road"></div>
-
-                <div class="ground-light one"></div>
-                <div class="ground-light two"></div>
-                <div class="ground-light three"></div>
-                <div class="ground-light four"></div>
-
-            </div>
-
-
-            <!-- =================================================
-                 شروع
-            ================================================= -->
-
-            <div
-                id="startOverlay"
-                class="game-overlay"
-            >
-
-                <div class="overlay-box">
-
-                    <h2>
-                        ✈️ آماده‌ای؟
-                    </h2>
-
-                    <p class="overlay-text">
-
-                        هواپیما به صورت خودکار شلیک می‌کند.
-
-                        <br>
-
-                        برای حرکت، انگشت خود را روی صفحه حرکت بده.
-
-                        <br>
-
-                        موشک ویژه را با دکمه پایین شلیک کن.
-
-                    </p>
-
-
-                    <button
-                        type="button"
-                        id="startGameButton"
-                        class="button"
-                    >
-                        🚀 شروع بازی
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="button secondary"
-                        onclick="cancelGame()"
-                    >
-                        ❌ لغو
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 پایان
-            ================================================= -->
-
-            <div
-                id="gameOverOverlay"
-                class="game-overlay hidden"
-            >
-
-                <div class="overlay-box">
-
-                    <h2>
-                        💥 بازی تمام شد
-                    </h2>
-
-
-                    <p class="overlay-text">
-
-                        امتیاز:
-
-                        <b id="finalScore">
-                            0
-                        </b>
-
-                        <br>
-
-                        سکه:
-
-                        <b id="finalCoins">
-                            0
-                        </b>
-
-                    </p>
-
-
-                    <button
-                        type="button"
-                        class="button"
-                        onclick="watchLifeAd()"
-                    >
-                        📺 دیدن تبلیغ و دریافت ۳ جان
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="button secondary"
-                        onclick="restartGame()"
-                    >
-                        🔄 شروع دوباره
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="button secondary"
-                        onclick="backHome()"
-                    >
-                        🏠 بازگشت
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 کنترل‌های پایین
-            ================================================= -->
-
-            <div class="game-bottom-controls">
-
-
-                <button
-                    type="button"
-                    id="cancelGameButton"
-                    class="game-control-button cancel"
-                    onclick="cancelGame()"
-                >
-                    ❌ لغو
-                </button>
-
-
-                <button
-                    type="button"
-                    id="pauseGameButton"
-                    class="game-control-button pause"
-                    onclick="pauseGame()"
-                    disabled
-                >
-                    ⏸️ توقف
-                </button>
-
-
-                <button
-                    type="button"
-                    id="resumeGameButton"
-                    class="game-control-button resume"
-                    onclick="resumeGame()"
-                    disabled
-                >
-                    ▶️ ادامه
-                </button>
-
-            </div>
-
-
-            <!-- =================================================
-                 موشک
-            ================================================= -->
-
-            <button
-                type="button"
-                id="missileButton"
-                class="missile-button"
-                onclick="fireSpecialMissile()"
-                disabled
-            >
-                🚀 موشک ویژه
-
-                (<span id="missileCount">3</span>)
-
-            </button>
-
-        </div>
-
-    </div>
-
+<section id="gamePage" class="page">
+<div class="card game-card">
+
+<div class="game-header">
+<div class="game-title">✈️ فرار از بمب</div>
+<div class="game-info">
+<div class="game-badge">❤️ <span id="gameLives">3</span></div>
+<div class="game-badge">⭐ <span id="gameScore">0</span></div>
+<div class="game-badge">⏱️ <span id="gameTime">0:00</span></div>
+</div>
+</div>
+
+<div class="game-wrapper">
+
+<canvas id="gameCanvas"></canvas>
+
+<div class="ground-info">
+<div class="ground-line"></div>
+<div class="ground-details"></div>
+<div class="ground-road"></div>
+<div class="ground-light one"></div>
+<div class="ground-light two"></div>
+<div class="ground-light three"></div>
+<div class="ground-light four"></div>
+</div>
+
+<!-- شروع -->
+<div id="startOverlay" class="game-overlay">
+<div class="overlay-box">
+<h2>✈️ آماده‌ای؟</h2>
+<p class="overlay-text">
+هواپیما به صورت خودکار شلیک می‌کند.<br>
+برای حرکت، انگشت خود را روی صفحه حرکت بده.<br>
+موشک ویژه را با دکمه پایین شلیک کن.
+</p>
+<button type="button" id="startGameButton" class="button">🚀 شروع بازی</button>
+<button type="button" class="button secondary" onclick="cancelGame()">❌ لغو</button>
+</div>
+</div>
+
+<!-- پایان -->
+<div id="gameOverOverlay" class="game-overlay hidden">
+<div class="overlay-box">
+<h2>💥 بازی تمام شد</h2>
+<p class="overlay-text">
+امتیاز: <b id="finalScore">0</b><br>
+سکه: <b id="finalCoins">0</b>
+</p>
+<button type="button" class="button" onclick="watchLifeAd()">📺 دیدن تبلیغ و دریافت ۳ جان</button>
+<button type="button" class="button secondary" onclick="restartGame()">🔄 شروع دوباره</button>
+<button type="button" class="button secondary" onclick="backHome()">🏠 بازگشت</button>
+</div>
+</div>
+
+<!-- کنترل‌های همیشه قابل مشاهده -->
+<div class="game-bottom-controls">
+
+<button type="button" id="startBottomButton" class="game-control-button start" onclick="startGame()">
+🚀 شروع
+</button>
+
+<button type="button" id="pauseGameButton" class="game-control-button pause" onclick="pauseGame()" disabled>
+⏸️ توقف
+</button>
+
+<button type="button" id="resumeGameButton" class="game-control-button resume" onclick="resumeGame()" disabled>
+▶️ ادامه
+</button>
+
+</div>
+
+<button type="button" id="missileButton" class="missile-button" onclick="fireSpecialMissile()" disabled>
+🚀 موشک ویژه (<span id="missileCount">3</span>)
+</button>
+
+</div>
+</div>
 </section>
 
-
-<!-- =================================================
-     دعوت
-================================================= -->
-
-<section
-    id="invite"
-    class="page"
->
-
-    <div class="card">
-
-        <h2>
-            👥 دعوت دوستان
-        </h2>
-
-        <p class="text">
-            دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.
-        </p>
-
-        <button
-            type="button"
-            class="button"
-            onclick="copyLink()"
-        >
-            📋 کپی لینک دعوت
-        </button>
-
-    </div>
-
+<section id="invite" class="page">
+<div class="card">
+<h2>👥 دعوت دوستان</h2>
+<p class="text">دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.</p>
+<button type="button" class="button" onclick="copyLink()">📋 کپی لینک دعوت</button>
+</div>
 </section>
 
-
-<!-- =================================================
-     کیف پول
-================================================= -->
-
-<section
-    id="wallet"
-    class="page"
->
-
-    <div class="card">
-
-        <h2>
-            💰 کیف پول
-        </h2>
-
-        <p class="text">
-            موجودی قابل برداشت
-        </p>
-
-        <div
-            class="balance-number"
-            id="walletBalance"
-        >
-            0.00 USDT
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h3>
-            💸 برداشت
-        </h3>
-
-        <p class="text">
-            بخش برداشت در مرحله بعد به سرور متصل می‌شود.
-        </p>
-
-    </div>
-
+<section id="wallet" class="page">
+<div class="card">
+<h2>💰 کیف پول</h2>
+<p class="text">موجودی قابل برداشت</p>
+<div class="balance-number" id="walletBalance">0.00 USDT</div>
+</div>
+<div class="card">
+<h3>💸 برداشت</h3>
+<p class="text">بخش برداشت در مرحله بعد به سرور متصل می‌شود.</p>
+</div>
 </section>
 
-
-<!-- =================================================
-     پروفایل
-================================================= -->
-
-<section
-    id="profile"
-    class="page"
->
-
-    <div class="card">
-
-        <h2>
-            👤 پروفایل
-        </h2>
-
-        <p class="text">
-            حساب کاربری USDT Earn
-        </p>
-
-
-        <div class="grid">
-
-            <div class="stat">
-
-                <span class="stat-title">
-                    شناسه
-                </span>
-
-                <span
-                    class="stat-number"
-                    id="userId"
-                >
-                    -
-                </span>
-
-            </div>
-
-
-            <div class="stat">
-
-                <span class="stat-title">
-                    موجودی
-                </span>
-
-                <span
-                    class="stat-number"
-                    id="profileBalance"
-                >
-                    0.00
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<section id="profile" class="page">
+<div class="card">
+<h2>👤 پروفایل</h2>
+<p class="text">حساب کاربری USDT Earn</p>
+<div class="grid">
+<div class="stat">
+<span class="stat-title">شناسه</span>
+<span class="stat-number" id="userId">-</span>
+</div>
+<div class="stat">
+<span class="stat-title">موجودی</span>
+<span class="stat-number" id="profileBalance">0.00</span>
+</div>
+</div>
+</div>
 </section>
-
 
 </main>
 
-
-<!-- =================================================
-     NAV
-================================================= -->
-
-<nav
-    class="nav"
-    id="mainNav"
->
-
-    <button
-        type="button"
-        id="navHome"
-        class="active"
-        onclick="showPage('home',this)"
-    >
-        🏠
-        <br>
-        خانه
-    </button>
-
-
-    <button
-        type="button"
-        id="navInvite"
-        onclick="showPage('invite',this)"
-    >
-        👥
-        <br>
-        دعوت
-    </button>
-
-
-    <button
-        type="button"
-        id="navWallet"
-        onclick="showPage('wallet',this)"
-    >
-        💰
-        <br>
-        کیف پول
-    </button>
-
-
-    <button
-        type="button"
-        id="navProfile"
-        onclick="showPage('profile',this)"
-    >
-        👤
-        <br>
-        پروفایل
-    </button>
-
+<nav class="nav" id="mainNav">
+<button type="button" id="navHome" class="active" onclick="showPage('home',this)">🏠<br>خانه</button>
+<button type="button" id="navInvite" onclick="showPage('invite',this)">👥<br>دعوت</button>
+<button type="button" id="navWallet" onclick="showPage('wallet',this)">💰<br>کیف پول</button>
+<button type="button" id="navProfile" onclick="showPage('profile',this)">👤<br>پروفایل</button>
 </nav>
 
-
 <script>
+var coins=0,totalScore=0,adCount=0;
 
-/* =====================================================
-   اطلاعات اصلی
-===================================================== */
-
-var coins = 0;
-var totalScore = 0;
-var adCount = 0;
-
-
-/* =====================================================
-   Telegram
-===================================================== */
-
-var tg = null;
-
-if(
-    window.Telegram &&
-    window.Telegram.WebApp
-){
-
-    try{
-
-        tg =
-            window.Telegram.WebApp;
-
-        tg.ready();
-        tg.expand();
-
-
-        if(
-            tg.initDataUnsafe &&
-            tg.initDataUnsafe.user
-        ){
-
-            var user =
-                tg.initDataUnsafe.user;
-
-            var userElement =
-                document.getElementById(
-                    "userId"
-                );
-
-            if(userElement){
-
-                userElement.textContent =
-                    user.id || "-";
-
-            }
-
-        }
-
-    }catch(error){
-
-        console.log(error);
-
-    }
-
+var tg=null;
+if(window.Telegram&&window.Telegram.WebApp){
+try{
+tg=window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+if(tg.initDataUnsafe&&tg.initDataUnsafe.user){
+var user=tg.initDataUnsafe.user;
+var userElement=document.getElementById("userId");
+if(userElement)userElement.textContent=user.id||"-";
+}
+}catch(error){console.log(error)}
 }
 
+function showPage(id,button){
+var pages=document.querySelectorAll(".page");
+for(var i=0;i<pages.length;i++)pages[i].classList.remove("active");
+var page=document.getElementById(id);
+if(page)page.classList.add("active");
 
-/* =====================================================
-   صفحات
-===================================================== */
-
-function showPage(
-    id,
-    button
-){
-
-    var pages =
-        document.querySelectorAll(
-            ".page"
-        );
-
-    for(
-        var i=0;
-        i<pages.length;
-        i++
-    ){
-
-        pages[i]
-            .classList
-            .remove("active");
-
-    }
-
-
-    var page =
-        document.getElementById(id);
-
-    if(page){
-
-        page.classList.add("active");
-
-    }
-
-
-    var buttons =
-        document.querySelectorAll(
-            ".nav button"
-        );
-
-    for(
-        var j=0;
-        j<buttons.length;
-        j++
-    ){
-
-        buttons[j]
-            .classList
-            .remove("active");
-
-    }
-
-
-    if(button){
-
-        button
-            .classList
-            .add("active");
-
-    }
-
+var buttons=document.querySelectorAll(".nav button");
+for(var j=0;j<buttons.length;j++)buttons[j].classList.remove("active");
+if(button)button.classList.add("active");
 }
 
+var gameRunning=false,gamePaused=false,animationId=null;
+var gameStartTime=0,pauseStartTime=0,elapsedSeconds=0;
+var gameScore=0,gameLives=3,missiles=3;
 
-/* =====================================================
-   وضعیت بازی
-===================================================== */
+var PLAYER_SCALE=.8;
+var player={x:0,y:0,targetX:0,targetY:0,width:30.4,height:41.6,speed:.18};
 
-var gameRunning = false;
-var gamePaused = false;
+var bullets=[],specialMissiles=[],bombs=[],enemies=[],enemyBullets=[],explosions=[];
 
-var animationId = null;
+var lastBulletTime=0,lastBombTime=0,lastEnemyTime=0,lastEnemyShotTime=0,lastFrameTime=0;
+var fourMinuteAdShown=false,pointerActive=false;
 
-var gameStartTime = 0;
-var pauseStartTime = 0;
-
-var elapsedSeconds = 0;
-
-var gameScore = 0;
-var gameLives = 3;
-var missiles = 3;
-
-
-/* =====================================================
-   بازیکن
-===================================================== */
-
-/*
-   اندازه قبلی:
-   38 × 52
-
-   اندازه جدید:
-   80٪ اندازه قبلی
-*/
-
-var PLAYER_SCALE = 0.8;
-
-var player = {
-
-    x:0,
-    y:0,
-
-    targetX:0,
-    targetY:0,
-
-    width:30.4,
-    height:41.6,
-
-    speed:0.18
-
-};
-
-
-/* =====================================================
-   آرایه‌های بازی
-===================================================== */
-
-var bullets = [];
-var specialMissiles = [];
-
-var bombs = [];
-var enemies = [];
-
-var enemyBullets = [];
-
-var explosions = [];
-
-
-/* =====================================================
-   زمان‌ها
-===================================================== */
-
-var lastBulletTime = 0;
-var lastBombTime = 0;
-var lastEnemyTime = 0;
-var lastEnemyShotTime = 0;
-
-var lastFrameTime = 0;
-
-var fourMinuteAdShown = false;
-
-var pointerActive = false;
-
-
-/* =====================================================
-   Canvas
-===================================================== */
-
-var canvas =
-    document.getElementById(
-        "gameCanvas"
-    );
-
-var ctx =
-    canvas
-    ?
-    canvas.getContext("2d")
-    :
-    null;
-
-
-/* =====================================================
-   Resize
-===================================================== */
+var canvas=document.getElementById("gameCanvas");
+var ctx=canvas?canvas.getContext("2d"):null;
 
 function resizeCanvas(){
+if(!canvas||!ctx)return;
+var rect=canvas.getBoundingClientRect();
+var width=Math.max(300,Math.floor(rect.width));
+var height=Math.max(400,Math.floor(rect.height));
+var dpr=Math.min(window.devicePixelRatio||1,2);
+canvas.width=width*dpr;
+canvas.height=height*dpr;
+ctx.setTransform(dpr,0,0,dpr,0,0);
 
-    if(
-        !canvas ||
-        !ctx
-    ){
-
-        return;
-
-    }
-
-
-    var rect =
-        canvas.getBoundingClientRect();
-
-
-    var width =
-        Math.max(
-            300,
-            Math.floor(
-                rect.width
-            )
-        );
-
-
-    var height =
-        Math.max(
-            400,
-            Math.floor(
-                rect.height
-            )
-        );
-
-
-    var dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
-
-
-    canvas.width =
-        width * dpr;
-
-    canvas.height =
-        height * dpr;
-
-
-    ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-
-
-    if(!gameRunning){
-
-        player.x =
-            width / 2;
-
-        player.y =
-            height - 105;
-
-        player.targetX =
-            player.x;
-
-        player.targetY =
-            player.y;
-
-    }
-
+if(!gameRunning){
+player.x=width/2;
+player.y=height-105;
+player.targetX=player.x;
+player.targetY=player.y;
 }
-
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-/* =====================================================
-   Reset کامل بازی
-===================================================== */
+}
+window.addEventListener("resize",resizeCanvas);
 
 function resetGameState(){
-
-    gameRunning = false;
-    gamePaused = false;
-
-    elapsedSeconds = 0;
-
-    gameScore = 0;
-    gameLives = 3;
-    missiles = 3;
-
-    pauseStartTime = 0;
-
-    lastBulletTime = 0;
-    lastBombTime = 0;
-    lastEnemyTime = 0;
-    lastEnemyShotTime = 0;
-
-    fourMinuteAdShown = false;
-
-    pointerActive = false;
-
-
-    bullets = [];
-    specialMissiles = [];
-
-    bombs = [];
-    enemies = [];
-
-    enemyBullets = [];
-    explosions = [];
-
-
-    if(animationId !== null){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-    }
-
-    animationId = null;
-
-    updateGameUI();
-    updateControlButtons();
-
+gameRunning=false;gamePaused=false;
+elapsedSeconds=0;gameScore=0;gameLives=3;missiles=3;
+pauseStartTime=0;
+lastBulletTime=0;lastBombTime=0;lastEnemyTime=0;lastEnemyShotTime=0;
+fourMinuteAdShown=false;pointerActive=false;
+bullets=[];specialMissiles=[];bombs=[];enemies=[];enemyBullets=[];explosions=[];
+if(animationId!==null)cancelAnimationFrame(animationId);
+animationId=null;
+updateGameUI();updateControlButtons();
 }
-
-
-/* =====================================================
-   باز کردن بازی
-===================================================== */
 
 function openGame(){
-
-    resetGameState();
-
-    document.body
-        .classList
-        .add("game-mode");
-
-
-    document
-        .getElementById("mainNav")
-        .classList
-        .add("hidden");
-
-
-    showPage(
-        "gamePage",
-        null
-    );
-
-
-    document
-        .getElementById("startOverlay")
-        .classList
-        .remove("hidden");
-
-
-    document
-        .getElementById("gameOverOverlay")
-        .classList
-        .add("hidden");
-
-
-    resizeCanvas();
-
-    updateGameUI();
-    updateControlButtons();
-
+resetGameState();
+document.body.classList.add("game-mode");
+document.getElementById("mainNav").classList.add("hidden");
+showPage("gamePage",null);
+document.getElementById("startOverlay").classList.remove("hidden");
+document.getElementById("gameOverOverlay").classList.add("hidden");
+resizeCanvas();
+updateGameUI();
+updateControlButtons();
 }
-
-
-/* =====================================================
-   بازگشت به خانه
-===================================================== */
 
 function backHome(){
-
-    resetGameState();
-
-
-    document.body
-        .classList
-        .remove("game-mode");
-
-
-    document
-        .getElementById("mainNav")
-        .classList
-        .remove("hidden");
-
-
-    document
-        .getElementById("startOverlay")
-        .classList
-        .remove("hidden");
-
-
-    document
-        .getElementById("gameOverOverlay")
-        .classList
-        .add("hidden");
-
-
-    showPage(
-        "home",
-        document.getElementById(
-            "navHome"
-        )
-    );
-
-
-    updateStats();
-
+resetGameState();
+document.body.classList.remove("game-mode");
+document.getElementById("mainNav").classList.remove("hidden");
+document.getElementById("startOverlay").classList.remove("hidden");
+document.getElementById("gameOverOverlay").classList.add("hidden");
+showPage("home",document.getElementById("navHome"));
+updateStats();
 }
 
-
-/* =====================================================
-   لغو بازی
-===================================================== */
-
-function cancelGame(){
-
-    backHome();
-
-}
-
-
-/* =====================================================
-   لینک دعوت
-===================================================== */
+function cancelGame(){backHome()}
 
 function copyLink(){
-
-    var link =
-        window.location.href;
-
-
-    if(
-        navigator.clipboard &&
-        navigator.clipboard.writeText
-    ){
-
-        navigator.clipboard
-            .writeText(link)
-            .then(
-                function(){
-
-                    alert(
-                        "لینک کپی شد ✅"
-                    );
-
-                }
-            )
-            .catch(
-                function(){
-
-                    alert(link);
-
-                }
-            );
-
-    }else{
-
-        alert(link);
-
-    }
-
+var link=window.location.href;
+if(navigator.clipboard&&navigator.clipboard.writeText){
+navigator.clipboard.writeText(link).then(function(){alert("لینک کپی شد ✅")}).catch(function(){alert(link)});
+}else alert(link);
 }
-
-
-/* =====================================================
-   آمار
-===================================================== */
 
 function updateStats(){
-
-    var coinStat =
-        document.getElementById(
-            "coinStat"
-        );
-
-    var scoreStat =
-        document.getElementById(
-            "scoreStat"
-        );
-
-    var adStat =
-        document.getElementById(
-            "adStat"
-        );
-
-    var walletBalance =
-        document.getElementById(
-            "walletBalance"
-        );
-
-    var profileBalance =
-        document.getElementById(
-            "profileBalance"
-        );
-
-
-    if(coinStat){
-
-        coinStat.textContent =
-            coins;
-
-    }
-
-
-    if(scoreStat){
-
-        scoreStat.textContent =
-            totalScore;
-
-    }
-
-
-    if(adStat){
-
-        adStat.textContent =
-            adCount;
-
-    }
-
-
-    if(walletBalance){
-
-        walletBalance.textContent =
-            "0.00 USDT";
-
-    }
-
-
-    if(profileBalance){
-
-        profileBalance.textContent =
-            "0.00";
-
-    }
-
+var coinStat=document.getElementById("coinStat");
+var scoreStat=document.getElementById("scoreStat");
+var adStat=document.getElementById("adStat");
+var walletBalance=document.getElementById("walletBalance");
+var profileBalance=document.getElementById("profileBalance");
+if(coinStat)coinStat.textContent=coins;
+if(scoreStat)scoreStat.textContent=totalScore;
+if(adStat)adStat.textContent=adCount;
+if(walletBalance)walletBalance.textContent="0.00 USDT";
+if(profileBalance)profileBalance.textContent="0.00";
 }
 
-
-/* =====================================================
-   ADSGRAM
-===================================================== */
-
-var ADSGRAM_REWARDED_BLOCK_ID =
-    "YOUR_REWARDED_BLOCK_ID";
-
-var ADSGRAM_INTERSTITIAL_BLOCK_ID =
-    "YOUR_INTERSTITIAL_BLOCK_ID";
-
-
-var rewardedController = null;
-var interstitialController = null;
-
+/* ADSGRAM */
+var ADSGRAM_REWARDED_BLOCK_ID="YOUR_REWARDED_BLOCK_ID";
+var ADSGRAM_INTERSTITIAL_BLOCK_ID="YOUR_INTERSTITIAL_BLOCK_ID";
+var rewardedController=null,interstitialController=null;
 
 function adsReady(){
-
-    return(
-        window.Adsgram &&
-        typeof window.Adsgram.init ===
-        "function"
-    );
-
+return window.Adsgram&&typeof window.Adsgram.init==="function";
 }
-
 
 function initAds(){
-
-    if(!adsReady()){
-
-        return;
-
-    }
-
-
-    try{
-
-        if(
-            ADSGRAM_REWARDED_BLOCK_ID &&
-            ADSGRAM_REWARDED_BLOCK_ID !==
-            "YOUR_REWARDED_BLOCK_ID"
-        ){
-
-            rewardedController =
-                window.Adsgram.init({
-
-                    blockId:
-                        ADSGRAM_REWARDED_BLOCK_ID
-
-                });
-
-        }
-
-
-        if(
-            ADSGRAM_INTERSTITIAL_BLOCK_ID &&
-            ADSGRAM_INTERSTITIAL_BLOCK_ID !==
-            "YOUR_INTERSTITIAL_BLOCK_ID"
-        ){
-
-            interstitialController =
-                window.Adsgram.init({
-
-                    blockId:
-                        ADSGRAM_INTERSTITIAL_BLOCK_ID
-
-                });
-
-        }
-
-    }catch(error){
-
-        console.log(
-            "AdsGram error:",
-            error
-        );
-
-    }
-
+if(!adsReady())return;
+try{
+if(ADSGRAM_REWARDED_BLOCK_ID&&ADSGRAM_REWARDED_BLOCK_ID!=="YOUR_REWARDED_BLOCK_ID")
+rewardedController=window.Adsgram.init({blockId:ADSGRAM_REWARDED_BLOCK_ID});
+if(ADSGRAM_INTERSTITIAL_BLOCK_ID&&ADSGRAM_INTERSTITIAL_BLOCK_ID!=="YOUR_INTERSTITIAL_BLOCK_ID")
+interstitialController=window.Adsgram.init({blockId:ADSGRAM_INTERSTITIAL_BLOCK_ID});
+}catch(error){console.log("AdsGram error:",error)}
 }
-
-
 initAds();
 
-
-/* =====================================================
-   شروع بازی
-===================================================== */
-
 function startGame(){
-
-    if(
-        !canvas ||
-        !ctx
-    ){
-
-        alert(
-            "خطا در بارگذاری صفحه بازی"
-        );
-
-        return;
-
-    }
-
-
-    if(animationId !== null){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-    }
-
-
-    animationId = null;
-
-
-    gameRunning = true;
-    gamePaused = false;
-
-
-    gameStartTime =
-        performance.now();
-
-
-    pauseStartTime = 0;
-
-
-    elapsedSeconds = 0;
-
-
-    gameScore = 0;
-    gameLives = 3;
-    missiles = 3;
-
-
-    bullets = [];
-    specialMissiles = [];
-
-    bombs = [];
-    enemies = [];
-
-    enemyBullets = [];
-    explosions = [];
-
-
-    lastBulletTime = 0;
-    lastBombTime = 0;
-    lastEnemyTime = 0;
-    lastEnemyShotTime = 0;
-
-
-    fourMinuteAdShown = false;
-
-
-    resizeCanvas();
-
-
-    player.x =
-        canvas.clientWidth / 2;
-
-    player.y =
-        canvas.clientHeight - 105;
-
-    player.targetX =
-        player.x;
-
-    player.targetY =
-        player.y;
-
-
-    document
-        .getElementById("startOverlay")
-        .classList
-        .add("hidden");
-
-
-    document
-        .getElementById("gameOverOverlay")
-        .classList
-        .add("hidden");
-
-
-    updateGameUI();
-    updateControlButtons();
-
-
-    lastFrameTime =
-        performance.now();
-
-
-    animationId =
-        requestAnimationFrame(
-            gameLoop
-        );
-
+if(!canvas||!ctx){
+alert("خطا در بارگذاری صفحه بازی");
+return;
 }
 
+if(animationId!==null)cancelAnimationFrame(animationId);
+animationId=null;
 
-/* =====================================================
-   توقف کامل
-===================================================== */
+gameRunning=true;gamePaused=false;
+gameStartTime=performance.now();
+pauseStartTime=0;
+elapsedSeconds=0;
+gameScore=0;gameLives=3;missiles=3;
+
+bullets=[];specialMissiles=[];bombs=[];enemies=[];enemyBullets=[];explosions=[];
+lastBulletTime=0;lastBombTime=0;lastEnemyTime=0;lastEnemyShotTime=0;
+fourMinuteAdShown=false;
+
+resizeCanvas();
+
+player.x=canvas.clientWidth/2;
+player.y=canvas.clientHeight-105;
+player.targetX=player.x;
+player.targetY=player.y;
+
+document.getElementById("startOverlay").classList.add("hidden");
+document.getElementById("gameOverOverlay").classList.add("hidden");
+
+updateGameUI();
+updateControlButtons();
+
+lastFrameTime=performance.now();
+animationId=requestAnimationFrame(gameLoop);
+}
 
 function stopGame(){
-
-    gameRunning = false;
-    gamePaused = false;
-
-    if(animationId !== null){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-    }
-
-    animationId = null;
-
-    pauseStartTime = 0;
-
-    pointerActive = false;
-
-    updateControlButtons();
-    updateGameUI();
-
+gameRunning=false;gamePaused=false;
+if(animationId!==null)cancelAnimationFrame(animationId);
+animationId=null;
+pauseStartTime=0;
+pointerActive=false;
+updateControlButtons();
+updateGameUI();
 }
-
-
-/* =====================================================
-   توقف موقت
-===================================================== */
 
 function pauseGame(){
-
-    if(!gameRunning){
-
-        return;
-
-    }
-
-
-    if(gamePaused){
-
-        return;
-
-    }
-
-
-    gamePaused = true;
-
-
-    pauseStartTime =
-        performance.now();
-
-
-    if(animationId !== null){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-    }
-
-
-    animationId = null;
-
-
-    updateControlButtons();
-    updateGameUI();
-
+if(!gameRunning||gamePaused)return;
+gamePaused=true;
+pauseStartTime=performance.now();
+if(animationId!==null)cancelAnimationFrame(animationId);
+animationId=null;
+updateControlButtons();
+updateGameUI();
 }
-
-
-/* =====================================================
-   ادامه بازی
-===================================================== */
 
 function resumeGame(){
-
-    if(!gameRunning){
-
-        return;
-
-    }
-
-
-    if(!gamePaused){
-
-        return;
-
-    }
-
-
-    var now =
-        performance.now();
-
-
-    /*
-       مدت توقف از زمان بازی کم می‌شود
-       تا زمان بازی هنگام Pause جلو نرود.
-    */
-
-    if(pauseStartTime > 0){
-
-        gameStartTime +=
-            now -
-            pauseStartTime;
-
-    }
-
-
-    pauseStartTime = 0;
-
-    gamePaused = false;
-
-    lastFrameTime = now;
-
-
-    updateControlButtons();
-    updateGameUI();
-
-
-    if(animationId === null){
-
-        animationId =
-            requestAnimationFrame(
-                gameLoop
-            );
-
-    }
-
+if(!gameRunning||!gamePaused)return;
+var now=performance.now();
+if(pauseStartTime>0)gameStartTime+=now-pauseStartTime;
+pauseStartTime=0;
+gamePaused=false;
+lastFrameTime=now;
+updateControlButtons();
+updateGameUI();
+if(animationId===null)animationId=requestAnimationFrame(gameLoop);
 }
-
-
-/* =====================================================
-   کنترل دکمه‌ها
-===================================================== */
 
 function updateControlButtons(){
-
-    var pauseButton =
-        document.getElementById(
-            "pauseGameButton"
-        );
-
-    var resumeButton =
-        document.getElementById(
-            "resumeGameButton"
-        );
-
-    var cancelButton =
-        document.getElementById(
-            "cancelGameButton"
-        );
-
-
-    if(pauseButton){
-
-        pauseButton.disabled =
-            !gameRunning ||
-            gamePaused;
-
-    }
-
-
-    if(resumeButton){
-
-        resumeButton.disabled =
-            !gameRunning ||
-            !gamePaused;
-
-    }
-
-
-    if(cancelButton){
-
-        cancelButton.disabled =
-            false;
-
-    }
-
+var start=document.getElementById("startBottomButton");
+var pause=document.getElementById("pauseGameButton");
+var resume=document.getElementById("resumeGameButton");
+if(start)start.disabled=gameRunning;
+if(pause)pause.disabled=!gameRunning||gamePaused;
+if(resume)resume.disabled=!gameRunning||!gamePaused;
 }
 
-
-/* =====================================================
-   شروع دوباره
-===================================================== */
-
-function restartGame(){
-
-    startGame();
-
-}
-
-
-/* =====================================================
-   حلقه بازی
-===================================================== */
+function restartGame(){startGame()}
 
 function gameLoop(timestamp){
+if(!gameRunning){animationId=null;return}
+if(gamePaused){animationId=null;return}
 
-    if(!gameRunning){
+animationId=requestAnimationFrame(gameLoop);
 
-        animationId = null;
+var delta=Math.min(.035,(timestamp-lastFrameTime)/1000);
+lastFrameTime=timestamp;
+elapsedSeconds=(timestamp-gameStartTime)/1000;
 
-        return;
+updateGame(delta,timestamp);
+drawGame();
+updateGameUI();
 
-    }
-
-
-    if(gamePaused){
-
-        animationId = null;
-
-        return;
-
-    }
-
-
-    animationId =
-        requestAnimationFrame(
-            gameLoop
-        );
-
-
-    var delta =
-        Math.min(
-            0.035,
-            (
-                timestamp -
-                lastFrameTime
-            ) / 1000
-        );
-
-
-    lastFrameTime =
-        timestamp;
-
-
-    elapsedSeconds =
-        (
-            timestamp -
-            gameStartTime
-        ) / 1000;
-
-
-    updateGame(
-        delta,
-        timestamp
-    );
-
-
-    drawGame();
-
-
-    updateGameUI();
-
-
-    if(
-        elapsedSeconds >= 240 &&
-        !fourMinuteAdShown
-    ){
-
-        fourMinuteAdShown = true;
-
-        showFourMinuteAd();
-
-    }
-
+if(elapsedSeconds>=240&&!fourMinuteAdShown){
+fourMinuteAdShown=true;
+showFourMinuteAd();
 }
-
-
-/* =====================================================
-   سختی
-===================================================== */
+}
 
 function getDifficulty(){
-
-    var progress =
-        Math.min(
-            elapsedSeconds / 240,
-            1
-        );
-
-
-    return{
-
-        progress:progress,
-
-        bombSpeed:
-            2.0 +
-            progress * 1.5,
-
-        enemySpeed:
-            1.25 +
-            progress * 1.15,
-
-        bombInterval:
-            1250 -
-            progress * 280,
-
-        enemyInterval:
-            2100 -
-            progress * 400,
-
-        enemyShotInterval:
-            2100 -
-            progress * 350
-
-    };
-
+var progress=Math.min(elapsedSeconds/240,1);
+return{
+progress:progress,
+bombSpeed:2+progress*1.5,
+enemySpeed:1.25+progress*1.15,
+bombInterval:1250-progress*280,
+enemyInterval:2100-progress*400,
+enemyShotInterval:2100-progress*350
+};
 }
 
+function updateGame(delta,timestamp){
+var difficulty=getDifficulty();
 
-/* =====================================================
-   Update بازی
-===================================================== */
+player.x+=(player.targetX-player.x)*player.speed;
+player.y+=(player.targetY-player.y)*player.speed;
 
-function updateGame(
-    delta,
-    timestamp
-){
+var width=canvas.clientWidth,height=canvas.clientHeight;
 
-    var difficulty =
-        getDifficulty();
+player.x=Math.max(player.width/2,Math.min(width-player.width/2,player.x));
+player.y=Math.max(height*.42,Math.min(height*.80,player.y));
 
+if(timestamp-lastBulletTime>=155){fireAutomaticBullet();lastBulletTime=timestamp}
+if(timestamp-lastBombTime>=difficulty.bombInterval){createBomb();lastBombTime=timestamp}
+if(timestamp-lastEnemyTime>=difficulty.enemyInterval){createEnemy();lastEnemyTime=timestamp}
+if(timestamp-lastEnemyShotTime>=difficulty.enemyShotInterval){enemyShoot();lastEnemyShotTime=timestamp}
 
-    player.x +=
-        (
-            player.targetX -
-            player.x
-        ) *
-        player.speed;
-
-
-    player.y +=
-        (
-            player.targetY -
-            player.y
-        ) *
-        player.speed;
-
-
-    var width =
-        canvas.clientWidth;
-
-    var height =
-        canvas.clientHeight;
-
-
-    player.x =
-        Math.max(
-            player.width / 2,
-            Math.min(
-                width -
-                player.width / 2,
-                player.x
-            )
-        );
-
-
-    player.y =
-        Math.max(
-            height * 0.42,
-            Math.min(
-                height * 0.80,
-                player.y
-            )
-        );
-
-
-    if(
-        timestamp -
-        lastBulletTime >=
-        155
-    ){
-
-        fireAutomaticBullet();
-
-        lastBulletTime =
-            timestamp;
-
-    }
-
-
-    if(
-        timestamp -
-        lastBombTime >=
-        difficulty.bombInterval
-    ){
-
-        createBomb();
-
-        lastBombTime =
-            timestamp;
-
-    }
-
-
-    if(
-        timestamp -
-        lastEnemyTime >=
-        difficulty.enemyInterval
-    ){
-
-        createEnemy();
-
-        lastEnemyTime =
-            timestamp;
-
-    }
-
-
-    if(
-        timestamp -
-        lastEnemyShotTime >=
-        difficulty.enemyShotInterval
-    ){
-
-        enemyShoot();
-
-        lastEnemyShotTime =
-            timestamp;
-
-    }
-
-
-    updateBullets(delta);
-
-    updateMissiles(delta);
-
-    updateBombs(
-        delta,
-        difficulty
-    );
-
-    updateEnemies(
-        delta,
-        difficulty
-    );
-
-    updateEnemyBullets(delta);
-
-    updateExplosions(delta);
-
-    checkCollisions();
-
+updateBullets(delta);
+updateMissiles(delta);
+updateBombs(delta,difficulty);
+updateEnemies(delta,difficulty);
+updateEnemyBullets(delta);
+updateExplosions(delta);
+checkCollisions();
 }
-
-
-/* =====================================================
-   تیر خودکار
-===================================================== */
 
 function fireAutomaticBullet(){
-
-    bullets.push({
-
-        x:
-            player.x,
-
-        y:
-            player.y - 27,
-
-        width:4,
-
-        height:14,
-
-        speed:8
-
-    });
-
+bullets.push({x:player.x,y:player.y-27,width:4,height:14,speed:8});
 }
-
-
-/* =====================================================
-   موشک ویژه
-===================================================== */
 
 function fireSpecialMissile(){
-
-    if(!gameRunning){
-
-        return;
-
-    }
-
-
-    if(gamePaused){
-
-        return;
-
-    }
-
-
-    if(missiles <= 0){
-
-        return;
-
-    }
-
-
-    missiles--;
-
-
-    specialMissiles.push({
-
-        x:
-            player.x,
-
-        y:
-            player.y - 30,
-
-        width:8,
-
-        height:23,
-
-        speed:7,
-
-        power:2
-
-    });
-
-
-    updateGameUI();
-
+if(!gameRunning||gamePaused||missiles<=0)return;
+missiles--;
+specialMissiles.push({x:player.x,y:player.y-30,width:8,height:23,speed:7,power:2});
+updateGameUI();
 }
-
-
-/* =====================================================
-   ساخت بمب
-===================================================== */
 
 function createBomb(){
-
-    var width =
-        canvas.clientWidth;
-
-
-    bombs.push({
-
-        x:
-            25 +
-            Math.random() *
-            Math.max(
-                1,
-                width - 50
-            ),
-
-        y:-30,
-
-        radius:9,
-
-        speed:
-            getDifficulty()
-                .bombSpeed
-
-    });
-
+var width=canvas.clientWidth;
+bombs.push({
+x:25+Math.random()*Math.max(1,width-50),
+y:-30,radius:9,speed:getDifficulty().bombSpeed
+});
 }
-
-
-/* =====================================================
-   ساخت دشمن
-===================================================== */
 
 function createEnemy(){
-
-    var width =
-        canvas.clientWidth;
-
-
-    enemies.push({
-
-        x:
-            35 +
-            Math.random() *
-            Math.max(
-                1,
-                width - 70
-            ),
-
-        y:-35,
-
-        width:28,
-
-        height:38,
-
-        speed:
-            getDifficulty()
-                .enemySpeed,
-
-        health:1,
-
-        shotTimer:
-            Math.random() * 1000
-
-    });
-
+var width=canvas.clientWidth;
+enemies.push({
+x:35+Math.random()*Math.max(1,width-70),
+y:-35,width:28,height:38,
+speed:getDifficulty().enemySpeed,
+health:1,
+shotTimer:Math.random()*1000
+});
 }
-
-
-/* =====================================================
-   شلیک دشمن
-===================================================== */
 
 function enemyShoot(){
-
-    if(enemies.length === 0){
-
-        return;
-
-    }
-
-
-    var enemy =
-        enemies[
-            Math.floor(
-                Math.random() *
-                enemies.length
-            )
-        ];
-
-
-    enemyBullets.push({
-
-        x:
-            enemy.x,
-
-        y:
-            enemy.y + 17,
-
-        radius:3.5,
-
-        speed:
-            4.0 +
-            getDifficulty()
-                .progress *
-            1.0
-
-    });
-
+if(enemies.length===0)return;
+var enemy=enemies[Math.floor(Math.random()*enemies.length)];
+enemyBullets.push({
+x:enemy.x,
+y:enemy.y+17,
+radius:3.5,
+speed:4+getDifficulty().progress
+});
 }
-
-
-/* =====================================================
-   Update گلوله
-===================================================== */
 
 function updateBullets(delta){
-
-    for(
-        var i=bullets.length-1;
-        i>=0;
-        i--
-    ){
-
-        bullets[i].y -=
-            bullets[i].speed;
-
-
-        if(
-            bullets[i].y < -30
-        ){
-
-            bullets.splice(
-                i,
-                1
-            );
-
-        }
-
-    }
-
+for(var i=bullets.length-1;i>=0;i--){
+bullets[i].y-=bullets[i].speed;
+if(bullets[i].y<-30)bullets.splice(i,1);
 }
-
-
-/* =====================================================
-   Update موشک
-===================================================== */
+}
 
 function updateMissiles(delta){
-
-    for(
-        var i=specialMissiles.length-1;
-        i>=0;
-        i--
-    ){
-
-        specialMissiles[i].y -=
-            specialMissiles[i].speed;
-
-
-        if(
-            specialMissiles[i].y < -40
-        ){
-
-            specialMissiles.splice(
-                i,
-                1
-            );
-
-        }
-
-    }
-
+for(var i=specialMissiles.length-1;i>=0;i--){
+specialMissiles[i].y-=specialMissiles[i].speed;
+if(specialMissiles[i].y<-40)specialMissiles.splice(i,1);
+}
 }
 
-
-/* =====================================================
-   Update بمب
-===================================================== */
-
-function updateBombs(
-    delta,
-    difficulty
-){
-
-    for(
-        var i=bombs.length-1;
-        i>=0;
-        i--
-    ){
-
-        bombs[i].y +=
-            bombs[i].speed;
-
-
-        bombs[i].x +=
-            Math.sin(
-                elapsedSeconds * 2 +
-                i
-            ) *
-            0.25;
-
-
-        if(
-            bombs[i].y >
-            canvas.clientHeight +
-            40
-        ){
-
-            bombs.splice(
-                i,
-                1
-            );
-
-        }
-
-    }
-
+function updateBombs(delta,difficulty){
+for(var i=bombs.length-1;i>=0;i--){
+bombs[i].y+=bombs[i].speed;
+bombs[i].x+=Math.sin(elapsedSeconds*2+i)*.25;
+if(bombs[i].y>canvas.clientHeight+40)bombs.splice(i,1);
+}
 }
 
-
-/* =====================================================
-   Update دشمن
-===================================================== */
-
-function updateEnemies(
-    delta,
-    difficulty
-){
-
-    for(
-        var i=enemies.length-1;
-        i>=0;
-        i--
-    ){
-
-        enemies[i].y +=
-            enemies[i].speed;
-
-
-        if(
-            enemies[i].y >
-            canvas.clientHeight +
-            70
-        ){
-
-            enemies.splice(
-                i,
-                1
-            );
-
-        }
-
-    }
-
+function updateEnemies(delta,difficulty){
+for(var i=enemies.length-1;i>=0;i--){
+enemies[i].y+=enemies[i].speed;
+if(enemies[i].y>canvas.clientHeight+70)enemies.splice(i,1);
 }
-
-
-/* =====================================================
-   Update تیر دشمن
-===================================================== */
+}
 
 function updateEnemyBullets(delta){
-
-    for(
-        var i=enemyBullets.length-1;
-        i>=0;
-        i--
-    ){
-
-        enemyBullets[i].y +=
-            enemyBullets[i].speed;
-
-
-        if(
-            enemyBullets[i].y >
-            canvas.clientHeight +
-            30
-        ){
-
-            enemyBullets.splice(
-                i,
-                1
-            );
-
-        }
-
-    }
-
+for(var i=enemyBullets.length-1;i>=0;i--){
+enemyBullets[i].y+=enemyBullets[i].speed;
+if(enemyBullets[i].y>canvas.clientHeight+30)enemyBullets.splice(i,1);
+}
 }
 
-
-/* =====================================================
-   انفجار
-===================================================== */
-
-function createExplosion(
-    x,
-    y
-){
-
-    explosions.push({
-
-        x:x,
-
-        y:y,
-
-        radius:4,
-
-        maxRadius:30,
-
-        life:0.45
-
-    });
-
+function createExplosion(x,y){
+explosions.push({x:x,y:y,radius:4,maxRadius:30,life:.45});
 }
-
-
-/* =====================================================
-   Update انفجار
-===================================================== */
 
 function updateExplosions(delta){
-
-    for(
-        var i=explosions.length-1;
-        i>=0;
-        i--
-    ){
-
-        explosions[i].life -=
-            delta;
-
-
-        explosions[i].radius +=
-            65 * delta;
-
-
-        if(
-            explosions[i].life <= 0
-        ){
-
-            explosions.splice(
-                i,
-                1
-            );
-
-        }
-
-    }
-
+for(var i=explosions.length-1;i>=0;i--){
+explosions[i].life-=delta;
+explosions[i].radius+=65*delta;
+if(explosions[i].life<=0)explosions.splice(i,1);
 }
-
-
-/* =====================================================
-   شعاع برخورد هواپیما
-===================================================== */
+}
 
 function getPlayerCollisionRadius(){
-
-    return Math.min(
-        player.width,
-        player.height
-    ) * 0.34;
-
+return Math.min(player.width,player.height)*.34;
 }
-
-
-/* =====================================================
-   برخوردها
-===================================================== */
 
 function checkCollisions(){
 
-    /* گلوله‌های عادی با دشمن */
+for(var i=bullets.length-1;i>=0;i--){
+var bullet=bullets[i];
+var hit=false;
 
-    for(
-        var i=bullets.length-1;
-        i>=0;
-        i--
-    ){
+for(var j=enemies.length-1;j>=0;j--){
+var enemy=enemies[j];
+if(circleRectCollision(bullet.x,bullet.y,4,enemy)){
+createExplosion(enemy.x,enemy.y);
+enemies.splice(j,1);
+bullets.splice(i,1);
+gameScore+=10;
+coins+=1;
+hit=true;
+break;
+}
+}
+if(hit)continue;
+}
 
-        var bullet =
-            bullets[i];
+for(var m=specialMissiles.length-1;m>=0;m--){
+var missile=specialMissiles[m];
+for(var e=enemies.length-1;e>=0;e--){
+var target=enemies[e];
+if(circleRectCollision(missile.x,missile.y,7,target)){
+createExplosion(target.x,target.y);
+enemies.splice(e,1);
+specialMissiles.splice(m,1);
+gameScore+=25;
+coins+=3;
+break;
+}
+}
+}
 
-        var hit =
-            false;
+var playerRadius=getPlayerCollisionRadius();
 
+for(var b=bombs.length-1;b>=0;b--){
+if(distance(bombs[b].x,bombs[b].y,player.x,player.y)<bombs[b].radius+playerRadius){
+createExplosion(player.x,player.y);
+bombs.splice(b,1);
+loseLife();
+return;
+}
+}
 
-        for(
-            var j=enemies.length-1;
-            j>=0;
-            j--
-        ){
+for(var eb=enemyBullets.length-1;eb>=0;eb--){
+if(distance(enemyBullets[eb].x,enemyBullets[eb].y,player.x,player.y)<enemyBullets[eb].radius+playerRadius){
+createExplosion(player.x,player.y);
+enemyBullets.splice(eb,1);
+loseLife();
+return;
+}
+}
 
-            var enemy =
-                enemies[j];
+for(var en=enemies.length-1;en>=0;en--){
+var enemyCollisionRadius=Math.min(enemies[en].width,enemies[en].height)*.45;
+if(distance(enemies[en].x,enemies[en].y,player.x,player.y)<enemyCollisionRadius+playerRadius){
+createExplosion(player.x,player.y);
+enemies.splice(en,1);
+loseLife();
+return;
+}
+}
+}
 
+function loseLife(){
+if(!gameRunning)return;
+gameLives--;
+if(gameLives<=0){endGame();return}
 
-            if(
-                circleRectCollision(
-                    bullet.x,
-                    bullet.y,
-                    4,
-                    enemy
-                )
-            ){
+player.y=canvas.clientHeight-100;
+player.targetY=player.y;
 
-                createExplosion(
-                    enemy.x,
-                    enemy.y
-                );
+bombs.splice(0,Math.min(2,bombs.length));
+enemyBullets.splice(0,Math.min(2,enemyBullets.length));
 
+updateGameUI();
+}
 
-                enemies.splice(
-                    j,
-                    1
-                );
+function endGame(){
+gameRunning=false;
+gamePaused=false;
+if(animationId!==null)cancelAnimationFrame(animationId);
+animationId=null;
 
+totalScore+=gameScore;
 
-                bullets.splice(
-                    i,
-                    1
-                );
+document.getElementById("finalScore").textContent=gameScore;
+document.getElementById("finalCoins").textContent=coins;
+document.getElementById("gameOverOverlay").classList.remove("hidden");
+document.getElementById("missileButton").disabled=true;
 
+updateControlButtons();
+updateStats();
+}
 
-                gameScore += 10;
+function watchLifeAd(){
+if(!rewardedController){
+alert("تبلیغ AdsGram هنوز تنظیم نشده است. بعد از قرار دادن Block ID این قسمت فعال می‌شود.");
+return;
+}
 
-                coins += 1;
+var savedElapsed=elapsedSeconds;
 
+rewardedController.show().then(function(){
+adCount++;
+gameLives=3;
+gameRunning=true;
+gamePaused=false;
 
-                hit = true;
+document.getElementById("gameOverOverlay").classList.add("hidden");
+document.getElementById("missileButton").disabled=false;
 
-                break;
+var now=performance.now();
+gameStartTime=now-savedElapsed*1000;
+lastFrameTime=now;
 
-            }
+updateGameUI();
+updateControlButtons();
+updateStats();
 
-        }
+animationId=requestAnimationFrame(gameLoop);
 
+}).catch(function(error){
+gamePaused=false;
+gameRunning=false;
+updateControlButtons();
+console.log("Rewarded ad error:",error);
+alert("تبلیغ در دسترس نبود. دوباره تلاش کن.");
+});
+}
 
-        if(hit){
+function showFourMinuteAd(){
+if(!gameRunning)return;
 
-            continue;
+gamePaused=true;
+pauseStartTime=performance.now();
 
-        }
+if(animationId!==null)cancelAnimationFrame(animationId);
+animationId=null;
 
-    }
+updateControlButtons();
 
+if(!interstitialController){
+resumeGame();
+return;
+}
 
-    /* موشک ویژه */
+interstitialController.show().then(function(){
+adCount++;
+resumeGame();
+updateStats();
+}).catch(function(error){
+console.log("Interstitial error:",error);
+resumeGame();
+});
+}
 
-    for(
-        var m=specialMissiles.length-1;
-        m>=0;
-        m--
-    ){
+function updateGameUI(){
+var lives=document.getElementById("gameLives");
+var score=document.getElementById("gameScore");
+var time=document.getElementById("gameTime");
+var missileCount=document.getElementById("missileCount");
+var missileButton=document.getElementById("missileButton");
 
-        var missile =
-            specialMissiles[m];
+if(lives)lives.textContent=gameLives;
+if(score)score.textContent=gameScore;
 
+if(time){
+var minutes=Math.floor(elapsedSeconds/60);
+var seconds=Math.floor(elapsedSeconds%60);
+time.textContent=minutes+":"+(seconds<10?"0"+seconds:seconds);
+}
 
-        for(
-            var e=enemies.length-1;
-            e>=0;
-            e--
-        ){
+if(missileCount)missileCount.textContent=missiles;
 
-            var target =
-                enemies[e];
+if(missileButton){
+missileButton.disabled=!gameRunning||gamePaused||missiles<=0;
+}
+}
 
+function drawGame(){
+if(!canvas||!ctx)return;
 
-            if(
-                circleRectCollision(
-                    missile.x,
-                    missile.y,
-                    7,
-                    target
-                )
-            ){
+var width=canvas.clientWidth,height=canvas.clientHeight;
 
-                createExplosion(
-                    target.x,
-                    target.y
-                );
+var skyGradient=ctx.createLinearGradient(0,0,0,height);
+skyGradient.addColorStop(0,"#020914");
+skyGradient.addColorStop(.65,"#061625");
+skyGradient.addColorStop(1,"#0a2018");
+ctx.fillStyle=skyGradient;
+ctx.fillRect(0,0,width,height);
 
+drawStars(width,height);
 
-                enemies.splice(
-                    e,
-                    1
-                );
+var horizonY=height*.82;
+var horizonGradient=ctx.createLinearGradient(0,horizonY-35,0,horizonY+20);
+horizonGradient.addColorStop(0,"rgba(30,70,45,0)");
+horizonGradient.addColorStop(1,"rgba(30,70,45,.35)");
+ctx.fillStyle=horizonGradient;
+ctx.fillRect(0,horizonY-35,width,55);
 
+for(var i=0;i<bombs.length;i++)drawBomb(bombs[i]);
+for(var j=0;j<enemies.length;j++)drawEnemy(enemies[j]);
+for(var k=0;k<enemyBullets.length;k++)drawEnemyBullet(enemyBullets[k]);
+for(var q=0;q<bullets.length;q++)drawBullet(bullets[q]);
+for(var r=0;r<specialMissiles.length;r++)drawMissile(specialMissiles[r]);
+for(var x=0;x<explosions.length;x++)drawExplosion(explosions[x]);
 
-                specialMissiles.splice(
-                    m,
-                    1
-                );
+drawPlayerPlane(player.x,player.y);
+}
 
+function drawStars(width,height){
+ctx.fillStyle="rgba(255,255,255,.75)";
+var count=Math.floor(width*height/7000);
+for(var i=0;i<count;i++){
+var x=(i*83)%width;
+var y=(i*137+elapsedSeconds*35)%height;
+var size=i%5===0?2:1;
+ctx.fillRect(x,y,size,size);
+}
+}
 
-                gameScore += 25;
+function drawPlayerPlane(x,y){
+ctx.save();
+ctx.translate(x,y);
+ctx.scale(PLAYER_SCALE,PLAYER_SCALE);
 
-                coins += 3;
+ctx.beginPath();
+ctx.moveTo(-5,20);
+ctx.lineTo(0,32+Math.sin(performance.now()/80)*3);
+ctx.lineTo(5,20);
+ctx.closePath();
+ctx.fillStyle="#ff8a00";
+ctx.fill();
 
+ctx.beginPath();
+ctx.moveTo(-6,-4);
+ctx.lineTo(-24,15);
+ctx.lineTo(-8,11);
+ctx.closePath();
+ctx.fillStyle="#cbd5e1";
+ctx.fill();
 
-                break;
+ctx.beginPath();
+ctx.moveTo(6,-4);
+ctx.lineTo(24,15);
+ctx.lineTo(8,11);
+ctx.closePath();
+ctx.fill();
 
-            }
+ctx.beginPath();
+ctx.moveTo(0,-27);
+ctx.lineTo(8,8);
+ctx.lineTo(6,22);
+ctx.lineTo(0,27);
+ctx.lineTo(-6,22);
+ctx.lineTo(-8,8);
+ctx.closePath();
+ctx.fillStyle="#e5e7eb";
+ctx.fill();
 
-        }
+ctx.beginPath();
+ctx.moveTo(0,-21);
+ctx.lineTo(5,-8);
+ctx.lineTo(0,-4);
+ctx.lineTo(-5,-8);
+ctx.closePath();
+ctx.fillStyle="#294f70";
+ctx.fill();
 
-    }
+ctx.beginPath();
+ctx.moveTo(-4,14);
+ctx.lineTo(-12,25);
+ctx.lineTo(-3,22);
+ctx.closePath();
+ctx.fillStyle="#9ca3af";
+ctx.fill();
 
+ctx.beginPath();
+ctx.moveTo(4,14);
+ctx.lineTo(12,25);
+ctx.lineTo(3,22);
+ctx.closePath();
+ctx.fill();
 
-    /* بمب با هواپیما */
+ctx.restore();
+}
 
-    var playerRadius =
-        getPlayerCollisionRadius();
+function drawBomb(bomb){
+ctx.save();
+ctx.translate(bomb.x,bomb.y);
 
+ctx.beginPath();
+ctx.arc(0,0,bomb.radius,0,Math.PI*2);
+ctx.fillStyle="#252525";
+ctx.fill();
 
-    for(
-        var b=bombs.length-
+ctx.beginPath();
+ctx.moveTo(0,-9);
+ctx.lineTo(6,-16);
+ctx.strokeStyle="#b8b8b8";
+ctx.lineWidth=2;
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(7,-17,2.5,0,Math.PI*2);
+ctx.fillStyle="#ff4d4d";
+ctx.fill();
+
+ctx.restore();
+}
+
+function drawEnemy(enemy){
+ctx.save();
+ctx.translate(enemy.x,enemy.y);
+
+ctx.beginPath();
+ctx.moveTo(-5,3);
+ctx.lineTo(-16,12);
+ctx.lineTo(-5,9);
+ctx.closePath();
+ctx.fillStyle="#c13b3b";
+ctx.fill();
+
+ctx.beginPath();
+ctx.moveTo(5,3);
+ctx.lineTo(16,12);
+ctx.lineTo(5,9);
+ctx.closePath();
+ctx.fill();
+
+ctx.beginPath();
+ctx.moveTo(0,-19);
+ctx.lineTo(5,7);
+ctx.lineTo(3.5,18);
+ctx.lineTo(0,21);
+ctx.lineTo(-3.5,18);
+ctx.lineTo(-5,7);
+ctx.closePath();
+ctx.fillStyle="#8f2020";
+ctx.fill();
+
+ctx.beginPath();
+ctx.arc(0,-10,4,0,Math.PI*2);
+ctx.fillStyle="#351c1c";
+ctx.fill();
+
+ctx.restore();
+}
+
+function drawBullet(bullet){
+ctx.fillStyle="#65e6ff";
+ctx.fillRect(bullet.x-2,bullet.y-7,4,14);
+}
+
+function drawMissile(missile){
+ctx.save();
+ctx.translate(missile.x,missile.y);
+
+ctx.fillStyle="#ffdf70";
+ctx.fillRect(-4,-11,8,22);
+
+ctx.beginPath();
+ctx.moveTo(-4,-11);
+ctx.lineTo(0,-19);
+ctx.lineTo(4,-11);
+ctx.closePath();
+ctx.fillStyle="#ffffff";
+ctx.fill();
+
+ctx.fillStyle="#ff6b35";
+ctx.fillRect(-3,11,6,7);
+
+ctx.restore();
+}
+
+function drawEnemyBullet(bullet){
+ctx.beginPath();
+ctx.arc(bullet.x,bullet.y,bullet.radius,0,Math.PI*2);
+ctx.fillStyle="#ff5252";
+ctx.fill();
+}
+
+function drawExplosion(exp){
+var alpha=Math.max(0,exp.life/.45);
+ctx.save();
+ctx.globalAlpha=alpha;
+
+ctx.beginPath();
+ctx.arc(exp.x,exp.y,exp.radius,0,Math.PI*2);
+ctx.fillStyle="#ffb020";
+ctx.fill();
+
+ctx.beginPath();
+ctx.arc(exp.x,exp.y,exp.radius*.45,0,Math.PI*2);
+ctx.fillStyle="#fff3a0";
+ctx.fill();
+
+ctx.restore();
+}
+
+function circleRectCollision(cx,cy,radius,rect){
+var closestX=Math.max(rect.x-rect.width/2,Math.min(cx,rect.x+rect.width/2));
+var closestY=Math.max(rect.y-rect.height/2,Math.min(cy,rect.y+rect.height/2));
+var dx=cx-closestX,dy=cy-closestY;
+return dx*dx+dy*dy<radius*radius;
+}
+
+function distance(x1,y1,x2,y2){
+var dx=x1-x2,dy=y1-y2;
+return Math.sqrt(dx*dx+dy*dy);
+}
+
+function movePlayerFromEvent(event){
+if(!gameRunning||gamePaused||!canvas)return;
+
+var rect=canvas.getBoundingClientRect();
+var clientX,clientY;
+
+if(event.touches&&event.touches.length){
+clientX=event.touches[0].clientX;
+clientY=event.touches[0].clientY;
+}else if(event.changedTouches&&event.changedTouches.length){
+clientX=event.changedTouches[0].clientX;
+clientY=event.changedTouches[0].clientY;
+}else{
+clientX=event.clientX;
+clientY=event.clientY;
+}
+
+if(typeof clientX!=="number"||typeof clientY!=="number")return;
+
+var x=clientX-rect.left;
+var y=clientY-rect.top;
+
+player.targetX=Math.max(player.width/2,Math.min(rect.width-player.width/2,x));
+player.targetY=Math.max(rect.height*.42,Math.min(rect.height*.80,y));
+}
+
+if(canvas){
+
+canvas.addEventListener("touchstart",function(event){
+if(!gameRunning||gamePaused)return;
+pointerActive=true;
+movePlayerFromEvent(event);
+event.preventDefault();
+},{passive:false});
+
+canvas.addEventListener("touchmove",function(event){
+if(!pointerActive||!gameRunning||gamePaused)return;
+movePlayerFromEvent(event);
+event.preventDefault();
+},{passive:false});
+
+canvas.addEventListener("touchend",function(){pointerActive=false},{passive:true});
+canvas.addEventListener("touchcancel",function(){pointerActive=false},{passive:true});
+
+canvas.addEventListener("mousedown",function(event){
+if(!gameRunning||gamePaused)return;
+pointerActive=true;
+movePlayerFromEvent(event);
+});
+
+canvas.addEventListener("mousemove",function(event){
+if(!pointerActive||!gameRunning||gamePaused)return;
+movePlayerFromEvent(event);
+});
+
+window.addEventListener("mouseup",function(){pointerActive=false});
+}
+
+var startGameButton=document.getElementById("startGameButton");
+if(startGameButton){
+startGameButton.addEventListener("click",function(){startGame()});
+}
+
+updateStats();
+updateGameUI();
+updateControlButtons();
+resizeCanvas();
+</script>
+
+</body>
+</html>
