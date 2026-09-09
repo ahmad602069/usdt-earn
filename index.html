@@ -1455,11 +1455,7 @@ speed:8
 
 }
 
-/* =========================================================
-   موشک هدایت‌شونده - نسخه ضد چرخش
-   موشک دیگر زاویه را دنبال نمی‌کند.
-   هر لحظه مستقیماً به سمت هدف حرکت می‌کند.
-   ========================================================= */
+/* FIND NEAREST ENEMY */
 
 function findNearestEnemy(x,y){
 
@@ -1511,11 +1507,6 @@ startX,
 startY
 );
 
-/*
-موشک از پشت هواپیما شروع می‌شود.
-dirX و dirY جهت فعلی حرکت هستند.
-*/
-
 specialMissiles.push({
 
 x:startX,
@@ -1524,10 +1515,6 @@ y:startY,
 width:10,
 height:25,
 
-/*
-سرعت بالاتر برای اینکه موشک
-به هدف برسد و دور آن نچرخد.
-*/
 speed:420,
 
 target:target,
@@ -1543,7 +1530,7 @@ updateGameUI();
 
 }
 
-/* بررسی وجود هدف */
+/* CHECK TARGET */
 
 function enemyStillExists(target){
 
@@ -1565,7 +1552,7 @@ return false;
 
 }
 
-/* MISSILE UPDATE */
+/* MISSILE UPDATE - FIXED */
 
 function updateMissiles(delta){
 
@@ -1579,7 +1566,7 @@ var missile=specialMissiles[i];
 
 /*
 اگر هدف قبلی نابود شده باشد،
-یک هدف جدید انتخاب می‌شود.
+موشک یک هدف جدید می‌گیرد.
 */
 
 if(
@@ -1604,40 +1591,73 @@ target.x-missile.x;
 var dy=
 target.y-missile.y;
 
-var distance=
+var distanceToTarget=
 Math.sqrt(
 dx*dx+dy*dy
 );
 
 /*
-اگر فاصله خیلی کم باشد،
-موشک مستقیماً روی دشمن قرار می‌گیرد.
-این کار باعث می‌شود موشک
-از کنار دشمن رد نشود.
+این قسمت مهم است:
+قبل از اینکه موشک روی هواپیما بماند،
+برخورد را تشخیص می‌دهیم.
 */
 
-var hitDistance=
-Math.max(
-20,
-missile.speed*delta+8
+var hitDistance=Math.max(
+24,
+missile.speed*delta+12
 );
 
-if(distance<=hitDistance){
+if(
+distanceToTarget<=hitDistance
+){
 
-missile.x=target.x;
-missile.y=target.y;
+/* انفجار فوری */
 
-}else{
+createExplosion(
+target.x,
+target.y
+);
+
+/* حذف هواپیمای دشمن */
+
+var enemyIndex=
+enemies.indexOf(target);
+
+if(enemyIndex!==-1){
+
+enemies.splice(
+enemyIndex,
+1
+);
+
+gameScore+=25;
+coins+=3;
+
+}
+
+/* حذف فوری موشک */
+
+specialMissiles.splice(
+i,
+1
+);
+
+continue;
+
+}
 
 /*
-جهت دقیق هدف.
-بدون angle
-بدون turnRate
-بدون چرخیدن دور هدف.
+حرکت مستقیم به طرف هدف.
+بدون angle و بدون turnRate.
 */
 
-missile.dirX=dx/distance;
-missile.dirY=dy/distance;
+if(distanceToTarget>0){
+
+missile.dirX=
+dx/distanceToTarget;
+
+missile.dirY=
+dy/distanceToTarget;
 
 missile.x+=
 missile.dirX*
@@ -1655,7 +1675,7 @@ delta;
 
 /*
 اگر هیچ دشمنی وجود نداشت،
-موشک مستقیم به بالا حرکت می‌کند.
+موشک مستقیم ادامه می‌دهد.
 */
 
 missile.x+=
@@ -1679,7 +1699,9 @@ y:missile.y
 
 });
 
-if(missile.trail.length>12)
+if(
+missile.trail.length>12
+)
 missile.trail.shift();
 
 /* حذف خارج صفحه */
@@ -1691,7 +1713,10 @@ missile.y<-80||
 missile.y>canvas.clientHeight+80
 ){
 
-specialMissiles.splice(i,1);
+specialMissiles.splice(
+i,
+1
+);
 
 }
 
@@ -1789,7 +1814,9 @@ i--
 bullets[i].y-=
 bullets[i].speed;
 
-if(bullets[i].y<-30)
+if(
+bullets[i].y<-30
+)
 bullets.splice(i,1);
 
 }
@@ -1903,7 +1930,9 @@ explosions[i].life-=delta;
 explosions[i].radius+=
 65*delta;
 
-if(explosions[i].life<=0)
+if(
+explosions[i].life<=0
+)
 explosions.splice(i,1);
 
 }
@@ -1978,53 +2007,16 @@ continue;
 
 }
 
-/* موشک هدایت‌شونده */
+/*
+برخورد موشک ویژه اینجا عمداً وجود ندارد.
 
-for(
-var m=specialMissiles.length-1;
-m>=0;
-m--
-){
+خود updateMissiles() برخورد موشک،
+انفجار، حذف دشمن و حذف موشک را
+کامل انجام می‌دهد.
 
-var missile=
-specialMissiles[m];
-
-for(
-var e=enemies.length-1;
-e>=0;
-e--
-){
-
-var target=enemies[e];
-
-if(
-circleRectCollision(
-missile.x,
-missile.y,
-10,
-target
-)
-){
-
-createExplosion(
-target.x,
-target.y
-);
-
-enemies.splice(e,1);
-
-specialMissiles.splice(m,1);
-
-gameScore+=25;
-coins+=3;
-
-break;
-
-}
-
-}
-
-}
+این کار باعث می‌شود موشک دوبار پردازش نشود
+و بعد از برخورد روی هواپیما نماند.
+*/
 
 /* بازیکن */
 
@@ -2494,7 +2486,6 @@ var i=0;
 i<bombs.length;
 i++
 )
-
 drawBomb(bombs[i]);
 
 for(
@@ -2502,7 +2493,6 @@ var j=0;
 j<enemies.length;
 j++
 )
-
 drawEnemy(enemies[j]);
 
 for(
@@ -2510,7 +2500,6 @@ var k=0;
 k<enemyBullets.length;
 k++
 )
-
 drawEnemyBullet(
 enemyBullets[k]
 );
@@ -2520,7 +2509,6 @@ var q=0;
 q<bullets.length;
 q++
 )
-
 drawBullet(
 bullets[q]
 );
@@ -2530,7 +2518,6 @@ var r=0;
 r<specialMissiles.length;
 r++
 )
-
 drawMissile(
 specialMissiles[r]
 );
@@ -2540,7 +2527,6 @@ var x=0;
 x<explosions.length;
 x++
 )
-
 drawExplosion(
 explosions[x]
 );
@@ -2842,11 +2828,6 @@ bullet.y-7,
 
 /* MISSILE */
 
-/*
-اینجا هم دیگر از missile.angle استفاده نمی‌شود.
-جهت ظاهری موشک از dirX و dirY گرفته می‌شود.
-*/
-
 function drawMissile(missile){
 
 ctx.save();
@@ -2894,7 +2875,7 @@ ctx.fill();
 ctx.globalAlpha=1;
 
 /*
-جهت ظاهری موشک از جهت حرکت واقعی آن گرفته می‌شود.
+جهت ظاهری موشک از جهت حرکت واقعی گرفته می‌شود.
 */
 
 var angle=
