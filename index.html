@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
 <title>USDT Earn</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -10,430 +11,496 @@
 
 <style>
 *{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent
 }
+
 html,body{
-margin:0;
-padding:0;
-background:#07111f;
-color:white;
-font-family:Arial,Tahoma,sans-serif
+    margin:0;
+    padding:0;
+    background:#07111f;
+    color:white;
+    font-family:Arial,Tahoma,sans-serif
 }
+
 body{
-padding-bottom:80px;
-overflow-x:hidden
+    padding-bottom:80px;
+    overflow-x:hidden
 }
+
 body.game-mode{
-padding-bottom:0;
-overflow:hidden
+    padding-bottom:0;
+    overflow:hidden
 }
+
 body.game-mode .header{
-display:none
+    display:none
 }
+
 .header{
-padding:18px;
-background:#0b192b;
-border-bottom:1px solid #20364f
+    padding:18px;
+    background:#0b192b;
+    border-bottom:1px solid #20364f
 }
+
 .logo{
-font-size:22px;
-font-weight:bold
+    font-size:22px;
+    font-weight:bold
 }
+
 .user{
-margin-top:5px;
-color:#91a4ba;
-font-size:13px
+    margin-top:5px;
+    color:#91a4ba;
+    font-size:13px
 }
+
 .balance{
-margin-top:15px;
-padding:18px;
-background:#12243a;
-border-radius:16px
+    margin-top:15px;
+    padding:18px;
+    background:#12243a;
+    border-radius:16px
 }
+
 .balance-title{
-color:#91a4ba;
-font-size:13px
+    color:#91a4ba;
+    font-size:13px
 }
+
 .balance-number{
-margin-top:5px;
-font-size:28px;
-font-weight:bold
+    margin-top:5px;
+    font-size:28px;
+    font-weight:bold
 }
+
 main{
-padding:15px
+    padding:15px
 }
+
 body.game-mode main{
-padding:0
+    padding:0
 }
+
 .page{
-display:none
+    display:none
 }
+
 .page.active{
-display:block
+    display:block
 }
+
 .card{
-margin-bottom:14px;
-padding:18px;
-background:#0d1d30;
-border:1px solid #20364f;
-border-radius:17px
+    margin-bottom:14px;
+    padding:18px;
+    background:#0d1d30;
+    border:1px solid #20364f;
+    border-radius:17px
 }
-.card h2,.card h3{
-margin-top:0
+
+.card h2,
+.card h3{
+    margin-top:0
 }
+
 .text{
-color:#91a4ba;
-line-height:1.8
+    color:#91a4ba;
+    line-height:1.8
 }
+
 .button{
-width:100%;
-margin-top:10px;
-padding:14px;
-border:0;
-border-radius:12px;
-background:#16ad5a;
-color:white;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-touch-action:manipulation
+    width:100%;
+    margin-top:10px;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:#16ad5a;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation
 }
+
 .button.secondary{
-background:#163451
+    background:#163451
 }
+
 .grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px
 }
+
 .stat{
-padding:15px;
-background:#10253b;
-border-radius:14px
+    padding:15px;
+    background:#10253b;
+    border-radius:14px
 }
+
 .stat-title{
-color:#91a4ba;
-font-size:12px
+    color:#91a4ba;
+    font-size:12px
 }
+
 .stat-number{
-display:block;
-margin-top:6px;
-font-size:20px;
-font-weight:bold
+    display:block;
+    margin-top:6px;
+    font-size:20px;
+    font-weight:bold
 }
 
 /* GAME */
+
 #gamePage{
-width:100%;
-height:100vh
+    width:100%;
+    height:100vh
 }
+
 .game-card{
-padding:0;
-margin:0;
-border:0;
-border-radius:0;
-background:#020914;
-width:100%;
-height:100vh
+    padding:0;
+    margin:0;
+    border:0;
+    border-radius:0;
+    background:#020914;
+    width:100%;
+    height:100vh
 }
+
 .game-header{
-height:38px;
-min-height:38px;
-flex:0 0 38px;
-padding:0 6px;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#091827;
-border-bottom:1px solid #294662;
-position:relative;
-z-index:20;
-overflow:hidden
+    height:38px;
+    min-height:38px;
+    flex:0 0 38px;
+    padding:0 6px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#091827;
+    border-bottom:1px solid #294662;
+    position:relative;
+    z-index:20;
+    overflow:hidden
 }
+
 .game-title{
-display:none
+    display:none
 }
+
 .game-info{
-width:100%;
-height:38px;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-align-items:center;
-gap:4px;
-min-width:0
+    width:100%;
+    height:38px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    align-items:center;
+    gap:4px;
+    min-width:0
 }
+
 .game-badge{
-height:29px;
-min-width:0;
-padding:3px 4px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:3px;
-background:#102941;
-border:1px solid #2b5275;
-border-radius:8px;
-font-size:12px;
-line-height:1;
-white-space:nowrap;
-font-weight:bold;
-overflow:hidden
+    height:29px;
+    min-width:0;
+    padding:3px 4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    background:#102941;
+    border:1px solid #2b5275;
+    border-radius:8px;
+    font-size:12px;
+    line-height:1;
+    white-space:nowrap;
+    font-weight:bold;
+    overflow:hidden
 }
+
 .game-badge.coin-badge{
-background:#3b2b08;
-border-color:#c99724;
-color:#ffd85a;
-font-size:13px;
-box-shadow:0 0 7px rgba(255,190,40,.15)
+    background:#3b2b08;
+    border-color:#c99724;
+    color:#ffd85a;
+    font-size:13px;
+    box-shadow:0 0 7px rgba(255,190,40,.15)
 }
+
 .game-wrapper{
-position:relative;
-width:100%;
-height:calc(100vh - 38px);
-min-height:430px;
-overflow:hidden;
-border:0;
-border-radius:0;
-background:#020914
+    position:relative;
+    width:100%;
+    height:calc(100vh - 38px);
+    min-height:430px;
+    overflow:hidden;
+    border:0;
+    border-radius:0;
+    background:#020914
 }
+
 #gameCanvas{
-display:block;
-width:100%;
-height:100%;
-touch-action:none
+    display:block;
+    width:100%;
+    height:100%;
+    touch-action:none
 }
+
 .game-overlay{
-position:absolute;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-background:rgba(2,9,20,.88);
-z-index:90
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:rgba(2,9,20,.88);
+    z-index:90
 }
+
 .game-overlay.hidden{
-display:none
+    display:none
 }
+
 .overlay-box{
-width:100%;
-max-width:330px;
-padding:25px 18px;
-text-align:center;
-background:#0d1d30;
-border:1px solid #294662;
-border-radius:18px
+    width:100%;
+    max-width:330px;
+    padding:25px 18px;
+    text-align:center;
+    background:#0d1d30;
+    border:1px solid #294662;
+    border-radius:18px
 }
+
 .overlay-box h2{
-margin-top:0
+    margin-top:0
 }
+
 .overlay-text{
-color:#91a4ba;
-line-height:1.8
+    color:#91a4ba;
+    line-height:1.8
 }
+
 .game-bottom-controls{
-position:absolute;
-right:0;
-bottom:0;
-left:0;
-z-index:120;
-padding:7px 7px calc(7px + env(safe-area-inset-bottom));
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:6px;
-background:linear-gradient(
-to top,
-rgba(2,9,20,.99),
-rgba(2,9,20,.90),
-rgba(2,9,20,.15)
-)
+    position:absolute;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:120;
+    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:6px;
+    background:linear-gradient(
+        to top,
+        rgba(2,9,20,.99),
+        rgba(2,9,20,.90),
+        rgba(2,9,20,.15)
+    )
 }
+
 .game-control-button{
-min-height:43px;
-border:1px solid #294662;
-border-radius:10px;
-background:#10253b;
-color:white;
-font-size:12px;
-font-weight:bold;
-cursor:pointer;
-touch-action:manipulation
+    min-height:43px;
+    border:1px solid #294662;
+    border-radius:10px;
+    background:#10253b;
+    color:white;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation
 }
+
 .game-control-button.start{
-background:#176b45
+    background:#176b45
 }
+
 .game-control-button.pause{
-background:#6b4b18
+    background:#6b4b18
 }
+
 .game-control-button.resume{
-background:#176b45
+    background:#176b45
 }
+
 .game-control-button:disabled{
-opacity:.4;
-cursor:not-allowed
+    opacity:.4;
+    cursor:not-allowed
 }
+
 .missile-button{
-position:absolute;
-left:50%;
-bottom:62px;
-transform:translateX(-50%);
-z-index:121;
-min-width:155px;
-padding:10px 14px;
-border:1px solid #8c313a;
-border-radius:12px;
-background:#b52b38;
-color:white;
-font-size:13px;
-font-weight:bold;
-cursor:pointer;
-touch-action:manipulation
+    position:absolute;
+    left:50%;
+    bottom:62px;
+    transform:translateX(-50%);
+    z-index:121;
+    min-width:155px;
+    padding:10px 14px;
+    border:1px solid #8c313a;
+    border-radius:12px;
+    background:#b52b38;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation
 }
+
 .missile-button:disabled{
-opacity:.45;
-cursor:not-allowed
+    opacity:.45;
+    cursor:not-allowed
 }
 
 /* GROUND */
+
 .ground-info{
-position:absolute;
-right:0;
-bottom:0;
-left:0;
-height:18%;
-pointer-events:none;
-z-index:5;
-background:linear-gradient(
-to bottom,
-rgba(18,42,30,.15),
-rgba(18,42,30,.85) 30%,
-rgba(8,25,18,.98)
-)
+    position:absolute;
+    right:0;
+    bottom:0;
+    left:0;
+    height:18%;
+    pointer-events:none;
+    z-index:5;
+    background:linear-gradient(
+        to bottom,
+        rgba(18,42,30,.15),
+        rgba(18,42,30,.85) 30%,
+        rgba(8,25,18,.98)
+    )
 }
+
 .ground-line{
-position:absolute;
-top:0;
-right:0;
-left:0;
-height:3px;
-background:#426b43;
-box-shadow:0 0 10px rgba(60,130,65,.8)
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    height:3px;
+    background:#426b43;
+    box-shadow:0 0 10px rgba(60,130,65,.8)
 }
+
 .ground-details{
-position:absolute;
-right:0;
-bottom:0;
-left:0;
-height:75%;
-background:repeating-linear-gradient(
-165deg,
-transparent 0,
-transparent 18px,
-rgba(93,119,75,.15) 19px,
-transparent 20px
-)
+    position:absolute;
+    right:0;
+    bottom:0;
+    left:0;
+    height:75%;
+    background:repeating-linear-gradient(
+        165deg,
+        transparent 0,
+        transparent 18px,
+        rgba(93,119,75,.15) 19px,
+        transparent 20px
+    )
 }
+
 .ground-road{
-position:absolute;
-left:50%;
-bottom:-15px;
-transform:translateX(-50%);
-width:25%;
-height:120%;
-background:linear-gradient(
-to bottom,
-rgba(75,83,77,.15),
-rgba(51,55,53,.55)
-);
-clip-path:polygon(35% 0,65% 0,100% 100%,0 100%)
+    position:absolute;
+    left:50%;
+    bottom:-15px;
+    transform:translateX(-50%);
+    width:25%;
+    height:120%;
+    background:linear-gradient(
+        to bottom,
+        rgba(75,83,77,.15),
+        rgba(51,55,53,.55)
+    );
+    clip-path:polygon(35% 0,65% 0,100% 100%,0 100%)
 }
+
 .ground-light{
-position:absolute;
-width:5px;
-height:5px;
-border-radius:50%;
-background:#c9d58d;
-box-shadow:0 0 7px #c9d58d
+    position:absolute;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#c9d58d;
+    box-shadow:0 0 7px #c9d58d
 }
+
 .ground-light.one{
-left:15%;
-bottom:35%
+    left:15%;
+    bottom:35%
 }
+
 .ground-light.two{
-right:15%;
-bottom:55%
+    right:15%;
+    bottom:55%
 }
+
 .ground-light.three{
-left:30%;
-bottom:65%
+    left:30%;
+    bottom:65%
 }
+
 .ground-light.four{
-right:30%;
-bottom:25%
+    right:30%;
+    bottom:25%
 }
 
 /* NAV */
+
 .nav{
-position:fixed;
-right:0;
-bottom:0;
-left:0;
-height:70px;
-display:flex;
-background:#091625;
-border-top:1px solid #20364f;
-z-index:100
+    position:fixed;
+    right:0;
+    bottom:0;
+    left:0;
+    height:70px;
+    display:flex;
+    background:#091625;
+    border-top:1px solid #20364f;
+    z-index:100
 }
+
 .nav.hidden{
-display:none
+    display:none
 }
+
 .nav button{
-flex:1;
-border:0;
-background:transparent;
-color:#71879f;
-font-size:12px;
-cursor:pointer
+    flex:1;
+    border:0;
+    background:transparent;
+    color:#71879f;
+    font-size:12px;
+    cursor:pointer
 }
+
 .nav button.active{
-color:#20d875
+    color:#20d875
 }
 
 @media(max-width:500px){
-.game-header{
-height:38px;
-min-height:38px;
-flex-basis:38px;
-padding:0 4px
-}
-.game-info{
-height:38px;
-gap:3px
-}
-.game-badge{
-height:29px;
-padding:3px 3px;
-font-size:11px;
-border-radius:7px
-}
-.game-badge.coin-badge{
-font-size:12px
-}
-.game-wrapper{
-height:calc(100vh - 38px);
-min-height:430px
-}
-.game-control-button{
-min-height:42px;
-font-size:11px
-}
-.missile-button{
-bottom:61px;
-min-width:145px;
-padding:9px;
-font-size:12px
-}
+
+    .game-header{
+        height:38px;
+        min-height:38px;
+        flex-basis:38px;
+        padding:0 4px
+    }
+
+    .game-info{
+        height:38px;
+        gap:3px
+    }
+
+    .game-badge{
+        height:29px;
+        padding:3px 3px;
+        font-size:11px;
+        border-radius:7px
+    }
+
+    .game-badge.coin-badge{
+        font-size:12px
+    }
+
+    .game-wrapper{
+        height:calc(100vh - 38px);
+        min-height:430px
+    }
+
+    .game-control-button{
+        min-height:42px;
+        font-size:11px
+    }
+
+    .missile-button{
+        bottom:61px;
+        min-width:145px;
+        padding:9px;
+        font-size:12px
+    }
 }
 </style>
 </head>
@@ -441,317 +508,407 @@ font-size:12px
 <body>
 
 <header class="header">
-<div class="logo">💰 USDT Earn</div>
-<div class="user">خوش آمدید 👋</div>
 
-<div class="balance">
-<div class="balance-title">موجودی شما</div>
-<div class="balance-number" id="mainBalance">0.00 USDT</div>
-</div>
+    <div class="logo">💰 USDT Earn</div>
+
+    <div class="user">خوش آمدید 👋</div>
+
+    <div class="balance">
+        <div class="balance-title">موجودی شما</div>
+        <div class="balance-number" id="mainBalance">
+            0.00 USDT
+        </div>
+    </div>
+
 </header>
 
 <main>
 
 <section id="home" class="page active">
 
-<div class="card">
+    <div class="card">
 
-<h2>✈️ فرار از بمب</h2>
+        <h2>✈️ فرار از بمب</h2>
 
-<p class="text">
-با هواپیمای جنگی از بمب‌ها فرار کن، دشمنان را نابود کن و امتیاز و سکه جمع کن.
-</p>
+        <p class="text">
+            با هواپیمای جنگی از بمب‌ها فرار کن،
+            دشمنان را نابود کن و امتیاز و سکه جمع کن.
+        </p>
 
-<button type="button"
-class="button"
-onclick="openGame()">
-🎮 شروع بازی
-</button>
+        <button
+            type="button"
+            class="button"
+            onclick="openGame()"
+        >
+            🎮 شروع بازی
+        </button>
 
-</div>
+    </div>
 
-<div class="grid">
+    <div class="grid">
 
-<div class="stat">
-<span class="stat-title">🪙 سکه</span>
-<span class="stat-number" id="coinStat">0</span>
-</div>
+        <div class="stat">
+            <span class="stat-title">🪙 سکه</span>
+            <span class="stat-number" id="coinStat">0</span>
+        </div>
 
-<div class="stat">
-<span class="stat-title">⭐ امتیاز</span>
-<span class="stat-number" id="scoreStat">0</span>
-</div>
+        <div class="stat">
+            <span class="stat-title">⭐ امتیاز</span>
+            <span class="stat-number" id="scoreStat">0</span>
+        </div>
 
-<div class="stat">
-<span class="stat-title">👥 دعوت</span>
-<span class="stat-number" id="inviteStat">0</span>
-</div>
+        <div class="stat">
+            <span class="stat-title">👥 دعوت</span>
+            <span class="stat-number" id="inviteStat">0</span>
+        </div>
 
-<div class="stat">
-<span class="stat-title">📺 تبلیغات</span>
-<span class="stat-number" id="adStat">0</span>
-</div>
+        <div class="stat">
+            <span class="stat-title">📺 تبلیغات</span>
+            <span class="stat-number" id="adStat">0</span>
+        </div>
 
-</div>
+    </div>
+
 </section>
+
 
 <section id="gamePage" class="page">
 
-<div class="card game-card">
+    <div class="card game-card">
 
-<div class="game-header">
+        <div class="game-header">
 
-<div class="game-info">
+            <div class="game-info">
 
-<div class="game-badge">
-❤️ <span id="gameLives">3</span>
-</div>
+                <div class="game-badge">
+                    ❤️ <span id="gameLives">3</span>
+                </div>
 
-<div class="game-badge coin-badge">
-🪙 <span id="gameCoins">0</span>
-</div>
+                <div class="game-badge coin-badge">
+                    🪙 <span id="gameCoins">0</span>
+                </div>
 
-<div class="game-badge">
-⭐ <span id="gameScore">0</span>
-</div>
+                <div class="game-badge">
+                    ⭐ <span id="gameScore">0</span>
+                </div>
 
-<div class="game-badge">
-⏱️ <span id="gameTime">0:00</span>
-</div>
+                <div class="game-badge">
+                    ⏱️ <span id="gameTime">0:00</span>
+                </div>
 
-</div>
-</div>
+            </div>
 
-<div class="game-wrapper">
+        </div>
 
-<canvas id="gameCanvas"></canvas>
 
-<div class="ground-info">
-<div class="ground-line"></div>
-<div class="ground-details"></div>
-<div class="ground-road"></div>
-<div class="ground-light one"></div>
-<div class="ground-light two"></div>
-<div class="ground-light three"></div>
-<div class="ground-light four"></div>
-</div>
+        <div class="game-wrapper">
 
-<div id="startOverlay" class="game-overlay">
+            <canvas id="gameCanvas"></canvas>
 
-<div class="overlay-box">
 
-<h2>✈️ آماده‌ای؟</h2>
+            <div class="ground-info">
 
-<p class="overlay-text">
-هواپیما به صورت خودکار شلیک می‌کند.
-<br>
-برای حرکت، انگشت خود را روی صفحه حرکت بده.
-<br>
-موشک ویژه از پشت هواپیما خارج شده و دشمن را مستقیم دنبال می‌کند.
-</p>
+                <div class="ground-line"></div>
+                <div class="ground-details"></div>
+                <div class="ground-road"></div>
 
-<button type="button"
-id="startGameButton"
-class="button">
-🚀 شروع بازی
-</button>
+                <div class="ground-light one"></div>
+                <div class="ground-light two"></div>
+                <div class="ground-light three"></div>
+                <div class="ground-light four"></div>
 
-<button type="button"
-class="button secondary"
-onclick="cancelGame()">
-❌ لغو
-</button>
+            </div>
 
-</div>
-</div>
 
-<div id="gameOverOverlay"
-class="game-overlay hidden">
+            <div id="startOverlay" class="game-overlay">
 
-<div class="overlay-box">
+                <div class="overlay-box">
 
-<h2>💥 بازی تمام شد</h2>
+                    <h2>✈️ آماده‌ای؟</h2>
 
-<p class="overlay-text">
-امتیاز: <b id="finalScore">0</b>
-<br>
-سکه: <b id="finalCoins">0</b>
-</p>
+                    <p class="overlay-text">
 
-<button type="button"
-class="button"
-onclick="watchLifeAd()">
-📺 دیدن تبلیغ و دریافت ۳ جان
-</button>
+                        هواپیما به صورت خودکار شلیک می‌کند.
+                        <br>
 
-<button type="button"
-class="button secondary"
-onclick="restartGame()">
-🔄 شروع دوباره
-</button>
+                        برای حرکت، انگشت خود را روی صفحه حرکت بده.
+                        <br>
 
-<button type="button"
-class="button secondary"
-onclick="backHome()">
-🏠 بازگشت
-</button>
+                        موشک ویژه از پشت هواپیما خارج شده
+                        و دشمن را مستقیم دنبال می‌کند.
 
-</div>
-</div>
+                    </p>
 
-<div class="game-bottom-controls">
+                    <button
+                        type="button"
+                        id="startGameButton"
+                        class="button"
+                    >
+                        🚀 شروع بازی
+                    </button>
 
-<button type="button"
-id="startBottomButton"
-class="game-control-button start"
-onclick="startGame()">
-🚀 شروع
-</button>
+                    <button
+                        type="button"
+                        class="button secondary"
+                        onclick="cancelGame()"
+                    >
+                        ❌ لغو
+                    </button>
 
-<button type="button"
-id="pauseGameButton"
-class="game-control-button pause"
-onclick="pauseGame()"
-disabled>
-⏸️ توقف
-</button>
+                </div>
 
-<button type="button"
-id="resumeGameButton"
-class="game-control-button resume"
-onclick="resumeGame()"
-disabled>
-▶️ ادامه
-</button>
+            </div>
 
-</div>
 
-<button type="button"
-id="missileButton"
-class="missile-button"
-onclick="fireSpecialMissile()"
-disabled>
-🚀 موشک ویژه (<span id="missileCount">3</span>)
-</button>
+            <div id="gameOverOverlay" class="game-overlay hidden">
 
-</div>
-</div>
+                <div class="overlay-box">
+
+                    <h2>💥 بازی تمام شد</h2>
+
+                    <p class="overlay-text">
+
+                        امتیاز:
+                        <b id="finalScore">0</b>
+
+                        <br>
+
+                        سکه:
+                        <b id="finalCoins">0</b>
+
+                    </p>
+
+                    <button
+                        type="button"
+                        class="button"
+                        onclick="watchLifeAd()"
+                    >
+                        📺 دیدن تبلیغ و دریافت ۳ جان
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button secondary"
+                        onclick="restartGame()"
+                    >
+                        🔄 شروع دوباره
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button secondary"
+                        onclick="backHome()"
+                    >
+                        🏠 بازگشت
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="game-bottom-controls">
+
+                <button
+                    type="button"
+                    id="startBottomButton"
+                    class="game-control-button start"
+                    onclick="startGame()"
+                >
+                    🚀 شروع
+                </button>
+
+                <button
+                    type="button"
+                    id="pauseGameButton"
+                    class="game-control-button pause"
+                    onclick="pauseGame()"
+                    disabled
+                >
+                    ⏸️ توقف
+                </button>
+
+                <button
+                    type="button"
+                    id="resumeGameButton"
+                    class="game-control-button resume"
+                    onclick="resumeGame()"
+                    disabled
+                >
+                    ▶️ ادامه
+                </button>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="missileButton"
+                class="missile-button"
+                onclick="fireSpecialMissile()"
+                disabled
+            >
+                🚀 موشک ویژه
+                (<span id="missileCount">3</span>)
+            </button>
+
+        </div>
+
+    </div>
+
 </section>
+
 
 <section id="invite" class="page">
 
-<div class="card">
+    <div class="card">
 
-<h2>👥 دعوت دوستان</h2>
+        <h2>👥 دعوت دوستان</h2>
 
-<p class="text">
-دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.
-</p>
+        <p class="text">
+            دوستان خود را دعوت کن و از سیستم دعوت استفاده کن.
+        </p>
 
-<button type="button"
-class="button"
-onclick="copyLink()">
-📋 کپی لینک دعوت
-</button>
+        <button
+            type="button"
+            class="button"
+            onclick="copyLink()"
+        >
+            📋 کپی لینک دعوت
+        </button>
 
-</div>
+    </div>
 
 </section>
+
 
 <section id="wallet" class="page">
 
-<div class="card">
+    <div class="card">
 
-<h2>💰 کیف پول</h2>
+        <h2>💰 کیف پول</h2>
 
-<p class="text">
-موجودی قابل برداشت
-</p>
+        <p class="text">
+            موجودی قابل برداشت
+        </p>
 
-<div class="balance-number"
-id="walletBalance">
-0.00 USDT
-</div>
+        <div class="balance-number" id="walletBalance">
+            0.00 USDT
+        </div>
 
-</div>
+    </div>
 
-<div class="card">
 
-<h3>💸 برداشت</h3>
+    <div class="card">
 
-<p class="text">
-بخش برداشت در مرحله بعد به سرور متصل می‌شود.
-</p>
+        <h3>💸 برداشت</h3>
 
-</div>
+        <p class="text">
+            بخش برداشت در مرحله بعد به سرور متصل می‌شود.
+        </p>
+
+    </div>
 
 </section>
 
+
 <section id="profile" class="page">
 
-<div class="card">
+    <div class="card">
 
-<h2>👤 پروفایل</h2>
+        <h2>👤 پروفایل</h2>
 
-<p class="text">
-حساب کاربری USDT Earn
-</p>
+        <p class="text">
+            حساب کاربری USDT Earn
+        </p>
 
-<div class="grid">
+        <div class="grid">
 
-<div class="stat">
-<span class="stat-title">شناسه</span>
-<span class="stat-number" id="userId">-</span>
-</div>
+            <div class="stat">
 
-<div class="stat">
-<span class="stat-title">موجودی</span>
-<span class="stat-number" id="profileBalance">0.00</span>
-</div>
+                <span class="stat-title">
+                    شناسه
+                </span>
 
-</div>
-</div>
+                <span
+                    class="stat-number"
+                    id="userId"
+                >
+                    -
+                </span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    موجودی
+                </span>
+
+                <span
+                    class="stat-number"
+                    id="profileBalance"
+                >
+                    0.00
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
 </main>
 
+
 <nav class="nav" id="mainNav">
 
-<button type="button"
-id="navHome"
-class="active"
-onclick="showPage('home',this)">
-🏠
-<br>
-خانه
-</button>
+    <button
+        type="button"
+        id="navHome"
+        class="active"
+        onclick="showPage('home',this)"
+    >
+        🏠
+        <br>
+        خانه
+    </button>
 
-<button type="button"
-id="navInvite"
-onclick="showPage('invite',this)">
-👥
-<br>
-دعوت
-</button>
+    <button
+        type="button"
+        id="navInvite"
+        onclick="showPage('invite',this)"
+    >
+        👥
+        <br>
+        دعوت
+    </button>
 
-<button type="button"
-id="navWallet"
-onclick="showPage('wallet',this)">
-💰
-<br>
-کیف پول
-</button>
+    <button
+        type="button"
+        id="navWallet"
+        onclick="showPage('wallet',this)"
+    >
+        💰
+        <br>
+        کیف پول
+    </button>
 
-<button type="button"
-id="navProfile"
-onclick="showPage('profile',this)">
-👤
-<br>
-پروفایل
-</button>
+    <button
+        type="button"
+        id="navProfile"
+        onclick="showPage('profile',this)"
+    >
+        👤
+        <br>
+        پروفایل
+    </button>
 
 </nav>
+
 
 <script>
 
@@ -759,67 +916,98 @@ var coins=0;
 var totalScore=0;
 var adCount=0;
 
+
 /* TELEGRAM */
 
 var tg=null;
 
-if(window.Telegram&&window.Telegram.WebApp){
-
-try{
-
-tg=window.Telegram.WebApp;
-
-tg.ready();
-tg.expand();
-
 if(
-tg.initDataUnsafe&&
-tg.initDataUnsafe.user
+    window.Telegram &&
+    window.Telegram.WebApp
 ){
 
-var user=tg.initDataUnsafe.user;
+    try{
 
-var userElement=
-document.getElementById("userId");
+        tg=window.Telegram.WebApp;
 
-if(userElement)
-userElement.textContent=user.id||"-";
+        tg.ready();
+        tg.expand();
+
+        if(
+            tg.initDataUnsafe &&
+            tg.initDataUnsafe.user
+        ){
+
+            var user=tg.initDataUnsafe.user;
+
+            var userElement=
+                document.getElementById("userId");
+
+            if(userElement){
+
+                userElement.textContent=
+                    user.id || "-";
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.log(error);
+
+    }
 
 }
 
-}catch(error){
-
-console.log(error);
-
-}
-
-}
 
 /* PAGE */
 
 function showPage(id,button){
 
-var pages=
-document.querySelectorAll(".page");
+    var pages=
+        document.querySelectorAll(".page");
 
-for(var i=0;i<pages.length;i++)
-pages[i].classList.remove("active");
+    for(
+        var i=0;
+        i<pages.length;
+        i++
+    ){
 
-var page=document.getElementById(id);
+        pages[i].classList.remove("active");
 
-if(page)
-page.classList.add("active");
+    }
 
-var buttons=
-document.querySelectorAll(".nav button");
+    var page=
+        document.getElementById(id);
 
-for(var j=0;j<buttons.length;j++)
-buttons[j].classList.remove("active");
+    if(page){
 
-if(button)
-button.classList.add("active");
+        page.classList.add("active");
+
+    }
+
+    var buttons=
+        document.querySelectorAll(".nav button");
+
+    for(
+        var j=0;
+        j<buttons.length;
+        j++
+    ){
+
+        buttons[j].classList.remove("active");
+
+    }
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
 
 }
+
 
 /* GAME STATE */
 
@@ -838,14 +1026,20 @@ var missiles=3;
 var PLAYER_SCALE=.8;
 
 var player={
-x:0,
-y:0,
-targetX:0,
-targetY:0,
-width:30.4,
-height:41.6,
-speed:.18
+
+    x:0,
+    y:0,
+
+    targetX:0,
+    targetY:0,
+
+    width:30.4,
+    height:41.6,
+
+    speed:.18
+
 };
+
 
 var bullets=[];
 var specialMissiles=[];
@@ -853,6 +1047,13 @@ var bombs=[];
 var enemies=[];
 var enemyBullets=[];
 var explosions=[];
+
+
+/*
+ IMPORTANT:
+ برای جلوگیری از عبور اجسام سریع از داخل هواپیما
+ موقعیت قبلی آنها نیز نگهداری می‌شود.
+*/
 
 var lastBulletTime=0;
 var lastBombTime=0;
@@ -863,2674 +1064,4087 @@ var lastFrameTime=0;
 var fourMinuteAdShown=false;
 var pointerActive=false;
 
+
 /* CANVAS */
 
 var canvas=
-document.getElementById("gameCanvas");
+    document.getElementById("gameCanvas");
 
 var ctx=
-canvas?canvas.getContext("2d"):null;
+    canvas ? canvas.getContext("2d") : null;
+
 
 function resizeCanvas(){
 
-if(!canvas||!ctx)
-return;
+    if(!canvas || !ctx) return;
 
-var rect=
-canvas.getBoundingClientRect();
+    var rect=
+        canvas.getBoundingClientRect();
 
-var width=
-Math.max(300,Math.floor(rect.width));
+    var width=
+        Math.max(
+            300,
+            Math.floor(rect.width)
+        );
 
-var height=
-Math.max(400,Math.floor(rect.height));
+    var height=
+        Math.max(
+            400,
+            Math.floor(rect.height)
+        );
 
-var dpr=
-Math.min(window.devicePixelRatio||1,2);
+    var dpr=
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
-canvas.width=width*dpr;
-canvas.height=height*dpr;
+    canvas.width=width*dpr;
+    canvas.height=height*dpr;
 
-ctx.setTransform(
-dpr,
-0,
-0,
-dpr,
-0,
-0
-);
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
 
-if(!gameRunning){
+    if(!gameRunning){
 
-player.x=width/2;
-player.y=height-105;
+        player.x=width/2;
+        player.y=height-105;
 
-player.targetX=player.x;
-player.targetY=player.y;
+        player.targetX=player.x;
+        player.targetY=player.y;
 
-}
+    }
 
 }
 
 window.addEventListener(
-"resize",
-resizeCanvas
+    "resize",
+    resizeCanvas
 );
+
 
 /* RESET */
 
 function resetGameState(){
 
-gameRunning=false;
-gamePaused=false;
+    gameRunning=false;
+    gamePaused=false;
 
-elapsedSeconds=0;
-gameScore=0;
-gameLives=3;
-missiles=3;
+    elapsedSeconds=0;
+    gameScore=0;
+    gameLives=3;
+    missiles=3;
 
-pauseStartTime=0;
+    pauseStartTime=0;
 
-lastBulletTime=0;
-lastBombTime=0;
-lastEnemyTime=0;
-lastEnemyShotTime=0;
+    lastBulletTime=0;
+    lastBombTime=0;
+    lastEnemyTime=0;
+    lastEnemyShotTime=0;
 
-fourMinuteAdShown=false;
-pointerActive=false;
+    fourMinuteAdShown=false;
+    pointerActive=false;
 
-bullets=[];
-specialMissiles=[];
-bombs=[];
-enemies=[];
-enemyBullets=[];
-explosions=[];
+    bullets=[];
+    specialMissiles=[];
+    bombs=[];
+    enemies=[];
+    enemyBullets=[];
+    explosions=[];
 
-if(animationId!==null)
-cancelAnimationFrame(animationId);
+    if(animationId!==null){
 
-animationId=null;
+        cancelAnimationFrame(animationId);
 
-updateGameUI();
-updateControlButtons();
+    }
+
+    animationId=null;
+
+    updateGameUI();
+    updateControlButtons();
 
 }
+
 
 /* OPEN GAME */
 
 function openGame(){
 
-resetGameState();
+    resetGameState();
 
-document.body.classList.add("game-mode");
+    document.body.classList.add(
+        "game-mode"
+    );
 
-document
-.getElementById("mainNav")
-.classList.add("hidden");
+    document
+        .getElementById("mainNav")
+        .classList.add("hidden");
 
-showPage("gamePage",null);
+    showPage(
+        "gamePage",
+        null
+    );
 
-document
-.getElementById("startOverlay")
-.classList.remove("hidden");
+    document
+        .getElementById("startOverlay")
+        .classList.remove("hidden");
 
-document
-.getElementById("gameOverOverlay")
-.classList.add("hidden");
+    document
+        .getElementById("gameOverOverlay")
+        .classList.add("hidden");
 
-resizeCanvas();
+    resizeCanvas();
 
-updateGameUI();
-updateControlButtons();
+    updateGameUI();
+    updateControlButtons();
 
 }
+
 
 /* HOME */
 
 function backHome(){
 
-resetGameState();
+    resetGameState();
 
-document.body.classList.remove("game-mode");
+    document.body.classList.remove(
+        "game-mode"
+    );
 
-document
-.getElementById("mainNav")
-.classList.remove("hidden");
+    document
+        .getElementById("mainNav")
+        .classList.remove("hidden");
 
-document
-.getElementById("startOverlay")
-.classList.remove("hidden");
+    document
+        .getElementById("startOverlay")
+        .classList.remove("hidden");
 
-document
-.getElementById("gameOverOverlay")
-.classList.add("hidden");
+    document
+        .getElementById("gameOverOverlay")
+        .classList.add("hidden");
 
-showPage(
-"home",
-document.getElementById("navHome")
-);
+    showPage(
+        "home",
+        document.getElementById("navHome")
+    );
 
-updateStats();
+    updateStats();
 
 }
+
 
 /* CANCEL */
 
 function cancelGame(){
-backHome();
+
+    backHome();
+
 }
+
 
 /* COPY LINK */
 
 function copyLink(){
 
-var link=window.location.href;
+    var link=
+        window.location.href;
 
-if(
-navigator.clipboard&&
-navigator.clipboard.writeText
-){
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
 
-navigator.clipboard
-.writeText(link)
-.then(function(){
+        navigator.clipboard
+            .writeText(link)
+            .then(function(){
 
-alert("لینک کپی شد ✅");
+                alert("لینک کپی شد ✅");
 
-})
-.catch(function(){
+            })
+            .catch(function(){
 
-alert(link);
+                alert(link);
 
-});
+            });
 
-}else{
+    }else{
 
-alert(link);
+        alert(link);
+
+    }
 
 }
 
-}
 
 /* STATS */
 
 function updateStats(){
 
-var coinStat=
-document.getElementById("coinStat");
+    var coinStat=
+        document.getElementById("coinStat");
 
-var scoreStat=
-document.getElementById("scoreStat");
+    var scoreStat=
+        document.getElementById("scoreStat");
 
-var adStat=
-document.getElementById("adStat");
+    var adStat=
+        document.getElementById("adStat");
 
-var walletBalance=
-document.getElementById("walletBalance");
+    var walletBalance=
+        document.getElementById("walletBalance");
 
-var profileBalance=
-document.getElementById("profileBalance");
+    var profileBalance=
+        document.getElementById("profileBalance");
 
-if(coinStat)
-coinStat.textContent=coins;
+    if(coinStat)
+        coinStat.textContent=coins;
 
-if(scoreStat)
-scoreStat.textContent=totalScore;
+    if(scoreStat)
+        scoreStat.textContent=totalScore;
 
-if(adStat)
-adStat.textContent=adCount;
+    if(adStat)
+        adStat.textContent=adCount;
 
-if(walletBalance)
-walletBalance.textContent="0.00 USDT";
+    if(walletBalance)
+        walletBalance.textContent=
+            "0.00 USDT";
 
-if(profileBalance)
-profileBalance.textContent="0.00";
+    if(profileBalance)
+        profileBalance.textContent=
+            "0.00";
 
 }
+
 
 /* ADSGRAM */
 
 var ADSGRAM_REWARDED_BLOCK_ID=
-"YOUR_REWARDED_BLOCK_ID";
+    "YOUR_REWARDED_BLOCK_ID";
 
 var ADSGRAM_INTERSTITIAL_BLOCK_ID=
-"YOUR_INTERSTITIAL_BLOCK_ID";
+    "YOUR_INTERSTITIAL_BLOCK_ID";
 
 var rewardedController=null;
 var interstitialController=null;
 
+
 function adsReady(){
 
-return window.Adsgram&&
-typeof window.Adsgram.init==="function";
+    return(
+        window.Adsgram &&
+        typeof window.Adsgram.init==="function"
+    );
 
 }
+
 
 function initAds(){
 
-if(!adsReady())
-return;
+    if(!adsReady()) return;
 
-try{
+    try{
 
-if(
-ADSGRAM_REWARDED_BLOCK_ID&&
-ADSGRAM_REWARDED_BLOCK_ID!=="YOUR_REWARDED_BLOCK_ID"
-){
+        if(
+            ADSGRAM_REWARDED_BLOCK_ID &&
+            ADSGRAM_REWARDED_BLOCK_ID!==
+                "YOUR_REWARDED_BLOCK_ID"
+        ){
 
-rewardedController=
-window.Adsgram.init({
-blockId:ADSGRAM_REWARDED_BLOCK_ID
-});
+            rewardedController=
+                window.Adsgram.init({
 
-}
+                    blockId:
+                        ADSGRAM_REWARDED_BLOCK_ID
 
-if(
-ADSGRAM_INTERSTITIAL_BLOCK_ID&&
-ADSGRAM_INTERSTITIAL_BLOCK_ID!=="YOUR_INTERSTITIAL_BLOCK_ID"
-){
+                });
 
-interstitialController=
-window.Adsgram.init({
-blockId:ADSGRAM_INTERSTITIAL_BLOCK_ID
-});
+        }
 
-}
+        if(
+            ADSGRAM_INTERSTITIAL_BLOCK_ID &&
+            ADSGRAM_INTERSTITIAL_BLOCK_ID!==
+                "YOUR_INTERSTITIAL_BLOCK_ID"
+        ){
 
-}catch(error){
+            interstitialController=
+                window.Adsgram.init({
 
-console.log(
-"AdsGram error:",
-error
-);
+                    blockId:
+                        ADSGRAM_INTERSTITIAL_BLOCK_ID
 
-}
+                });
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "AdsGram error:",
+            error
+        );
+
+    }
 
 }
 
 initAds();
 
+
 /* START */
 
 function startGame(){
 
-if(!canvas||!ctx){
+    if(!canvas || !ctx){
 
-alert(
-"خطا در بارگذاری صفحه بازی"
-);
+        alert(
+            "خطا در بارگذاری صفحه بازی"
+        );
 
-return;
+        return;
+
+    }
+
+    if(animationId!==null){
+
+        cancelAnimationFrame(
+            animationId
+        );
+
+    }
+
+    animationId=null;
+
+    gameRunning=true;
+    gamePaused=false;
+
+    gameStartTime=
+        performance.now();
+
+    pauseStartTime=0;
+    elapsedSeconds=0;
+
+    gameScore=0;
+    gameLives=3;
+    missiles=3;
+
+    bullets=[];
+    specialMissiles=[];
+    bombs=[];
+    enemies=[];
+    enemyBullets=[];
+    explosions=[];
+
+
+    /*
+     شلیک اول بلافاصله فعال می‌شود.
+    */
+
+    lastBulletTime=
+        performance.now()-500;
+
+    lastBombTime=
+        performance.now();
+
+    lastEnemyTime=
+        performance.now();
+
+    lastEnemyShotTime=
+        performance.now();
+
+
+    fourMinuteAdShown=false;
+
+
+    resizeCanvas();
+
+
+    player.x=
+        canvas.clientWidth/2;
+
+    player.y=
+        canvas.clientHeight-105;
+
+    player.targetX=
+        player.x;
+
+    player.targetY=
+        player.y;
+
+
+    document
+        .getElementById("startOverlay")
+        .classList.add("hidden");
+
+    document
+        .getElementById("gameOverOverlay")
+        .classList.add("hidden");
+
+
+    updateGameUI();
+    updateControlButtons();
+
+
+    lastFrameTime=
+        performance.now();
+
+    animationId=
+        requestAnimationFrame(
+            gameLoop
+        );
 
 }
 
-if(animationId!==null)
-cancelAnimationFrame(animationId);
-
-animationId=null;
-
-gameRunning=true;
-gamePaused=false;
-
-gameStartTime=performance.now();
-
-pauseStartTime=0;
-elapsedSeconds=0;
-
-gameScore=0;
-gameLives=3;
-missiles=3;
-
-bullets=[];
-specialMissiles=[];
-bombs=[];
-enemies=[];
-enemyBullets=[];
-explosions=[];
-
-lastBulletTime=0;
-lastBombTime=0;
-lastEnemyTime=0;
-lastEnemyShotTime=0;
-
-fourMinuteAdShown=false;
-
-resizeCanvas();
-
-player.x=canvas.clientWidth/2;
-player.y=canvas.clientHeight-105;
-
-player.targetX=player.x;
-player.targetY=player.y;
-
-document
-.getElementById("startOverlay")
-.classList.add("hidden");
-
-document
-.getElementById("gameOverOverlay")
-.classList.add("hidden");
-
-updateGameUI();
-updateControlButtons();
-
-lastFrameTime=performance.now();
-
-animationId=
-requestAnimationFrame(gameLoop);
-
-}
 
 /* STOP */
 
 function stopGame(){
 
-gameRunning=false;
-gamePaused=false;
+    gameRunning=false;
+    gamePaused=false;
 
-if(animationId!==null)
-cancelAnimationFrame(animationId);
+    if(animationId!==null){
 
-animationId=null;
+        cancelAnimationFrame(
+            animationId
+        );
 
-pauseStartTime=0;
-pointerActive=false;
+    }
 
-updateControlButtons();
-updateGameUI();
+    animationId=null;
+    pauseStartTime=0;
+    pointerActive=false;
+
+    updateControlButtons();
+    updateGameUI();
 
 }
+
 
 /* PAUSE */
 
 function pauseGame(){
 
-if(!gameRunning||gamePaused)
-return;
+    if(
+        !gameRunning ||
+        gamePaused
+    ) return;
 
-gamePaused=true;
+    gamePaused=true;
 
-pauseStartTime=
-performance.now();
+    pauseStartTime=
+        performance.now();
 
-if(animationId!==null)
-cancelAnimationFrame(animationId);
+    if(animationId!==null){
 
-animationId=null;
+        cancelAnimationFrame(
+            animationId
+        );
 
-updateControlButtons();
-updateGameUI();
+    }
+
+    animationId=null;
+
+    updateControlButtons();
+    updateGameUI();
 
 }
+
 
 /* RESUME */
 
 function resumeGame(){
 
-if(!gameRunning||!gamePaused)
-return;
+    if(
+        !gameRunning ||
+        !gamePaused
+    ) return;
 
-var now=performance.now();
+    var now=
+        performance.now();
 
-if(pauseStartTime>0)
-gameStartTime+=
-now-pauseStartTime;
+    if(pauseStartTime>0){
 
-pauseStartTime=0;
+        gameStartTime+=
+            now-pauseStartTime;
 
-gamePaused=false;
+    }
 
-lastFrameTime=now;
+    pauseStartTime=0;
 
-updateControlButtons();
-updateGameUI();
+    gamePaused=false;
 
-if(animationId===null)
-animationId=
-requestAnimationFrame(gameLoop);
+    lastFrameTime=now;
+
+    updateControlButtons();
+    updateGameUI();
+
+    if(animationId===null){
+
+        animationId=
+            requestAnimationFrame(
+                gameLoop
+            );
+
+    }
 
 }
+
 
 /* BUTTONS */
 
 function updateControlButtons(){
 
-var start=
-document.getElementById(
-"startBottomButton"
-);
+    var start=
+        document.getElementById(
+            "startBottomButton"
+        );
 
-var pause=
-document.getElementById(
-"pauseGameButton"
-);
+    var pause=
+        document.getElementById(
+            "pauseGameButton"
+        );
 
-var resume=
-document.getElementById(
-"resumeGameButton"
-);
+    var resume=
+        document.getElementById(
+            "resumeGameButton"
+        );
 
-if(start)
-start.disabled=gameRunning;
 
-if(pause)
-pause.disabled=
-!gameRunning||gamePaused;
+    if(start)
+        start.disabled=gameRunning;
 
-if(resume)
-resume.disabled=
-!gameRunning||!gamePaused;
+    if(pause)
+        pause.disabled=
+            !gameRunning ||
+            gamePaused;
+
+    if(resume)
+        resume.disabled=
+            !gameRunning ||
+            !gamePaused;
 
 }
+
 
 /* RESTART */
 
 function restartGame(){
-startGame();
+
+    startGame();
+
 }
+
 
 /* GAME LOOP */
 
 function gameLoop(timestamp){
 
-if(!gameRunning){
+    if(!gameRunning){
 
-animationId=null;
-return;
+        animationId=null;
+        return;
+
+    }
+
+    if(gamePaused){
+
+        animationId=null;
+        return;
+
+    }
+
+    animationId=
+        requestAnimationFrame(
+            gameLoop
+        );
+
+
+    var delta=
+        Math.min(
+            .035,
+            (timestamp-lastFrameTime)/1000
+        );
+
+    lastFrameTime=timestamp;
+
+
+    elapsedSeconds=
+        (timestamp-gameStartTime)/1000;
+
+
+    updateGame(
+        delta,
+        timestamp
+    );
+
+    drawGame();
+
+    updateGameUI();
+
+
+    if(
+        elapsedSeconds>=240 &&
+        !fourMinuteAdShown
+    ){
+
+        fourMinuteAdShown=true;
+
+        showFourMinuteAd();
+
+    }
 
 }
 
-if(gamePaused){
-
-animationId=null;
-return;
-
-}
-
-animationId=
-requestAnimationFrame(gameLoop);
-
-var delta=
-Math.min(
-.035,
-(timestamp-lastFrameTime)/1000
-);
-
-lastFrameTime=timestamp;
-
-elapsedSeconds=
-(timestamp-gameStartTime)/1000;
-
-updateGame(
-delta,
-timestamp
-);
-
-drawGame();
-
-updateGameUI();
-
-if(
-elapsedSeconds>=240&&
-!fourMinuteAdShown
-){
-
-fourMinuteAdShown=true;
-
-showFourMinuteAd();
-
-}
-
-}
 
 /* DIFFICULTY */
 
 function getDifficulty(){
 
-var progress=
-Math.min(
-elapsedSeconds/240,
-1
-);
+    var progress=
+        Math.min(
+            elapsedSeconds/240,
+            1
+        );
 
-return{
+    return{
 
-progress:progress,
+        progress:progress,
 
-bombSpeed:
-2+progress*1.5,
+        bombSpeed:
+            2+progress*1.5,
 
-enemySpeed:
-1.25+progress*1.15,
+        enemySpeed:
+            1.25+progress*1.15,
 
-bombInterval:
-1250-progress*280,
+        bombInterval:
+            1250-progress*280,
 
-enemyInterval:
-2100-progress*400,
+        enemyInterval:
+            2100-progress*400,
 
-enemyShotInterval:
-2100-progress*350
+        enemyShotInterval:
+            2100-progress*350
 
-};
+    };
 
 }
+
 
 /* UPDATE */
 
-function updateGame(delta,timestamp){
-
-var difficulty=
-getDifficulty();
-
-player.x+=
-(player.targetX-player.x)*
-player.speed;
-
-player.y+=
-(player.targetY-player.y)*
-player.speed;
-
-var width=canvas.clientWidth;
-var height=canvas.clientHeight;
-
-player.x=Math.max(
-player.width/2,
-Math.min(
-width-player.width/2,
-player.x
-)
-);
-
-player.y=Math.max(
-height*.42,
-Math.min(
-height*.80,
-player.y
-)
-);
-
-/* گلوله خودکار */
-
-if(
-timestamp-lastBulletTime>=155
+function updateGame(
+    delta,
+    timestamp
 ){
 
-fireAutomaticBullet();
+    var difficulty=
+        getDifficulty();
 
-lastBulletTime=timestamp;
+
+    /*
+     حرکت نرم هواپیما
+    */
+
+    player.x+=
+        (
+            player.targetX-player.x
+        )*
+        player.speed;
+
+    player.y+=
+        (
+            player.targetY-player.y
+        )*
+        player.speed;
+
+
+    var width=
+        canvas.clientWidth;
+
+    var height=
+        canvas.clientHeight;
+
+
+    player.x=
+        Math.max(
+            player.width/2,
+            Math.min(
+                width-player.width/2,
+                player.x
+            )
+        );
+
+
+    player.y=
+        Math.max(
+            height*.42,
+            Math.min(
+                height*.80,
+                player.y
+            )
+        );
+
+
+    /*
+     شلیک خودکار
+    */
+
+    if(
+        timestamp-lastBulletTime>=155
+    ){
+
+        fireAutomaticBullet();
+
+        lastBulletTime=timestamp;
+
+    }
+
+
+    /*
+     بمب
+    */
+
+    if(
+        timestamp-lastBombTime>=
+        difficulty.bombInterval
+    ){
+
+        createBomb();
+
+        lastBombTime=timestamp;
+
+    }
+
+
+    /*
+     دشمن
+    */
+
+    if(
+        timestamp-lastEnemyTime>=
+        difficulty.enemyInterval
+    ){
+
+        createEnemy();
+
+        lastEnemyTime=timestamp;
+
+    }
+
+
+    /*
+     شلیک دشمن
+    */
+
+    if(
+        timestamp-lastEnemyShotTime>=
+        difficulty.enemyShotInterval
+    ){
+
+        enemyShoot();
+
+        lastEnemyShotTime=timestamp;
+
+    }
+
+
+    updateBullets(delta);
+
+    updateMissiles(delta);
+
+    updateBombs(
+        delta,
+        difficulty
+    );
+
+    updateEnemies(
+        delta,
+        difficulty
+    );
+
+    updateEnemyBullets(delta);
+
+    updateExplosions(delta);
+
+    checkCollisions();
 
 }
 
-/* بمب */
-
-if(
-timestamp-lastBombTime>=
-difficulty.bombInterval
-){
-
-createBomb();
-
-lastBombTime=timestamp;
-
-}
-
-/* دشمن */
-
-if(
-timestamp-lastEnemyTime>=
-difficulty.enemyInterval
-){
-
-createEnemy();
-
-lastEnemyTime=timestamp;
-
-}
-
-/* شلیک دشمن */
-
-if(
-timestamp-lastEnemyShotTime>=
-difficulty.enemyShotInterval
-){
-
-enemyShoot();
-
-lastEnemyShotTime=timestamp;
-
-}
-
-updateBullets(delta);
-
-updateMissiles(delta);
-
-updateBombs(delta,difficulty);
-
-updateEnemies(delta,difficulty);
-
-updateEnemyBullets(delta);
-
-updateExplosions(delta);
-
-checkCollisions();
-
-}
 
 /* AUTO BULLET */
 
 function fireAutomaticBullet(){
 
-bullets.push({
+    bullets.push({
 
-x:player.x,
-y:player.y-27,
-width:4,
-height:14,
-speed:8
+        x:player.x,
 
-});
+        y:
+            player.y-
+            (27*PLAYER_SCALE)-8,
+
+        oldX:player.x,
+
+        oldY:
+            player.y-
+            (27*PLAYER_SCALE)-8,
+
+        width:4,
+
+        height:14,
+
+        speed:520
+
+    });
 
 }
+
 
 /* FIND NEAREST ENEMY */
 
-function findNearestEnemy(x,y){
-
-var nearest=null;
-var bestDistance=Infinity;
-
-for(
-var i=0;
-i<enemies.length;
-i++
+function findNearestEnemy(
+    x,
+    y
 ){
 
-var dx=enemies[i].x-x;
-var dy=enemies[i].y-y;
+    var nearest=null;
+    var bestDistance=Infinity;
 
-var d=dx*dx+dy*dy;
 
-if(d<bestDistance){
+    for(
+        var i=0;
+        i<enemies.length;
+        i++
+    ){
 
-bestDistance=d;
-nearest=enemies[i];
+        var dx=
+            enemies[i].x-x;
+
+        var dy=
+            enemies[i].y-y;
+
+        var d=
+            dx*dx+dy*dy;
+
+
+        if(d<bestDistance){
+
+            bestDistance=d;
+            nearest=enemies[i];
+
+        }
+
+    }
+
+
+    return nearest;
 
 }
 
-}
-
-return nearest;
-
-}
 
 /* SPECIAL MISSILE */
 
 function fireSpecialMissile(){
 
-if(
-!gameRunning||
-gamePaused||
-missiles<=0
-)
-return;
+    if(
+        !gameRunning ||
+        gamePaused ||
+        missiles<=0
+    ){
 
-missiles--;
+        return;
 
-var startX=player.x;
-var startY=player.y+25;
+    }
 
-var target=
-findNearestEnemy(
-startX,
-startY
-);
 
-specialMissiles.push({
+    missiles--;
 
-x:startX,
-y:startY,
 
-width:10,
-height:25,
+    var startX=
+        player.x;
 
-speed:420,
+    var startY=
+        player.y+25;
 
-target:target,
 
-dirX:0,
-dirY:-1,
+    var target=
+        findNearestEnemy(
+            startX,
+            startY
+        );
 
-trail:[]
 
-});
+    specialMissiles.push({
 
-updateGameUI();
+        x:startX,
+        y:startY,
+
+        oldX:startX,
+        oldY:startY,
+
+        width:10,
+        height:25,
+
+        speed:420,
+
+        target:target,
+
+        dirX:0,
+        dirY:-1,
+
+        trail:[]
+
+    });
+
+
+    updateGameUI();
 
 }
+
 
 /* CHECK TARGET */
 
-function enemyStillExists(target){
-
-if(!target)
-return false;
-
-for(
-var i=0;
-i<enemies.length;
-i++
+function enemyStillExists(
+    target
 ){
 
-if(enemies[i]===target)
-return true;
+    if(!target) return false;
+
+
+    for(
+        var i=0;
+        i<enemies.length;
+        i++
+    ){
+
+        if(enemies[i]===target){
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
 
 }
 
-return false;
 
-}
-
-/* =====================================================
-   MISSILE UPDATE - برخورد قطعی
-   ===================================================== */
+/* MISSILE UPDATE */
 
 function updateMissiles(delta){
 
-for(
-var i=specialMissiles.length-1;
-i>=0;
-i--
-){
+    for(
+        var i=specialMissiles.length-1;
+        i>=0;
+        i--
+    ){
 
-var missile=
-specialMissiles[i];
+        var missile=
+            specialMissiles[i];
 
-/* هدف قبلی اگر از بین رفته باشد */
 
-if(
-!enemyStillExists(missile.target)
-){
+        /*
+         موقعیت قبلی
+        */
 
-missile.target=
-findNearestEnemy(
-missile.x,
-missile.y
-);
+        missile.oldX=
+            missile.x;
+
+        missile.oldY=
+            missile.y;
+
+
+        /*
+         اگر هدف قبلی از بین رفته باشد،
+         هدف جدید پیدا می‌شود.
+        */
+
+        if(
+            !enemyStillExists(
+                missile.target
+            )
+        ){
+
+            missile.target=
+                findNearestEnemy(
+                    missile.x,
+                    missile.y
+                );
+
+        }
+
+
+        var target=
+            missile.target;
+
+
+        /*
+         حرکت موشک
+        */
+
+        if(target){
+
+            var dx=
+                target.x-missile.x;
+
+            var dy=
+                target.y-missile.y;
+
+            var distanceToTarget=
+                Math.sqrt(
+                    dx*dx+dy*dy
+                );
+
+
+            if(distanceToTarget>0){
+
+                missile.dirX=
+                    dx/distanceToTarget;
+
+                missile.dirY=
+                    dy/distanceToTarget;
+
+
+                missile.x+=
+                    missile.dirX*
+                    missile.speed*
+                    delta;
+
+                missile.y+=
+                    missile.dirY*
+                    missile.speed*
+                    delta;
+
+            }
+
+        }else{
+
+            missile.x+=
+                missile.dirX*
+                missile.speed*
+                delta;
+
+            missile.y+=
+                missile.dirY*
+                missile.speed*
+                delta;
+
+        }
+
+
+        var missileHit=false;
+
+
+        /*
+         برخورد موشک با دشمن
+         */
+
+        for(
+            var e=enemies.length-1;
+            e>=0;
+            e--
+        ){
+
+            var enemy=
+                enemies[e];
+
+
+            if(
+                segmentCircleRectCollision(
+                    missile.oldX,
+                    missile.oldY,
+                    missile.x,
+                    missile.y,
+                    18,
+                    enemy
+                )
+            ){
+
+                createBigExplosion(
+                    enemy.x,
+                    enemy.y
+                );
+
+
+                enemies.splice(
+                    e,
+                    1
+                );
+
+
+                gameScore+=25;
+                coins+=3;
+
+
+                specialMissiles.splice(
+                    i,
+                    1
+                );
+
+
+                missileHit=true;
+
+                break;
+
+            }
+
+        }
+
+
+        if(missileHit){
+
+            continue;
+
+        }
+
+
+        /*
+         رد آتش موشک
+        */
+
+        missile.trail.push({
+
+            x:missile.x,
+            y:missile.y
+
+        });
+
+
+        if(
+            missile.trail.length>14
+        ){
+
+            missile.trail.shift();
+
+        }
+
+
+        /*
+         خروج موشک از صفحه
+        */
+
+        if(
+            missile.x<-80 ||
+            missile.x>
+                canvas.clientWidth+80 ||
+            missile.y<-80 ||
+            missile.y>
+                canvas.clientHeight+80
+        ){
+
+            specialMissiles.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
 
 }
 
-var oldX=missile.x;
-var oldY=missile.y;
-
-var target=missile.target;
-
-/* حرکت */
-
-if(target){
-
-var dx=
-target.x-missile.x;
-
-var dy=
-target.y-missile.y;
-
-var distanceToTarget=
-Math.sqrt(
-dx*dx+dy*dy
-);
-
-if(distanceToTarget>0){
-
-missile.dirX=
-dx/distanceToTarget;
-
-missile.dirY=
-dy/distanceToTarget;
-
-missile.x+=
-missile.dirX*
-missile.speed*
-delta;
-
-missile.y+=
-missile.dirY*
-missile.speed*
-delta;
-
-}
-
-}else{
-
-missile.x+=
-missile.dirX*
-missile.speed*
-delta;
-
-missile.y+=
-missile.dirY*
-missile.speed*
-delta;
-
-}
-
-/* =================================================
-   بررسی واقعی برخورد بعد از حرکت
-   ================================================= */
-
-var missileHit=false;
-
-for(
-var e=enemies.length-1;
-e>=0;
-e--
-){
-
-var enemy=enemies[e];
-
-/*
-شعاع برخورد موشک را کمی بزرگ گرفته‌ایم
-تا موشک از کنار هواپیما رد نشود.
-*/
-
-if(
-circleRectCollision(
-missile.x,
-missile.y,
-14,
-enemy
-)
-){
-
-/* مرکز انفجار */
-
-createBigExplosion(
-enemy.x,
-enemy.y
-);
-
-/* حذف دشمن */
-
-enemies.splice(
-e,
-1
-);
-
-/* امتیاز */
-
-gameScore+=25;
-coins+=3;
-
-/* حذف موشک */
-
-specialMissiles.splice(
-i,
-1
-);
-
-missileHit=true;
-
-break;
-
-}
-
-}
-
-/* اگر برخورد کرده، دیگر ادامه نده */
-
-if(missileHit)
-continue;
-
-/*
-بررسی مسیر بین موقعیت قبلی و جدید.
-این قسمت برای سرعت بالای موشک است.
-*/
-
-for(
-var e2=enemies.length-1;
-e2>=0;
-e2--
-){
-
-var enemy2=enemies[e2];
-
-var midX=
-(oldX+missile.x)/2;
-
-var midY=
-(oldY+missile.y)/2;
-
-if(
-circleRectCollision(
-midX,
-midY,
-18,
-enemy2
-)
-){
-
-createBigExplosion(
-enemy2.x,
-enemy2.y
-);
-
-enemies.splice(
-e2,
-1
-);
-
-gameScore+=25;
-coins+=3;
-
-specialMissiles.splice(
-i,
-1
-);
-
-missileHit=true;
-
-break;
-
-}
-
-}
-
-if(missileHit)
-continue;
-
-/* رد آتش */
-
-missile.trail.push({
-
-x:missile.x,
-y:missile.y
-
-});
-
-if(
-missile.trail.length>14
-)
-missile.trail.shift();
-
-/* حذف خارج صفحه */
-
-if(
-missile.x<-80||
-missile.x>
-canvas.clientWidth+80||
-missile.y<-80||
-missile.y>
-canvas.clientHeight+80
-){
-
-specialMissiles.splice(
-i,
-1
-);
-
-}
-
-}
-
-}
 
 /* BOMB */
 
 function createBomb(){
 
-var width=
-canvas.clientWidth;
+    var width=
+        canvas.clientWidth;
 
-bombs.push({
 
-x:
-25+
-Math.random()*
-Math.max(1,width-50),
+    bombs.push({
 
-y:-30,
+        x:
+            25+
+            Math.random()*
+            Math.max(
+                1,
+                width-50
+            ),
 
-radius:9,
+        y:-30,
 
-speed:
-getDifficulty().bombSpeed
+        oldX:
+            25+
+            Math.random()*
+            Math.max(
+                1,
+                width-50
+            ),
 
-});
+        oldY:-30,
+
+        radius:9,
+
+        speed:
+            getDifficulty().bombSpeed*
+            60
+
+    });
 
 }
+
 
 /* ENEMY */
 
 function createEnemy(){
 
-var width=
-canvas.clientWidth;
+    var width=
+        canvas.clientWidth;
 
-enemies.push({
 
-x:
-35+
-Math.random()*
-Math.max(1,width-70),
+    var x=
+        35+
+        Math.random()*
+        Math.max(
+            1,
+            width-70
+        );
 
-y:-35,
 
-width:28,
-height:38,
+    enemies.push({
 
-speed:
-getDifficulty().enemySpeed,
+        x:x,
 
-health:1
+        y:-35,
 
-});
+        oldX:x,
+
+        oldY:-35,
+
+        width:28,
+
+        height:38,
+
+        speed:
+            getDifficulty().enemySpeed*
+            60,
+
+        health:1
+
+    });
 
 }
+
 
 /* ENEMY SHOOT */
 
 function enemyShoot(){
 
-if(enemies.length===0)
-return;
+    if(enemies.length===0)
+        return;
 
-var enemy=
-enemies[
-Math.floor(
-Math.random()*enemies.length
-)
-];
 
-enemyBullets.push({
+    var enemy=
+        enemies[
+            Math.floor(
+                Math.random()*
+                enemies.length
+            )
+        ];
 
-x:enemy.x,
-y:enemy.y+17,
-radius:3.5,
 
-speed:
-4+
-getDifficulty().progress
+    enemyBullets.push({
 
-});
+        x:enemy.x,
+
+        y:enemy.y+17,
+
+        oldX:enemy.x,
+
+        oldY:enemy.y+17,
+
+        radius:3.5,
+
+        speed:
+            (
+                4+
+                getDifficulty().progress
+            )*
+            60
+
+    });
 
 }
+
 
 /* BULLETS UPDATE */
 
 function updateBullets(delta){
 
-for(
-var i=bullets.length-1;
-i>=0;
-i--
-){
+    for(
+        var i=bullets.length-1;
+        i>=0;
+        i--
+    ){
 
-bullets[i].y-=
-bullets[i].speed;
+        var bullet=
+            bullets[i];
 
-if(
-bullets[i].y<-30
-)
-bullets.splice(i,1);
+
+        bullet.oldX=
+            bullet.x;
+
+        bullet.oldY=
+            bullet.y;
+
+
+        bullet.y-=
+            bullet.speed*
+            delta;
+
+
+        if(
+            bullet.y<-40
+        ){
+
+            bullets.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
 
 }
 
-}
 
 /* BOMBS UPDATE */
 
-function updateBombs(delta,difficulty){
-
-for(
-var i=bombs.length-1;
-i>=0;
-i--
+function updateBombs(
+    delta,
+    difficulty
 ){
 
-bombs[i].y+=
-bombs[i].speed;
+    for(
+        var i=bombs.length-1;
+        i>=0;
+        i--
+    ){
 
-bombs[i].x+=
-Math.sin(
-elapsedSeconds*2+i
-)*.25;
+        var bomb=
+            bombs[i];
 
-if(
-bombs[i].y>
-canvas.clientHeight+40
-)
 
-bombs.splice(i,1);
+        bomb.oldX=
+            bomb.x;
+
+        bomb.oldY=
+            bomb.y;
+
+
+        bomb.y+=
+            bomb.speed*
+            delta;
+
+
+        bomb.x+=
+            Math.sin(
+                elapsedSeconds*2+i
+            )*.25;
+
+
+        if(
+            bomb.y>
+            canvas.clientHeight+40
+        ){
+
+            bombs.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
 
 }
 
-}
 
 /* ENEMIES UPDATE */
 
-function updateEnemies(delta,difficulty){
-
-for(
-var i=enemies.length-1;
-i>=0;
-i--
+function updateEnemies(
+    delta,
+    difficulty
 ){
 
-enemies[i].y+=
-enemies[i].speed;
+    for(
+        var i=enemies.length-1;
+        i>=0;
+        i--
+    ){
 
-if(
-enemies[i].y>
-canvas.clientHeight+70
-)
+        var enemy=
+            enemies[i];
 
-enemies.splice(i,1);
+
+        enemy.oldX=
+            enemy.x;
+
+        enemy.oldY=
+            enemy.y;
+
+
+        enemy.y+=
+            enemy.speed*
+            delta;
+
+
+        if(
+            enemy.y>
+            canvas.clientHeight+70
+        ){
+
+            enemies.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
 
 }
 
-}
 
 /* ENEMY BULLETS */
 
 function updateEnemyBullets(delta){
 
-for(
-var i=enemyBullets.length-1;
-i>=0;
-i--
-){
+    for(
+        var i=enemyBullets.length-1;
+        i>=0;
+        i--
+    ){
 
-enemyBullets[i].y+=
-enemyBullets[i].speed;
+        var bullet=
+            enemyBullets[i];
 
-if(
-enemyBullets[i].y>
-canvas.clientHeight+30
-)
 
-enemyBullets.splice(i,1);
+        bullet.oldX=
+            bullet.x;
+
+        bullet.oldY=
+            bullet.y;
+
+
+        bullet.y+=
+            bullet.speed*
+            delta;
+
+
+        if(
+            bullet.y>
+            canvas.clientHeight+40
+        ){
+
+            enemyBullets.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
 
 }
 
-}
 
 /* EXPLOSION */
 
-function createExplosion(x,y){
+function createExplosion(
+    x,
+    y
+){
 
-explosions.push({
+    explosions.push({
 
-x:x,
-y:y,
+        x:x,
+        y:y,
 
-radius:4,
-maxRadius:30,
-life:.45,
+        radius:4,
 
-type:"normal"
+        maxRadius:30,
 
-});
+        life:.45,
+
+        type:"normal"
+
+    });
+
+}
+
+
+/* BIG EXPLOSION */
+
+function createBigExplosion(
+    x,
+    y
+){
+
+    explosions.push({
+
+        x:x,
+        y:y,
+
+        radius:5,
+
+        maxRadius:58,
+
+        life:.75,
+
+        type:"missile"
+
+    });
 
 }
 
-/* انفجار بزرگ موشک */
 
-function createBigExplosion(x,y){
+/*
+ انفجار مخصوص برخورد با هواپیما
+ بزرگ‌تر و واضح‌تر
+*/
 
-explosions.push({
+function createPlayerExplosion(){
 
-x:x,
-y:y,
+    explosions.push({
 
-radius:5,
-maxRadius:58,
-life:.75,
+        x:player.x,
+        y:player.y,
 
-type:"missile"
+        radius:6,
 
-});
+        maxRadius:65,
+
+        life:.8,
+
+        type:"player"
+
+    });
 
 }
+
+
+/* EXPLOSIONS UPDATE */
 
 function updateExplosions(delta){
 
-for(
-var i=explosions.length-1;
-i>=0;
-i--
-){
+    for(
+        var i=explosions.length-1;
+        i>=0;
+        i--
+    ){
 
-var exp=explosions[i];
+        var exp=
+            explosions[i];
 
-exp.life-=delta;
 
-if(exp.type==="missile"){
+        exp.life-=delta;
 
-exp.radius+=
-100*delta;
 
-}else{
+        if(
+            exp.type==="missile"
+        ){
 
-exp.radius+=
-65*delta;
+            exp.radius+=
+                100*delta;
+
+        }else if(
+            exp.type==="player"
+        ){
+
+            exp.radius+=
+                82*delta;
+
+        }else{
+
+            exp.radius+=
+                65*delta;
+
+        }
+
+
+        if(
+            exp.life<=0
+        ){
+
+            explosions.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
 
 }
 
-if(
-exp.life<=0
-)
-explosions.splice(i,1);
+
+/* PLAYER HITBOX */
+
+/*
+ این قسمت مهم‌ترین اصلاح است.
+ به‌جای یک دایره کوچک،
+ محدوده واقعی هواپیما استفاده می‌شود.
+*/
+
+function getPlayerHitbox(){
+
+    return{
+
+        x:player.x,
+
+        y:player.y,
+
+        width:
+            22*PLAYER_SCALE,
+
+        height:
+            47*PLAYER_SCALE
+
+    };
 
 }
 
-}
 
-/* COLLISION RADIUS */
+/* PLAYER COLLISION RADIUS */
 
 function getPlayerCollisionRadius(){
 
-return Math.min(
-player.width,
-player.height
-)*.34;
+    return(
+        Math.min(
+            player.width,
+            player.height
+        )*.48
+    );
 
 }
 
-/* COLLISIONS */
+
+/*
+ RECTANGLE OVERLAP
+*/
+
+function rectsOverlap(
+    a,
+    b
+){
+
+    return(
+        Math.abs(a.x-b.x)*
+            2
+            <
+        a.width+b.width
+        &&
+        Math.abs(a.y-b.y)*
+            2
+            <
+        a.height+b.height
+    );
+
+}
+
+
+/*
+ بررسی مسیر حرکت یک نقطه/دایره
+ در فاصله بین دو فریم.
+*/
+
+function segmentCircleCollision(
+    x1,
+    y1,
+    x2,
+    y2,
+    cx,
+    cy,
+    radius
+){
+
+    var vx=
+        x2-x1;
+
+    var vy=
+        y2-y1;
+
+
+    var wx=
+        cx-x1;
+
+    var wy=
+        cy-y1;
+
+
+    var lengthSquared=
+        vx*vx+vy*vy;
+
+
+    var t=0;
+
+
+    if(lengthSquared>0){
+
+        t=
+            (
+                wx*vx+
+                wy*vy
+            )/
+            lengthSquared;
+
+        t=
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    t
+                )
+            );
+
+    }
+
+
+    var closestX=
+        x1+
+        vx*t;
+
+    var closestY=
+        y1+
+        vy*t;
+
+
+    var dx=
+        cx-closestX;
+
+    var dy=
+        cy-closestY;
+
+
+    return(
+        dx*dx+
+        dy*dy
+        <=
+        radius*radius
+    );
+
+}
+
+
+/*
+ برخورد مسیر موشک/گلوله با مستطیل دشمن
+*/
+
+function segmentCircleRectCollision(
+    x1,
+    y1,
+    x2,
+    y2,
+    radius,
+    rect
+){
+
+    var expanded={
+
+        x:rect.x,
+
+        y:rect.y,
+
+        width:
+            rect.width+
+            radius*2,
+
+        height:
+            rect.height+
+            radius*2
+
+    };
+
+
+    var steps=
+        Math.max(
+            4,
+            Math.ceil(
+                distance(
+                    x1,
+                    y1,
+                    x2,
+                    y2
+                )/
+                8
+            )
+        );
+
+
+    for(
+        var s=0;
+        s<=steps;
+        s++
+    ){
+
+        var t=
+            s/steps;
+
+
+        var x=
+            x1+
+            (x2-x1)*t;
+
+        var y=
+            y1+
+            (y2-y1)*t;
+
+
+        if(
+            pointRectCollision(
+                x,
+                y,
+                expanded
+            )
+        ){
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+/*
+ نقطه داخل مستطیل
+*/
+
+function pointRectCollision(
+    x,
+    y,
+    rect
+){
+
+    return(
+        x>=rect.x-rect.width/2 &&
+        x<=rect.x+rect.width/2 &&
+        y>=rect.y-rect.height/2 &&
+        y<=rect.y+rect.height/2
+    );
+
+}
+
+
+/* COLLISION */
 
 function checkCollisions(){
 
-/* گلوله معمولی */
+    /*
+     گلوله خودی → دشمن
+    */
 
-for(
-var i=bullets.length-1;
-i>=0;
-i--
-){
+    for(
+        var i=bullets.length-1;
+        i>=0;
+        i--
+    ){
 
-var bullet=bullets[i];
+        var bullet=
+            bullets[i];
 
-var hit=false;
+        var hit=false;
 
-for(
-var j=enemies.length-1;
-j>=0;
-j--
-){
 
-var enemy=enemies[j];
+        for(
+            var j=enemies.length-1;
+            j>=0;
+            j--
+        ){
 
-if(
-circleRectCollision(
-bullet.x,
-bullet.y,
-4,
-enemy
-)
-){
+            var enemy=
+                enemies[j];
 
-createExplosion(
-enemy.x,
-enemy.y
-);
 
-enemies.splice(j,1);
-bullets.splice(i,1);
+            if(
+                segmentCircleRectCollision(
+                    bullet.oldX,
+                    bullet.oldY,
+                    bullet.x,
+                    bullet.y,
+                    5,
+                    enemy
+                )
+            ){
 
-gameScore+=10;
-coins+=1;
+                createExplosion(
+                    enemy.x,
+                    enemy.y
+                );
 
-hit=true;
 
-break;
+                enemies.splice(
+                    j,
+                    1
+                );
+
+
+                bullets.splice(
+                    i,
+                    1
+                );
+
+
+                gameScore+=10;
+                coins+=1;
+
+
+                hit=true;
+
+                break;
+
+            }
+
+        }
+
+
+        if(hit)
+            continue;
+
+    }
+
+
+    /*
+     ==============================
+     برخورد با هواپیما
+     ==============================
+    */
+
+
+    var playerHitbox=
+        getPlayerHitbox();
+
+
+    /*
+     بمب → هواپیما
+    */
+
+    for(
+        var b=bombs.length-1;
+        b>=0;
+        b--
+    ){
+
+        var bomb=
+            bombs[b];
+
+
+        /*
+         برخورد مستقیم
+        */
+
+        var directHit=
+            circleRectCollision(
+                bomb.x,
+                bomb.y,
+                bomb.radius+4,
+                playerHitbox
+            );
+
+
+        /*
+         برخورد مسیر بین دو فریم
+        */
+
+        var sweptHit=
+            segmentCircleRectPlayerCollision(
+                bomb.oldX,
+                bomb.oldY,
+                bomb.x,
+                bomb.y,
+                bomb.radius+4,
+                playerHitbox
+            );
+
+
+        if(
+            directHit ||
+            sweptHit
+        ){
+
+            createPlayerExplosion();
+
+
+            bombs.splice(
+                b,
+                1
+            );
+
+
+            loseLife();
+
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+     گلوله دشمن → هواپیما
+    */
+
+    for(
+        var eb=enemyBullets.length-1;
+        eb>=0;
+        eb--
+    ){
+
+        var enemyBullet=
+            enemyBullets[eb];
+
+
+        /*
+         برخورد مستقیم
+        */
+
+        var bulletDirectHit=
+            circleRectCollision(
+                enemyBullet.x,
+                enemyBullet.y,
+                enemyBullet.radius+5,
+                playerHitbox
+            );
+
+
+        /*
+         برخورد مسیر
+        */
+
+        var bulletSweptHit=
+            segmentCircleRectPlayerCollision(
+                enemyBullet.oldX,
+                enemyBullet.oldY,
+                enemyBullet.x,
+                enemyBullet.y,
+                enemyBullet.radius+5,
+                playerHitbox
+            );
+
+
+        if(
+            bulletDirectHit ||
+            bulletSweptHit
+        ){
+
+            /*
+             انفجار دقیقاً روی هواپیما
+            */
+
+            createPlayerExplosion();
+
+
+            enemyBullets.splice(
+                eb,
+                1
+            );
+
+
+            loseLife();
+
+
+            return;
+
+        }
+
+    }
+
+
+    /*
+     دشمن → هواپیما
+    */
+
+    for(
+        var en=enemies.length-1;
+        en>=0;
+        en--
+    ){
+
+        var enemy2=
+            enemies[en];
+
+
+        var enemyHitbox={
+
+            x:enemy2.x,
+
+            y:enemy2.y,
+
+            width:
+                enemy2.width+10,
+
+            height:
+                enemy2.height+12
+
+        };
+
+
+        if(
+            rectsOverlap(
+                playerHitbox,
+                enemyHitbox
+            )
+        ){
+
+            createPlayerExplosion();
+
+
+            enemies.splice(
+                en,
+                1
+            );
+
+
+            loseLife();
+
+
+            return;
+
+        }
+
+    }
 
 }
 
-}
-
-if(hit)
-continue;
-
-}
 
 /*
-برخورد موشک اینجا انجام نمی‌شود.
-updateMissiles() خودش برخورد قطعی را انجام می‌دهد.
+ برخورد مسیر دایره با Hitbox هواپیما
 */
 
-/* بازیکن */
-
-var playerRadius=
-getPlayerCollisionRadius();
-
-/* بمب */
-
-for(
-var b=bombs.length-1;
-b>=0;
-b--
+function segmentCircleRectPlayerCollision(
+    x1,
+    y1,
+    x2,
+    y2,
+    radius,
+    rect
 ){
 
-if(
-distance(
-bombs[b].x,
-bombs[b].y,
-player.x,
-player.y
-)<
-bombs[b].radius+
-playerRadius
+    var expanded={
+
+        x:rect.x,
+
+        y:rect.y,
+
+        width:
+            rect.width+
+            radius*2,
+
+        height:
+            rect.height+
+            radius*2
+
+    };
+
+
+    var steps=
+        Math.max(
+            5,
+            Math.ceil(
+                distance(
+                    x1,
+                    y1,
+                    x2,
+                    y2
+                )/
+                6
+            )
+        );
+
+
+    for(
+        var s=0;
+        s<=steps;
+        s++
+    ){
+
+        var t=
+            s/steps;
+
+
+        var x=
+            x1+
+            (x2-x1)*t;
+
+        var y=
+            y1+
+            (y2-y1)*t;
+
+
+        if(
+            pointRectCollision(
+                x,
+                y,
+                expanded
+            )
+        ){
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
+
+}
+
+
+/*
+ دایره با مستطیل
+*/
+
+function circleRectCollision(
+    cx,
+    cy,
+    radius,
+    rect
 ){
 
-createExplosion(
-player.x,
-player.y
-);
+    var closestX=
+        Math.max(
+            rect.x-rect.width/2,
+            Math.min(
+                cx,
+                rect.x+rect.width/2
+            )
+        );
 
-bombs.splice(b,1);
 
-loseLife();
+    var closestY=
+        Math.max(
+            rect.y-rect.height/2,
+            Math.min(
+                cy,
+                rect.y+rect.height/2
+            )
+        );
 
-return;
+
+    var dx=
+        cx-closestX;
+
+    var dy=
+        cy-closestY;
+
+
+    return(
+        dx*dx+
+        dy*dy
+        <=
+        radius*radius
+    );
 
 }
 
-}
 
-/* گلوله دشمن */
+/* DISTANCE */
 
-for(
-var eb=enemyBullets.length-1;
-eb>=0;
-eb--
+function distance(
+    x1,
+    y1,
+    x2,
+    y2
 ){
 
-if(
-distance(
-enemyBullets[eb].x,
-enemyBullets[eb].y,
-player.x,
-player.y
-)<
-enemyBullets[eb].radius+
-playerRadius
-){
+    var dx=x1-x2;
+    var dy=y1-y2;
 
-createExplosion(
-player.x,
-player.y
-);
-
-enemyBullets.splice(eb,1);
-
-loseLife();
-
-return;
+    return Math.sqrt(
+        dx*dx+
+        dy*dy
+    );
 
 }
 
-}
-
-/* دشمن */
-
-for(
-var en=enemies.length-1;
-en>=0;
-en--
-){
-
-var enemyCollisionRadius=
-Math.min(
-enemies[en].width,
-enemies[en].height
-)*.45;
-
-if(
-distance(
-enemies[en].x,
-enemies[en].y,
-player.x,
-player.y
-)<
-enemyCollisionRadius+
-playerRadius
-){
-
-createExplosion(
-player.x,
-player.y
-);
-
-enemies.splice(en,1);
-
-loseLife();
-
-return;
-
-}
-
-}
-
-}
 
 /* LOSE LIFE */
 
 function loseLife(){
 
-if(!gameRunning)
-return;
+    if(!gameRunning)
+        return;
 
-gameLives--;
 
-if(gameLives<=0){
+    gameLives--;
 
-endGame();
 
-return;
+    /*
+     جان صفر
+    */
+
+    if(gameLives<=0){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    /*
+     بعد از برخورد هواپیما کمی
+     به پایین برمی‌گردد.
+    */
+
+    player.y=
+        canvas.clientHeight-100;
+
+    player.targetY=
+        player.y;
+
+
+    /*
+     کمی از خطرات پاک می‌شود.
+    */
+
+    bombs.splice(
+        0,
+        Math.min(
+            3,
+            bombs.length
+        )
+    );
+
+
+    enemyBullets.splice(
+        0,
+        Math.min(
+            3,
+            enemyBullets.length
+        )
+    );
+
+
+    /*
+     انفجار اضافی برای واضح بودن برخورد
+    */
+
+    createExplosion(
+        player.x,
+        player.y
+    );
+
+
+    updateGameUI();
 
 }
 
-player.y=
-canvas.clientHeight-100;
-
-player.targetY=
-player.y;
-
-bombs.splice(
-0,
-Math.min(2,bombs.length)
-);
-
-enemyBullets.splice(
-0,
-Math.min(2,enemyBullets.length)
-);
-
-updateGameUI();
-
-}
 
 /* END */
 
 function endGame(){
 
-gameRunning=false;
-gamePaused=false;
+    gameRunning=false;
+    gamePaused=false;
 
-if(animationId!==null)
-cancelAnimationFrame(animationId);
 
-animationId=null;
+    if(animationId!==null){
 
-totalScore+=gameScore;
+        cancelAnimationFrame(
+            animationId
+        );
 
-document.getElementById(
-"finalScore"
-).textContent=gameScore;
+    }
 
-document.getElementById(
-"finalCoins"
-).textContent=coins;
 
-document.getElementById(
-"gameOverOverlay"
-).classList.remove("hidden");
+    animationId=null;
 
-document.getElementById(
-"missileButton"
-).disabled=true;
 
-updateControlButtons();
-updateStats();
+    totalScore+=gameScore;
+
+
+    document.getElementById(
+        "finalScore"
+    ).textContent=
+        gameScore;
+
+
+    document.getElementById(
+        "finalCoins"
+    ).textContent=
+        coins;
+
+
+    document
+        .getElementById(
+            "gameOverOverlay"
+        )
+        .classList.remove("hidden");
+
+
+    document.getElementById(
+        "missileButton"
+    ).disabled=true;
+
+
+    updateControlButtons();
+    updateStats();
 
 }
+
 
 /* REWARDED AD */
 
 function watchLifeAd(){
 
-if(!rewardedController){
+    if(!rewardedController){
 
-alert(
-"تبلیغ AdsGram هنوز تنظیم نشده است. بعد از قرار دادن Block ID این قسمت فعال می‌شود."
-);
+        alert(
+            "تبلیغ AdsGram هنوز تنظیم نشده است. بعد از قرار دادن Block ID این قسمت فعال می‌شود."
+        );
 
-return;
+        return;
+
+    }
+
+
+    var savedElapsed=
+        elapsedSeconds;
+
+
+    rewardedController
+        .show()
+
+        .then(function(){
+
+            adCount++;
+
+            gameLives=3;
+
+            gameRunning=true;
+            gamePaused=false;
+
+
+            document
+                .getElementById(
+                    "gameOverOverlay"
+                )
+                .classList.add("hidden");
+
+
+            var now=
+                performance.now();
+
+
+            gameStartTime=
+                now-
+                savedElapsed*1000;
+
+
+            lastFrameTime=now;
+
+
+            updateGameUI();
+            updateControlButtons();
+            updateStats();
+
+
+            animationId=
+                requestAnimationFrame(
+                    gameLoop
+                );
+
+        })
+
+        .catch(function(error){
+
+            gamePaused=false;
+            gameRunning=false;
+
+
+            updateControlButtons();
+
+
+            console.log(
+                "Rewarded ad error:",
+                error
+            );
+
+
+            alert(
+                "تبلیغ در دسترس نبود. دوباره تلاش کن."
+            );
+
+        });
 
 }
 
-var savedElapsed=
-elapsedSeconds;
-
-rewardedController
-.show()
-
-.then(function(){
-
-adCount++;
-
-gameLives=3;
-
-gameRunning=true;
-gamePaused=false;
-
-document
-.getElementById("gameOverOverlay")
-.classList.add("hidden");
-
-var now=performance.now();
-
-gameStartTime=
-now-
-savedElapsed*1000;
-
-lastFrameTime=now;
-
-updateGameUI();
-updateControlButtons();
-updateStats();
-
-animationId=
-requestAnimationFrame(gameLoop);
-
-})
-
-.catch(function(error){
-
-gamePaused=false;
-gameRunning=false;
-
-updateControlButtons();
-
-console.log(
-"Rewarded ad error:",
-error
-);
-
-alert(
-"تبلیغ در دسترس نبود. دوباره تلاش کن."
-);
-
-});
-
-}
 
 /* FOUR MINUTE AD */
 
 function showFourMinuteAd(){
 
-if(!gameRunning)
-return;
+    if(!gameRunning)
+        return;
 
-gamePaused=true;
 
-pauseStartTime=
-performance.now();
+    gamePaused=true;
 
-if(animationId!==null)
-cancelAnimationFrame(animationId);
+    pauseStartTime=
+        performance.now();
 
-animationId=null;
 
-updateControlButtons();
+    if(animationId!==null){
 
-if(!interstitialController){
+        cancelAnimationFrame(
+            animationId
+        );
 
-resumeGame();
+    }
 
-return;
+
+    animationId=null;
+
+
+    updateControlButtons();
+
+
+    if(!interstitialController){
+
+        resumeGame();
+
+        return;
+
+    }
+
+
+    interstitialController
+        .show()
+
+        .then(function(){
+
+            adCount++;
+
+            resumeGame();
+
+            updateStats();
+
+        })
+
+        .catch(function(error){
+
+            console.log(
+                "Interstitial error:",
+                error
+            );
+
+            resumeGame();
+
+        });
 
 }
 
-interstitialController
-.show()
-
-.then(function(){
-
-adCount++;
-
-resumeGame();
-
-updateStats();
-
-})
-
-.catch(function(error){
-
-console.log(
-"Interstitial error:",
-error
-);
-
-resumeGame();
-
-});
-
-}
 
 /* GAME UI */
 
 function updateGameUI(){
 
-var lives=
-document.getElementById(
-"gameLives"
-);
+    var lives=
+        document.getElementById(
+            "gameLives"
+        );
 
-var score=
-document.getElementById(
-"gameScore"
-);
+    var score=
+        document.getElementById(
+            "gameScore"
+        );
 
-var gameCoins=
-document.getElementById(
-"gameCoins"
-);
+    var gameCoins=
+        document.getElementById(
+            "gameCoins"
+        );
 
-var time=
-document.getElementById(
-"gameTime"
-);
+    var time=
+        document.getElementById(
+            "gameTime"
+        );
 
-var missileCount=
-document.getElementById(
-"missileCount"
-);
+    var missileCount=
+        document.getElementById(
+            "missileCount"
+        );
 
-var missileButton=
-document.getElementById(
-"missileButton"
-);
+    var missileButton=
+        document.getElementById(
+            "missileButton"
+        );
 
-if(lives)
-lives.textContent=gameLives;
 
-if(score)
-score.textContent=gameScore;
+    if(lives)
+        lives.textContent=
+            gameLives;
 
-if(gameCoins)
-gameCoins.textContent=coins;
 
-if(time){
+    if(score)
+        score.textContent=
+            gameScore;
 
-var minutes=
-Math.floor(
-elapsedSeconds/60
-);
 
-var seconds=
-Math.floor(
-elapsedSeconds%60
-);
+    if(gameCoins)
+        gameCoins.textContent=
+            coins;
 
-time.textContent=
-minutes+
-":"+
-(seconds<10?"0"+seconds:seconds);
+
+    if(time){
+
+        var minutes=
+            Math.floor(
+                elapsedSeconds/60
+            );
+
+
+        var seconds=
+            Math.floor(
+                elapsedSeconds%60
+            );
+
+
+        time.textContent=
+            minutes+
+            ":"+
+            (
+                seconds<10
+                ?
+                "0"+seconds
+                :
+                seconds
+            );
+
+    }
+
+
+    if(missileCount)
+        missileCount.textContent=
+            missiles;
+
+
+    if(missileButton){
+
+        missileButton.disabled=
+            !gameRunning ||
+            gamePaused ||
+            missiles<=0;
+
+    }
 
 }
 
-if(missileCount)
-missileCount.textContent=missiles;
-
-if(missileButton){
-
-missileButton.disabled=
-!gameRunning||
-gamePaused||
-missiles<=0;
-
-}
-
-}
 
 /* DRAW GAME */
 
 function drawGame(){
 
-if(!canvas||!ctx)
-return;
+    if(!canvas || !ctx)
+        return;
 
-var width=
-canvas.clientWidth;
 
-var height=
-canvas.clientHeight;
+    var width=
+        canvas.clientWidth;
 
-var skyGradient=
-ctx.createLinearGradient(
-0,
-0,
-0,
-height
-);
+    var height=
+        canvas.clientHeight;
 
-skyGradient.addColorStop(
-0,
-"#020914"
-);
 
-skyGradient.addColorStop(
-.65,
-"#061625"
-);
+    var skyGradient=
+        ctx.createLinearGradient(
+            0,
+            0,
+            0,
+            height
+        );
 
-skyGradient.addColorStop(
-1,
-"#0a2018"
-);
 
-ctx.fillStyle=skyGradient;
+    skyGradient.addColorStop(
+        0,
+        "#020914"
+    );
 
-ctx.fillRect(
-0,
-0,
-width,
-height
-);
+    skyGradient.addColorStop(
+        .65,
+        "#061625"
+    );
 
-drawStars(
-width,
-height
-);
+    skyGradient.addColorStop(
+        1,
+        "#0a2018"
+    );
 
-var horizonY=
-height*.82;
 
-var horizonGradient=
-ctx.createLinearGradient(
-0,
-horizonY-35,
-0,
-horizonY+20
-);
+    ctx.fillStyle=
+        skyGradient;
 
-horizonGradient.addColorStop(
-0,
-"rgba(30,70,45,0)"
-);
 
-horizonGradient.addColorStop(
-1,
-"rgba(30,70,45,.35)"
-);
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
 
-ctx.fillStyle=horizonGradient;
 
-ctx.fillRect(
-0,
-horizonY-35,
-width,
-55
-);
+    drawStars(
+        width,
+        height
+    );
 
-/* بمب */
 
-for(
-var i=0;
-i<bombs.length;
-i++
-)
-drawBomb(bombs[i]);
+    var horizonY=
+        height*.82;
 
-/* دشمن */
 
-for(
-var j=0;
-j<enemies.length;
-j++
-)
-drawEnemy(enemies[j]);
+    var horizonGradient=
+        ctx.createLinearGradient(
+            0,
+            horizonY-35,
+            0,
+            horizonY+20
+        );
 
-/* گلوله دشمن */
 
-for(
-var k=0;
-k<enemyBullets.length;
-k++
-)
-drawEnemyBullet(
-enemyBullets[k]
-);
+    horizonGradient.addColorStop(
+        0,
+        "rgba(30,70,45,0)"
+    );
 
-/* گلوله خودی */
+    horizonGradient.addColorStop(
+        1,
+        "rgba(30,70,45,.35)"
+    );
 
-for(
-var q=0;
-q<bullets.length;
-q++
-)
-drawBullet(
-bullets[q]
-);
 
-/* موشک */
+    ctx.fillStyle=
+        horizonGradient;
 
-for(
-var r=0;
-r<specialMissiles.length;
-r++
-)
-drawMissile(
-specialMissiles[r]
-);
 
-/*
-اول هواپیما رسم می‌شود،
-بعد انفجار روی آن رسم می‌شود
-تا انفجار کاملاً دیده شود.
-*/
+    ctx.fillRect(
+        0,
+        horizonY-35,
+        width,
+        55
+    );
 
-drawPlayerPlane(
-player.x,
-player.y
-);
 
-/* انفجارها */
+    /*
+     بمب
+    */
 
-for(
-var x=0;
-x<explosions.length;
-x++
-)
-drawExplosion(
-explosions[x]
-);
+    for(
+        var i=0;
+        i<bombs.length;
+        i++
+    ){
+
+        drawBomb(
+            bombs[i]
+        );
+
+    }
+
+
+    /*
+     دشمن
+    */
+
+    for(
+        var j=0;
+        j<enemies.length;
+        j++
+    ){
+
+        drawEnemy(
+            enemies[j]
+        );
+
+    }
+
+
+    /*
+     گلوله دشمن
+    */
+
+    for(
+        var k=0;
+        k<enemyBullets.length;
+        k++
+    ){
+
+        drawEnemyBullet(
+            enemyBullets[k]
+        );
+
+    }
+
+
+    /*
+     گلوله خودی
+    */
+
+    for(
+        var q=0;
+        q<bullets.length;
+        q++
+    ){
+
+        drawBullet(
+            bullets[q]
+        );
+
+    }
+
+
+    /*
+     موشک
+    */
+
+    for(
+        var r=0;
+        r<specialMissiles.length;
+        r++
+    ){
+
+        drawMissile(
+            specialMissiles[r]
+        );
+
+    }
+
+
+    /*
+     هواپیما
+    */
+
+    drawPlayerPlane(
+        player.x,
+        player.y
+    );
+
+
+    /*
+     انفجارها در آخر رسم می‌شوند
+     تا روی هواپیما دیده شوند.
+    */
+
+    for(
+        var x=0;
+        x<explosions.length;
+        x++
+    ){
+
+        drawExplosion(
+            explosions[x]
+        );
+
+    }
 
 }
+
 
 /* STARS */
 
-function drawStars(width,height){
-
-ctx.fillStyle=
-"rgba(255,255,255,.75)";
-
-var count=
-Math.floor(
-width*height/7000
-);
-
-for(
-var i=0;
-i<count;
-i++
+function drawStars(
+    width,
+    height
 ){
 
-var x=
-(i*83)%width;
+    ctx.fillStyle=
+        "rgba(255,255,255,.75)";
 
-var y=
-(
-i*137+
-elapsedSeconds*35
-)%height;
 
-var size=
-i%5===0?2:1;
+    var count=
+        Math.floor(
+            width*height/7000
+        );
 
-ctx.fillRect(
-x,
-y,
-size,
-size
-);
+
+    for(
+        var i=0;
+        i<count;
+        i++
+    ){
+
+        var x=
+            (i*83)%width;
+
+
+        var y=
+            (
+                i*137+
+                elapsedSeconds*35
+            )%
+            height;
+
+
+        var size=
+            i%5===0
+            ?
+            2
+            :
+            1;
+
+
+        ctx.fillRect(
+            x,
+            y,
+            size,
+            size
+        );
+
+    }
 
 }
 
-}
 
 /* PLAYER */
 
-function drawPlayerPlane(x,y){
+function drawPlayerPlane(
+    x,
+    y
+){
 
-ctx.save();
+    ctx.save();
 
-ctx.translate(x,y);
 
-ctx.scale(
-PLAYER_SCALE,
-PLAYER_SCALE
-);
+    ctx.translate(
+        x,
+        y
+    );
 
-/* آتش */
 
-ctx.beginPath();
+    ctx.scale(
+        PLAYER_SCALE,
+        PLAYER_SCALE
+    );
 
-ctx.moveTo(-5,20);
 
-ctx.lineTo(
-0,
-32+
-Math.sin(
-performance.now()/80
-)*3
-);
+    /*
+     آتش
+    */
 
-ctx.lineTo(5,20);
+    ctx.beginPath();
 
-ctx.closePath();
+    ctx.moveTo(
+        -5,
+        20
+    );
 
-ctx.fillStyle="#ff8a00";
-ctx.fill();
+    ctx.lineTo(
+        0,
+        32+
+        Math.sin(
+            performance.now()/80
+        )*3
+    );
 
-/* بال چپ */
+    ctx.lineTo(
+        5,
+        20
+    );
 
-ctx.beginPath();
+    ctx.closePath();
 
-ctx.moveTo(-6,-4);
-ctx.lineTo(-24,15);
-ctx.lineTo(-8,11);
 
-ctx.closePath();
+    ctx.fillStyle=
+        "#ff8a00";
 
-ctx.fillStyle="#cbd5e1";
-ctx.fill();
+    ctx.fill();
 
-/* بال راست */
 
-ctx.beginPath();
+    /*
+     بال چپ
+    */
 
-ctx.moveTo(6,-4);
-ctx.lineTo(24,15);
-ctx.lineTo(8,11);
+    ctx.beginPath();
 
-ctx.closePath();
+    ctx.moveTo(
+        -6,
+        -4
+    );
 
-ctx.fill();
+    ctx.lineTo(
+        -24,
+        15
+    );
 
-/* بدنه */
+    ctx.lineTo(
+        -8,
+        11
+    );
 
-ctx.beginPath();
+    ctx.closePath();
 
-ctx.moveTo(0,-27);
-ctx.lineTo(8,8);
-ctx.lineTo(6,22);
-ctx.lineTo(0,27);
-ctx.lineTo(-6,22);
-ctx.lineTo(-8,8);
 
-ctx.closePath();
+    ctx.fillStyle=
+        "#cbd5e1";
 
-ctx.fillStyle="#e5e7eb";
-ctx.fill();
+    ctx.fill();
 
-/* شیشه */
 
-ctx.beginPath();
+    /*
+     بال راست
+    */
 
-ctx.moveTo(0,-21);
-ctx.lineTo(5,-8);
-ctx.lineTo(0,-4);
-ctx.lineTo(-5,-8);
+    ctx.beginPath();
 
-ctx.closePath();
+    ctx.moveTo(
+        6,
+        -4
+    );
 
-ctx.fillStyle="#294f70";
-ctx.fill();
+    ctx.lineTo(
+        24,
+        15
+    );
 
-/* دم چپ */
+    ctx.lineTo(
+        8,
+        11
+    );
 
-ctx.beginPath();
+    ctx.closePath();
 
-ctx.moveTo(-4,14);
-ctx.lineTo(-12,25);
-ctx.lineTo(-3,22);
 
-ctx.closePath();
+    ctx.fill();
 
-ctx.fillStyle="#9ca3af";
-ctx.fill();
 
-/* دم راست */
+    /*
+     بدنه
+    */
 
-ctx.beginPath();
+    ctx.beginPath();
 
-ctx.moveTo(4,14);
-ctx.lineTo(12,25);
-ctx.lineTo(3,22);
+    ctx.moveTo(
+        0,
+        -27
+    );
 
-ctx.closePath();
+    ctx.lineTo(
+        8,
+        8
+    );
 
-ctx.fill();
+    ctx.lineTo(
+        6,
+        22
+    );
 
-ctx.restore();
+    ctx.lineTo(
+        0,
+        27
+    );
+
+    ctx.lineTo(
+        -6,
+        22
+    );
+
+    ctx.lineTo(
+        -8,
+        8
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#e5e7eb";
+
+    ctx.fill();
+
+
+    /*
+     شیشه
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -21
+    );
+
+    ctx.lineTo(
+        5,
+        -8
+    );
+
+    ctx.lineTo(
+        0,
+        -4
+    );
+
+    ctx.lineTo(
+        -5,
+        -8
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#294f70";
+
+    ctx.fill();
+
+
+    /*
+     دم چپ
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -4,
+        14
+    );
+
+    ctx.lineTo(
+        -12,
+        25
+    );
+
+    ctx.lineTo(
+        -3,
+        22
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#9ca3af";
+
+    ctx.fill();
+
+
+    /*
+     دم راست
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        4,
+        14
+    );
+
+    ctx.lineTo(
+        12,
+        25
+    );
+
+    ctx.lineTo(
+        3,
+        22
+    );
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    ctx.restore();
 
 }
+
 
 /* BOMB */
 
-function drawBomb(bomb){
+function drawBomb(
+    bomb
+){
 
-ctx.save();
+    ctx.save();
 
-ctx.translate(
-bomb.x,
-bomb.y
-);
 
-ctx.beginPath();
+    ctx.translate(
+        bomb.x,
+        bomb.y
+    );
 
-ctx.arc(
-0,
-0,
-bomb.radius,
-0,
-Math.PI*2
-);
 
-ctx.fillStyle="#252525";
-ctx.fill();
+    ctx.beginPath();
 
-ctx.beginPath();
+    ctx.arc(
+        0,
+        0,
+        bomb.radius,
+        0,
+        Math.PI*2
+    );
 
-ctx.moveTo(0,-9);
-ctx.lineTo(6,-16);
 
-ctx.strokeStyle="#b8b8b8";
-ctx.lineWidth=2;
+    ctx.fillStyle=
+        "#252525";
 
-ctx.stroke();
+    ctx.fill();
 
-ctx.beginPath();
 
-ctx.arc(
-7,
--17,
-2.5,
-0,
-Math.PI*2
-);
+    ctx.beginPath();
 
-ctx.fillStyle="#ff4d4d";
-ctx.fill();
+    ctx.moveTo(
+        0,
+        -9
+    );
 
-ctx.restore();
+    ctx.lineTo(
+        6,
+        -16
+    );
+
+
+    ctx.strokeStyle=
+        "#b8b8b8";
+
+    ctx.lineWidth=2;
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        7,
+        -17,
+        2.5,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle=
+        "#ff4d4d";
+
+    ctx.fill();
+
+
+    ctx.restore();
 
 }
+
 
 /* ENEMY */
 
-function drawEnemy(enemy){
+function drawEnemy(
+    enemy
+){
 
-ctx.save();
+    ctx.save();
 
-ctx.translate(
-enemy.x,
-enemy.y
-);
 
-ctx.beginPath();
+    ctx.translate(
+        enemy.x,
+        enemy.y
+    );
 
-ctx.moveTo(-5,3);
-ctx.lineTo(-16,12);
-ctx.lineTo(-5,9);
 
-ctx.closePath();
+    ctx.beginPath();
 
-ctx.fillStyle="#c13b3b";
-ctx.fill();
+    ctx.moveTo(
+        -5,
+        3
+    );
 
-ctx.beginPath();
+    ctx.lineTo(
+        -16,
+        12
+    );
 
-ctx.moveTo(5,3);
-ctx.lineTo(16,12);
-ctx.lineTo(5,9);
+    ctx.lineTo(
+        -5,
+        9
+    );
 
-ctx.closePath();
+    ctx.closePath();
 
-ctx.fill();
 
-ctx.beginPath();
+    ctx.fillStyle=
+        "#c13b3b";
 
-ctx.moveTo(0,-19);
-ctx.lineTo(5,7);
-ctx.lineTo(3.5,18);
-ctx.lineTo(0,21);
-ctx.lineTo(-3.5,18);
-ctx.lineTo(-5,7);
+    ctx.fill();
 
-ctx.closePath();
 
-ctx.fillStyle="#8f2020";
-ctx.fill();
+    ctx.beginPath();
 
-ctx.beginPath();
+    ctx.moveTo(
+        5,
+        3
+    );
 
-ctx.arc(
-0,
--10,
-4,
-0,
-Math.PI*2
-);
+    ctx.lineTo(
+        16,
+        12
+    );
 
-ctx.fillStyle="#351c1c";
-ctx.fill();
+    ctx.lineTo(
+        5,
+        9
+    );
 
-ctx.restore();
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -19
+    );
+
+    ctx.lineTo(
+        5,
+        7
+    );
+
+    ctx.lineTo(
+        3.5,
+        18
+    );
+
+    ctx.lineTo(
+        0,
+        21
+    );
+
+    ctx.lineTo(
+        -3.5,
+        18
+    );
+
+    ctx.lineTo(
+        -5,
+        7
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#8f2020";
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -10,
+        4,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle=
+        "#351c1c";
+
+    ctx.fill();
+
+
+    ctx.restore();
 
 }
+
 
 /* BULLET */
 
-function drawBullet(bullet){
+function drawBullet(
+    bullet
+){
 
-ctx.fillStyle="#65e6ff";
+    /*
+     گلوله خودی روشن‌تر و واضح‌تر
+    */
 
-ctx.fillRect(
-bullet.x-2,
-bullet.y-7,
-4,
-14
-);
+    ctx.save();
+
+
+    ctx.shadowBlur=8;
+
+    ctx.shadowColor=
+        "#65e6ff";
+
+
+    ctx.fillStyle=
+        "#65e6ff";
+
+
+    ctx.fillRect(
+        bullet.x-2,
+        bullet.y-9,
+        4,
+        18
+    );
+
+
+    ctx.restore();
 
 }
+
 
 /* MISSILE */
 
-function drawMissile(missile){
-
-ctx.save();
-
-/* رد آتش */
-
-if(
-missile.trail&&
-missile.trail.length
+function drawMissile(
+    missile
 ){
 
-for(
-var i=0;
-i<missile.trail.length;
-i++
-){
+    ctx.save();
 
-var p=missile.trail[i];
 
-var progress=
-(i+1)/
-missile.trail.length;
+    /*
+     رد آتش
+    */
 
-ctx.globalAlpha=
-progress*.5;
+    if(
+        missile.trail &&
+        missile.trail.length
+    ){
 
-ctx.fillStyle="#ff6b18";
+        for(
+            var i=0;
+            i<missile.trail.length;
+            i++
+        ){
 
-ctx.beginPath();
+            var p=
+                missile.trail[i];
 
-ctx.arc(
-p.x,
-p.y,
-2+progress*3,
-0,
-Math.PI*2
-);
 
-ctx.fill();
+            var progress=
+                (i+1)/
+                missile.trail.length;
+
+
+            ctx.globalAlpha=
+                progress*.5;
+
+
+            ctx.fillStyle=
+                "#ff6b18";
+
+
+            ctx.beginPath();
+
+
+            ctx.arc(
+                p.x,
+                p.y,
+                2+
+                progress*3,
+                0,
+                Math.PI*2
+            );
+
+
+            ctx.fill();
+
+        }
+
+    }
+
+
+    ctx.globalAlpha=1;
+
+
+    var angle=
+        Math.atan2(
+            missile.dirY,
+            missile.dirX
+        );
+
+
+    ctx.translate(
+        missile.x,
+        missile.y
+    );
+
+
+    ctx.rotate(
+        angle+
+        Math.PI/2
+    );
+
+
+    /*
+     بدنه
+    */
+
+    ctx.fillStyle=
+        "#e5e7eb";
+
+
+    ctx.fillRect(
+        -4,
+        -13,
+        8,
+        25
+    );
+
+
+    /*
+     نوک
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -4,
+        -13
+    );
+
+    ctx.lineTo(
+        0,
+        -22
+    );
+
+    ctx.lineTo(
+        4,
+        -13
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#ffffff";
+
+    ctx.fill();
+
+
+    /*
+     بالچه چپ
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -4,
+        4
+    );
+
+    ctx.lineTo(
+        -10,
+        11
+    );
+
+    ctx.lineTo(
+        -4,
+        10
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#9ca3af";
+
+    ctx.fill();
+
+
+    /*
+     بالچه راست
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        4,
+        4
+    );
+
+    ctx.lineTo(
+        10,
+        11
+    );
+
+    ctx.lineTo(
+        4,
+        10
+    );
+
+    ctx.closePath();
+
+
+    ctx.fill();
+
+
+    /*
+     آتش
+    */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -3,
+        12
+    );
+
+    ctx.lineTo(
+        0,
+        23+
+        Math.sin(
+            performance.now()/50
+        )*3
+    );
+
+    ctx.lineTo(
+        3,
+        12
+    );
+
+    ctx.closePath();
+
+
+    ctx.fillStyle=
+        "#ff5a1f";
+
+    ctx.fill();
+
+
+    ctx.restore();
 
 }
 
-}
-
-ctx.globalAlpha=1;
-
-var angle=
-Math.atan2(
-missile.dirY,
-missile.dirX
-);
-
-ctx.translate(
-missile.x,
-missile.y
-);
-
-ctx.rotate(
-angle+
-Math.PI/2
-);
-
-/* بدنه */
-
-ctx.fillStyle="#e5e7eb";
-
-ctx.fillRect(
--4,
--13,
-8,
-25
-);
-
-/* نوک */
-
-ctx.beginPath();
-
-ctx.moveTo(-4,-13);
-ctx.lineTo(0,-22);
-ctx.lineTo(4,-13);
-
-ctx.closePath();
-
-ctx.fillStyle="#ffffff";
-ctx.fill();
-
-/* بالچه چپ */
-
-ctx.beginPath();
-
-ctx.moveTo(-4,4);
-ctx.lineTo(-10,11);
-ctx.lineTo(-4,10);
-
-ctx.closePath();
-
-ctx.fillStyle="#9ca3af";
-ctx.fill();
-
-/* بالچه راست */
-
-ctx.beginPath();
-
-ctx.moveTo(4,4);
-ctx.lineTo(10,11);
-ctx.lineTo(4,10);
-
-ctx.closePath();
-
-ctx.fill();
-
-/* آتش */
-
-ctx.beginPath();
-
-ctx.moveTo(-3,12);
-
-ctx.lineTo(
-0,
-23+
-Math.sin(
-performance.now()/50
-)*3
-);
-
-ctx.lineTo(3,12);
-
-ctx.closePath();
-
-ctx.fillStyle="#ff5a1f";
-ctx.fill();
-
-ctx.restore();
-
-}
 
 /* ENEMY BULLET */
 
-function drawEnemyBullet(bullet){
+function drawEnemyBullet(
+    bullet
+){
 
-ctx.beginPath();
+    ctx.save();
 
-ctx.arc(
-bullet.x,
-bullet.y,
-bullet.radius,
-0,
-Math.PI*2
-);
 
-ctx.fillStyle="#ff5252";
-ctx.fill();
+    ctx.shadowBlur=10;
+
+    ctx.shadowColor=
+        "#ff3030";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        bullet.x,
+        bullet.y,
+        bullet.radius+1,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle=
+        "#ff5252";
+
+    ctx.fill();
+
+
+    ctx.restore();
 
 }
+
 
 /* EXPLOSION */
 
-function drawExplosion(exp){
-
-var maxLife=
-exp.type==="missile"?
-.75:
-.45;
-
-var alpha=
-Math.max(
-0,
-exp.life/maxLife
-);
-
-ctx.save();
-
-ctx.globalAlpha=alpha;
-
-/* هاله بیرونی */
-
-ctx.beginPath();
-
-ctx.arc(
-exp.x,
-exp.y,
-exp.radius,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle=
-exp.type==="missile"?
-"#ff4a00":
-"#ffb020";
-
-ctx.fill();
-
-/* حلقه نارنجی */
-
-if(exp.type==="missile"){
-
-ctx.beginPath();
-
-ctx.arc(
-exp.x,
-exp.y,
-exp.radius*.72,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle="#ffb020";
-
-ctx.fill();
-
-}
-
-/* مرکز سفید */
-
-ctx.beginPath();
-
-ctx.arc(
-exp.x,
-exp.y,
-exp.radius*.40,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle="#fff3a0";
-
-ctx.fill();
-
-ctx.restore();
-
-}
-
-/* COLLISION */
-
-function circleRectCollision(
-cx,
-cy,
-radius,
-rect
+function drawExplosion(
+    exp
 ){
 
-var closestX=
-Math.max(
-rect.x-rect.width/2,
-Math.min(
-cx,
-rect.x+rect.width/2
-)
-);
+    var maxLife=
+        exp.type==="missile"
+        ?
+        .75
+        :
+        (
+            exp.type==="player"
+            ?
+            .8
+            :
+            .45
+        );
 
-var closestY=
-Math.max(
-rect.y-rect.height/2,
-Math.min(
-cy,
-rect.y+rect.height/2
-)
-);
 
-var dx=
-cx-closestX;
+    var alpha=
+        Math.max(
+            0,
+            exp.life/maxLife
+        );
 
-var dy=
-cy-closestY;
 
-return
-dx*dx+
-dy*dy<
-radius*radius;
+    ctx.save();
+
+
+    ctx.globalAlpha=
+        alpha;
+
+
+    /*
+     هاله بیرونی
+    */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        exp.x,
+        exp.y,
+        exp.radius,
+        0,
+        Math.PI*2
+    );
+
+
+    if(exp.type==="player"){
+
+        ctx.fillStyle=
+            "#ff2800";
+
+    }else if(
+        exp.type==="missile"
+    ){
+
+        ctx.fillStyle=
+            "#ff4a00";
+
+    }else{
+
+        ctx.fillStyle=
+            "#ffb020";
+
+    }
+
+
+    ctx.fill();
+
+
+    /*
+     حلقه نارنجی
+    */
+
+    if(
+        exp.type==="missile" ||
+        exp.type==="player"
+    ){
+
+        ctx.beginPath();
+
+        ctx.arc(
+            exp.x,
+            exp.y,
+            exp.radius*.72,
+            0,
+            Math.PI*2
+        );
+
+
+        ctx.fillStyle=
+            "#ffb020";
+
+        ctx.fill();
+
+    }
+
+
+    /*
+     مرکز سفید
+    */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        exp.x,
+        exp.y,
+        exp.radius*.40,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fillStyle=
+        "#fff3a0";
+
+    ctx.fill();
+
+
+    ctx.restore();
 
 }
 
-/* DISTANCE */
-
-function distance(
-x1,
-y1,
-x2,
-y2
-){
-
-var dx=x1-x2;
-var dy=y1-y2;
-
-return Math.sqrt(
-dx*dx+dy*dy
-);
-
-}
 
 /* PLAYER MOVEMENT */
 
-function movePlayerFromEvent(event){
-
-if(
-!gameRunning||
-gamePaused||
-!canvas
-)
-return;
-
-var rect=
-canvas.getBoundingClientRect();
-
-var clientX,clientY;
-
-if(
-event.touches&&
-event.touches.length
+function movePlayerFromEvent(
+    event
 ){
 
-clientX=
-event.touches[0].clientX;
+    if(
+        !gameRunning ||
+        gamePaused ||
+        !canvas
+    ){
 
-clientY=
-event.touches[0].clientY;
+        return;
 
-}else if(
-event.changedTouches&&
-event.changedTouches.length
-){
+    }
 
-clientX=
-event.changedTouches[0].clientX;
 
-clientY=
-event.changedTouches[0].clientY;
+    var rect=
+        canvas.getBoundingClientRect();
 
-}else{
 
-clientX=event.clientX;
-clientY=event.clientY;
+    var clientX,
+        clientY;
+
+
+    if(
+        event.touches &&
+        event.touches.length
+    ){
+
+        clientX=
+            event.touches[0].clientX;
+
+        clientY=
+            event.touches[0].clientY;
+
+    }else if(
+        event.changedTouches &&
+        event.changedTouches.length
+    ){
+
+        clientX=
+            event.changedTouches[0].clientX;
+
+        clientY=
+            event.changedTouches[0].clientY;
+
+    }else{
+
+        clientX=
+            event.clientX;
+
+        clientY=
+            event.clientY;
+
+    }
+
+
+    if(
+        typeof clientX!=="number" ||
+        typeof clientY!=="number"
+    ){
+
+        return;
+
+    }
+
+
+    var x=
+        clientX-rect.left;
+
+    var y=
+        clientY-rect.top;
+
+
+    player.targetX=
+        Math.max(
+            player.width/2,
+            Math.min(
+                rect.width-
+                player.width/2,
+                x
+            )
+        );
+
+
+    player.targetY=
+        Math.max(
+            rect.height*.42,
+            Math.min(
+                rect.height*.80,
+                y
+            )
+        );
 
 }
 
-if(
-typeof clientX!=="number"||
-typeof clientY!=="number"
-)
-return;
-
-var x=
-clientX-rect.left;
-
-var y=
-clientY-rect.top;
-
-player.targetX=
-Math.max(
-player.width/2,
-Math.min(
-rect.width-player.width/2,
-x
-)
-);
-
-player.targetY=
-Math.max(
-rect.height*.42,
-Math.min(
-rect.height*.80,
-y
-)
-);
-
-}
 
 /* TOUCH + MOUSE */
 
 if(canvas){
 
-canvas.addEventListener(
-"touchstart",
-function(event){
+    canvas.addEventListener(
+        "touchstart",
+        function(event){
 
-if(
-!gameRunning||
-gamePaused
-)
-return;
+            if(
+                !gameRunning ||
+                gamePaused
+            )
+                return;
 
-pointerActive=true;
 
-movePlayerFromEvent(event);
+            pointerActive=true;
 
-event.preventDefault();
+            movePlayerFromEvent(
+                event
+            );
 
-},
-{
-passive:false
+
+            event.preventDefault();
+
+        },
+        {
+            passive:false
+        }
+    );
+
+
+    canvas.addEventListener(
+        "touchmove",
+        function(event){
+
+            if(
+                !pointerActive ||
+                !gameRunning ||
+                gamePaused
+            )
+                return;
+
+
+            movePlayerFromEvent(
+                event
+            );
+
+
+            event.preventDefault();
+
+        },
+        {
+            passive:false
+        }
+    );
+
+
+    canvas.addEventListener(
+        "touchend",
+        function(){
+
+            pointerActive=false;
+
+        },
+        {
+            passive:true
+        }
+    );
+
+
+    canvas.addEventListener(
+        "touchcancel",
+        function(){
+
+            pointerActive=false;
+
+        },
+        {
+            passive:true
+        }
+    );
+
+
+    canvas.addEventListener(
+        "mousedown",
+        function(event){
+
+            if(
+                !gameRunning ||
+                gamePaused
+            )
+                return;
+
+
+            pointerActive=true;
+
+            movePlayerFromEvent(
+                event
+            );
+
+        }
+    );
+
+
+    canvas.addEventListener(
+        "mousemove",
+        function(event){
+
+            if(
+                !pointerActive ||
+                !gameRunning ||
+                gamePaused
+            )
+                return;
+
+
+            movePlayerFromEvent(
+                event
+            );
+
+        }
+    );
+
+
+    window.addEventListener(
+        "mouseup",
+        function(){
+
+            pointerActive=false;
+
+        }
+    );
+
 }
-);
 
-canvas.addEventListener(
-"touchmove",
-function(event){
-
-if(
-!pointerActive||
-!gameRunning||
-gamePaused
-)
-return;
-
-movePlayerFromEvent(event);
-
-event.preventDefault();
-
-},
-{
-passive:false
-}
-);
-
-canvas.addEventListener(
-"touchend",
-function(){
-
-pointerActive=false;
-
-},
-{
-passive:true
-}
-);
-
-canvas.addEventListener(
-"touchcancel",
-function(){
-
-pointerActive=false;
-
-},
-{
-passive:true
-}
-);
-
-canvas.addEventListener(
-"mousedown",
-function(event){
-
-if(
-!gameRunning||
-gamePaused
-)
-return;
-
-pointerActive=true;
-
-movePlayerFromEvent(event);
-
-}
-);
-
-canvas.addEventListener(
-"mousemove",
-function(event){
-
-if(
-!pointerActive||
-!gameRunning||
-gamePaused
-)
-return;
-
-movePlayerFromEvent(event);
-
-}
-);
-
-window.addEventListener(
-"mouseup",
-function(){
-
-pointerActive=false;
-
-}
-);
-
-}
 
 /* START BUTTON */
 
 var startGameButton=
-document.getElementById(
-"startGameButton"
-);
+    document.getElementById(
+        "startGameButton"
+    );
+
 
 if(startGameButton){
 
-startGameButton.addEventListener(
-"click",
-function(){
+    startGameButton.addEventListener(
+        "click",
+        function(){
 
-startGame();
+            startGame();
+
+        }
+    );
 
 }
-);
 
-}
 
 /* INITIAL */
 
