@@ -180,10 +180,6 @@ body.game-mode main{
     overflow:hidden
 }
 
-.game-title{
-    display:none
-}
-
 .game-info{
     width:100%;
     height:38px;
@@ -321,43 +317,31 @@ body.game-mode main{
     cursor:not-allowed
 }
 
-/* MISSILE BUTTON */
+/* MISSILE */
 
 .missile-button{
     position:fixed !important;
     left:50% !important;
     bottom:78px !important;
     transform:translateX(-50%) !important;
-
     z-index:999999 !important;
-
     display:flex !important;
     visibility:visible !important;
-
     align-items:center;
     justify-content:center;
-
     width:180px;
     min-height:46px;
-
     padding:10px 14px;
-
     border:2px solid #ff7373;
     border-radius:13px;
-
     background:#c6283a !important;
     color:#fff !important;
-
     font-size:13px;
     font-weight:bold;
-
     cursor:pointer;
     touch-action:manipulation;
-
     pointer-events:auto !important;
-
-    box-shadow:
-        0 0 15px rgba(255,50,60,.7)
+    box-shadow:0 0 15px rgba(255,50,60,.7)
 }
 
 .missile-button:disabled{
@@ -539,8 +523,18 @@ body.game-mode main{
     <div class="user">خوش آمدید 👋</div>
 
     <div class="balance">
-        <div class="balance-title">موجودی شما</div>
-        <div class="balance-number" id="mainBalance">0.00 USDT</div>
+
+        <div class="balance-title">
+            موجودی شما
+        </div>
+
+        <div
+            class="balance-number"
+            id="mainBalance"
+        >
+            0.00 USDT
+        </div>
+
     </div>
 
 </header>
@@ -571,23 +565,63 @@ body.game-mode main{
     <div class="grid">
 
         <div class="stat">
-            <span class="stat-title">🪙 سکه</span>
-            <span class="stat-number" id="coinStat">0</span>
+
+            <span class="stat-title">
+                🪙 سکه
+            </span>
+
+            <span
+                class="stat-number"
+                id="coinStat"
+            >
+                0
+            </span>
+
         </div>
 
         <div class="stat">
-            <span class="stat-title">⭐ امتیاز</span>
-            <span class="stat-number" id="scoreStat">0</span>
+
+            <span class="stat-title">
+                ⭐ امتیاز
+            </span>
+
+            <span
+                class="stat-number"
+                id="scoreStat"
+            >
+                0
+            </span>
+
         </div>
 
         <div class="stat">
-            <span class="stat-title">👥 دعوت</span>
-            <span class="stat-number" id="inviteStat">0</span>
+
+            <span class="stat-title">
+                👥 دعوت
+            </span>
+
+            <span
+                class="stat-number"
+                id="inviteStat"
+            >
+                0
+            </span>
+
         </div>
 
         <div class="stat">
-            <span class="stat-title">📺 تبلیغات</span>
-            <span class="stat-number" id="adStat">0</span>
+
+            <span class="stat-title">
+                📺 تبلیغات
+            </span>
+
+            <span
+                class="stat-number"
+                id="adStat"
+            >
+                0
+            </span>
+
         </div>
 
     </div>
@@ -649,13 +683,11 @@ body.game-mode main{
                     <h2>✈️ آماده‌ای؟</h2>
 
                     <p class="overlay-text">
-
                         هواپیما به صورت خودکار شلیک می‌کند.
                         <br>
                         برای حرکت، انگشت خود را روی صفحه حرکت بده.
                         <br>
                         موشک ویژه دشمن را دنبال می‌کند.
-
                     </p>
 
                     <button
@@ -766,6 +798,94 @@ body.game-mode main{
 
 </section>
 
+<!-- WALLET -->
+
+<section id="wallet" class="page">
+
+    <div class="card">
+
+        <h2>💰 کیف پول</h2>
+
+        <p class="text">
+            دارایی‌ها و سکه‌های جمع‌آوری‌شده شما
+        </p>
+
+        <div class="stat">
+
+            <span class="stat-title">
+                🪙 مجموع سکه‌های جمع‌آوری‌شده
+            </span>
+
+            <span
+                class="stat-number"
+                id="walletCoins"
+            >
+                0
+            </span>
+
+        </div>
+
+        <div
+            class="stat"
+            style="margin-top:10px;"
+        >
+
+            <span class="stat-title">
+                💵 موجودی USDT
+            </span>
+
+            <span
+                class="stat-number"
+                id="walletBalance"
+            >
+                0.00 USDT
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>🔄 تبدیل سکه به USDT</h3>
+
+        <p class="text">
+            سکه‌های جمع‌آوری‌شده را می‌توانی در این بخش به USDT تبدیل کنی.
+            <br>
+            مقدار و نرخ تبدیل فعلاً مشخص نشده است.
+        </p>
+
+        <div
+            class="stat"
+            style="margin-top:10px;"
+        >
+
+            <span class="stat-title">
+                🪙 سکه قابل تبدیل
+            </span>
+
+            <span
+                class="stat-number"
+                id="convertCoins"
+            >
+                0
+            </span>
+
+        </div>
+
+        <button
+            type="button"
+            class="button"
+            disabled
+            style="opacity:.5;"
+        >
+            🔄 تبدیل به USDT
+        </button>
+
+    </div>
+
+</section>
+
 <section id="invite" class="page">
 
     <div class="card">
@@ -783,37 +903,6 @@ body.game-mode main{
         >
             📋 کپی لینک دعوت
         </button>
-
-    </div>
-
-</section>
-
-<section id="wallet" class="page">
-
-    <div class="card">
-
-        <h2>💰 کیف پول</h2>
-
-        <p class="text">
-            موجودی قابل برداشت
-        </p>
-
-        <div
-            class="balance-number"
-            id="walletBalance"
-        >
-            0.00 USDT
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h3>💸 برداشت</h3>
-
-        <p class="text">
-            بخش برداشت در مرحله بعد به سرور متصل می‌شود.
-        </p>
 
     </div>
 
@@ -909,9 +998,7 @@ body.game-mode main{
 
 </nav>
 
-<!-- MISSILE BUTTON
-     خارج از game-wrapper قرار گرفته تا Overlay نتواند آن را بپوشاند.
--->
+<!-- MISSILE BUTTON -->
 
 <button
     type="button"
@@ -978,7 +1065,10 @@ if(
 
 /* PAGE */
 
-function showPage(id,button){
+function showPage(
+    id,
+    button
+){
 
     var pages=
         document.querySelectorAll(
@@ -1347,6 +1437,16 @@ function updateStats(){
             "adStat"
         );
 
+    var walletCoins=
+        document.getElementById(
+            "walletCoins"
+        );
+
+    var convertCoins=
+        document.getElementById(
+            "convertCoins"
+        );
+
     var walletBalance=
         document.getElementById(
             "walletBalance"
@@ -1355,6 +1455,11 @@ function updateStats(){
     var profileBalance=
         document.getElementById(
             "profileBalance"
+        );
+
+    var mainBalance=
+        document.getElementById(
+            "mainBalance"
         );
 
     if(coinStat){
@@ -1378,9 +1483,36 @@ function updateStats(){
 
     }
 
+    /* WALLET COINS */
+
+    if(walletCoins){
+
+        walletCoins.textContent=
+            coins;
+
+    }
+
+    /* CONVERTIBLE COINS */
+
+    if(convertCoins){
+
+        convertCoins.textContent=
+            coins;
+
+    }
+
+    /* USDT - RATE NOT DEFINED YET */
+
     if(walletBalance){
 
         walletBalance.textContent=
+            "0.00 USDT";
+
+    }
+
+    if(mainBalance){
+
+        mainBalance.textContent=
             "0.00 USDT";
 
     }
@@ -1566,30 +1698,6 @@ function startGame(){
         requestAnimationFrame(
             gameLoop
         );
-
-}
-
-/* STOP */
-
-function stopGame(){
-
-    gameRunning=false;
-    gamePaused=false;
-
-    if(animationId!==null){
-
-        cancelAnimationFrame(
-            animationId
-        );
-
-    }
-
-    animationId=null;
-    pauseStartTime=0;
-    pointerActive=false;
-
-    updateControlButtons();
-    updateGameUI();
 
 }
 
@@ -1971,9 +2079,7 @@ function findNearestEnemy(
         var d=
             dx*dx+dy*dy;
 
-        if(
-            d<bestDistance
-        ){
+        if(d<bestDistance){
 
             bestDistance=d;
             nearest=enemies[i];
@@ -2110,6 +2216,8 @@ function destroyEnemy(
         coins+=1;
 
     }
+
+    updateStats();
 
     return true;
 
@@ -2687,48 +2795,6 @@ function getEnemyHitbox(
 
 }
 
-function getBulletHitbox(
-    bullet
-){
-
-    return{
-
-        x:bullet.x,
-        y:bullet.y,
-
-        width:
-            bullet.width || 5,
-
-        height:
-            bullet.height || 20
-
-    };
-
-}
-
-/* RECTANGLE OVERLAP */
-
-function rectsOverlap(
-    a,
-    b
-){
-
-    return !(
-        a.x-a.width/2 >
-        b.x+b.width/2 ||
-
-        a.x+a.width/2 <
-        b.x-b.width/2 ||
-
-        a.y-a.height/2 >
-        b.y+b.height/2 ||
-
-        a.y+a.height/2 <
-        b.y-b.height/2
-    );
-
-}
-
 /* SEGMENT COLLISION */
 
 function segmentRectCollision(
@@ -2911,29 +2977,19 @@ function movingBulletHitsEnemy(
             enemy
         );
 
-    var paddingX=
-        (bullet.width || 5)/2+3;
-
-    var paddingY=
-        (bullet.height || 20)/2+3;
-
     var padding=
         Math.max(
-            paddingX,
-            paddingY
+            (bullet.width || 5)/2+3,
+            (bullet.height || 20)/2+3
         );
 
     return segmentRectCollision(
-
         bullet.oldX,
         bullet.oldY,
-
         bullet.x,
         bullet.y,
-
         enemyBox,
         padding
-
     );
 
 }
@@ -2946,16 +3002,12 @@ function movingCircleHitsPlayer(
 ){
 
     return segmentRectCollision(
-
         object.oldX,
         object.oldY,
-
         object.x,
         object.y,
-
         getPlayerHitbox(),
         radius
-
     );
 
 }
@@ -2969,10 +3021,15 @@ function movingEnemyHitsPlayer(
     var playerBox=
         getPlayerHitbox();
 
+    var enemyBox=
+        getEnemyHitbox(
+            enemy
+        );
+
     if(
         rectsOverlap(
             playerBox,
-            getEnemyHitbox(enemy)
+            enemyBox
         )
     ){
 
@@ -2981,16 +3038,35 @@ function movingEnemyHitsPlayer(
     }
 
     return segmentRectCollision(
-
         enemy.oldX,
         enemy.oldY,
-
         enemy.x,
         enemy.y,
-
         playerBox,
         enemy.width/2
+    );
 
+}
+
+/* RECTANGLE OVERLAP */
+
+function rectsOverlap(
+    a,
+    b
+){
+
+    return !(
+        a.x-a.width/2 >
+        b.x+b.width/2 ||
+
+        a.x+a.width/2 <
+        b.x-b.width/2 ||
+
+        a.y-a.height/2 >
+        b.y+b.height/2 ||
+
+        a.y+a.height/2 <
+        b.y-b.height/2
     );
 
 }
@@ -3715,10 +3791,7 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -5,
-        20
-    );
+    ctx.moveTo(-5,20);
 
     ctx.lineTo(
         0,
@@ -3728,10 +3801,7 @@ function drawPlayerPlane(
         )*3
     );
 
-    ctx.lineTo(
-        5,
-        20
-    );
+    ctx.lineTo(5,20);
 
     ctx.closePath();
 
@@ -3742,20 +3812,9 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -6,
-        -4
-    );
-
-    ctx.lineTo(
-        -24,
-        15
-    );
-
-    ctx.lineTo(
-        -8,
-        11
-    );
+    ctx.moveTo(-6,-4);
+    ctx.lineTo(-24,15);
+    ctx.lineTo(-8,11);
 
     ctx.closePath();
 
@@ -3766,20 +3825,9 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        6,
-        -4
-    );
-
-    ctx.lineTo(
-        24,
-        15
-    );
-
-    ctx.lineTo(
-        8,
-        11
-    );
+    ctx.moveTo(6,-4);
+    ctx.lineTo(24,15);
+    ctx.lineTo(8,11);
 
     ctx.closePath();
 
@@ -3787,35 +3835,12 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        0,
-        -27
-    );
-
-    ctx.lineTo(
-        8,
-        8
-    );
-
-    ctx.lineTo(
-        6,
-        22
-    );
-
-    ctx.lineTo(
-        0,
-        27
-    );
-
-    ctx.lineTo(
-        -6,
-        22
-    );
-
-    ctx.lineTo(
-        -8,
-        8
-    );
+    ctx.moveTo(0,-27);
+    ctx.lineTo(8,8);
+    ctx.lineTo(6,22);
+    ctx.lineTo(0,27);
+    ctx.lineTo(-6,22);
+    ctx.lineTo(-8,8);
 
     ctx.closePath();
 
@@ -3826,25 +3851,10 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        0,
-        -21
-    );
-
-    ctx.lineTo(
-        5,
-        -8
-    );
-
-    ctx.lineTo(
-        0,
-        -4
-    );
-
-    ctx.lineTo(
-        -5,
-        -8
-    );
+    ctx.moveTo(0,-21);
+    ctx.lineTo(5,-8);
+    ctx.lineTo(0,-4);
+    ctx.lineTo(-5,-8);
 
     ctx.closePath();
 
@@ -3855,20 +3865,9 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -4,
-        14
-    );
-
-    ctx.lineTo(
-        -12,
-        25
-    );
-
-    ctx.lineTo(
-        -3,
-        22
-    );
+    ctx.moveTo(-4,14);
+    ctx.lineTo(-12,25);
+    ctx.lineTo(-3,22);
 
     ctx.closePath();
 
@@ -3879,20 +3878,9 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        4,
-        14
-    );
-
-    ctx.lineTo(
-        12,
-        25
-    );
-
-    ctx.lineTo(
-        3,
-        22
-    );
+    ctx.moveTo(4,14);
+    ctx.lineTo(12,25);
+    ctx.lineTo(3,22);
 
     ctx.closePath();
 
@@ -3932,15 +3920,8 @@ function drawBomb(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        0,
-        -9
-    );
-
-    ctx.lineTo(
-        6,
-        -16
-    );
+    ctx.moveTo(0,-9);
+    ctx.lineTo(6,-16);
 
     ctx.strokeStyle=
         "#b8b8b8";
@@ -3983,20 +3964,9 @@ function drawEnemy(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -5,
-        3
-    );
-
-    ctx.lineTo(
-        -16,
-        12
-    );
-
-    ctx.lineTo(
-        -5,
-        9
-    );
+    ctx.moveTo(-5,3);
+    ctx.lineTo(-16,12);
+    ctx.lineTo(-5,9);
 
     ctx.closePath();
 
@@ -4007,20 +3977,9 @@ function drawEnemy(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        5,
-        3
-    );
-
-    ctx.lineTo(
-        16,
-        12
-    );
-
-    ctx.lineTo(
-        5,
-        9
-    );
+    ctx.moveTo(5,3);
+    ctx.lineTo(16,12);
+    ctx.lineTo(5,9);
 
     ctx.closePath();
 
@@ -4028,35 +3987,12 @@ function drawEnemy(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        0,
-        -19
-    );
-
-    ctx.lineTo(
-        5,
-        7
-    );
-
-    ctx.lineTo(
-        3.5,
-        18
-    );
-
-    ctx.lineTo(
-        0,
-        21
-    );
-
-    ctx.lineTo(
-        -3.5,
-        18
-    );
-
-    ctx.lineTo(
-        -5,
-        7
-    );
+    ctx.moveTo(0,-19);
+    ctx.lineTo(5,7);
+    ctx.lineTo(3.5,18);
+    ctx.lineTo(0,21);
+    ctx.lineTo(-3.5,18);
+    ctx.lineTo(-5,7);
 
     ctx.closePath();
 
@@ -4111,7 +4047,7 @@ function drawBullet(
 
 }
 
-/* MISSILE DRAW */
+/* MISSILE */
 
 function drawMissile(
     missile
@@ -4188,20 +4124,9 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -4,
-        -13
-    );
-
-    ctx.lineTo(
-        0,
-        -22
-    );
-
-    ctx.lineTo(
-        4,
-        -13
-    );
+    ctx.moveTo(-4,-13);
+    ctx.lineTo(0,-22);
+    ctx.lineTo(4,-13);
 
     ctx.closePath();
 
@@ -4212,20 +4137,9 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -4,
-        4
-    );
-
-    ctx.lineTo(
-        -10,
-        11
-    );
-
-    ctx.lineTo(
-        -4,
-        10
-    );
+    ctx.moveTo(-4,4);
+    ctx.lineTo(-10,11);
+    ctx.lineTo(-4,10);
 
     ctx.closePath();
 
@@ -4236,20 +4150,9 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        4,
-        4
-    );
-
-    ctx.lineTo(
-        10,
-        11
-    );
-
-    ctx.lineTo(
-        4,
-        10
-    );
+    ctx.moveTo(4,4);
+    ctx.lineTo(10,11);
+    ctx.lineTo(4,10);
 
     ctx.closePath();
 
@@ -4257,10 +4160,7 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(
-        -3,
-        12
-    );
+    ctx.moveTo(-3,12);
 
     ctx.lineTo(
         0,
@@ -4270,10 +4170,7 @@ function drawMissile(
         )*3
     );
 
-    ctx.lineTo(
-        3,
-        12
-    );
+    ctx.lineTo(3,12);
 
     ctx.closePath();
 
@@ -4409,7 +4306,7 @@ function drawExplosion(
 
 }
 
-/* PLAYER MOVEMENT */
+/* MOVEMENT */
 
 function movePlayerFromEvent(
     event
