@@ -469,6 +469,38 @@ body.game-mode main{
     color:#20d875
 }
 
+/* PROFILE */
+
+.profile-id{
+    direction:ltr;
+    text-align:center;
+    word-break:break-all;
+    font-size:15px
+}
+
+.settings-button{
+    margin-top:10px;
+}
+
+.language-select{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:1px solid #294662;
+    border-radius:10px;
+    background:#10253b;
+    color:white;
+    font-size:14px;
+    outline:none
+}
+
+.setting-status{
+    display:block;
+    margin-top:6px;
+    color:#20d875;
+    font-size:13px
+}
+
 @media(max-width:500px){
 
     .game-header{
@@ -520,7 +552,9 @@ body.game-mode main{
 
     <div class="logo">💰 USDT Earn</div>
 
-    <div class="user">خوش آمدید 👋</div>
+    <div class="user" id="welcomeUser">
+        خوش آمدید 👋
+    </div>
 
     <div class="balance">
 
@@ -683,11 +717,13 @@ body.game-mode main{
                     <h2>✈️ آماده‌ای؟</h2>
 
                     <p class="overlay-text">
+
                         هواپیما به صورت خودکار شلیک می‌کند.
                         <br>
                         برای حرکت، انگشت خود را روی صفحه حرکت بده.
                         <br>
                         موشک ویژه دشمن را دنبال می‌کند.
+
                     </p>
 
                     <button
@@ -886,6 +922,8 @@ body.game-mode main{
 
 </section>
 
+<!-- INVITE -->
+
 <section id="invite" class="page">
 
     <div class="card">
@@ -908,6 +946,8 @@ body.game-mode main{
 
 </section>
 
+<!-- PROFILE -->
+
 <section id="profile" class="page">
 
     <div class="card">
@@ -915,7 +955,7 @@ body.game-mode main{
         <h2>👤 پروفایل</h2>
 
         <p class="text">
-            حساب کاربری USDT Earn
+            اطلاعات حساب کاربری شما در USDT Earn
         </p>
 
         <div class="grid">
@@ -923,11 +963,26 @@ body.game-mode main{
             <div class="stat">
 
                 <span class="stat-title">
-                    شناسه
+                    👤 نام کاربر
                 </span>
 
                 <span
                     class="stat-number"
+                    id="profileName"
+                >
+                    -
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    🆔 شناسه کاربر
+                </span>
+
+                <span
+                    class="stat-number profile-id"
                     id="userId"
                 >
                     -
@@ -938,7 +993,37 @@ body.game-mode main{
             <div class="stat">
 
                 <span class="stat-title">
-                    موجودی
+                    🪙 مجموع سکه
+                </span>
+
+                <span
+                    class="stat-number"
+                    id="profileCoins"
+                >
+                    0
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    ⭐ مجموع امتیاز
+                </span>
+
+                <span
+                    class="stat-number"
+                    id="profileScore"
+                >
+                    0
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    💵 موجودی USDT
                 </span>
 
                 <span
@@ -950,7 +1035,159 @@ body.game-mode main{
 
             </div>
 
+            <div class="stat">
+
+                <span class="stat-title">
+                    👥 دوستان دعوت‌شده
+                </span>
+
+                <span
+                    class="stat-number"
+                    id="profileInvites"
+                >
+                    0
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    🎮 تعداد بازی‌ها
+                </span>
+
+                <span
+                    class="stat-number"
+                    id="gamesPlayed"
+                >
+                    0
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    🏆 سطح کاربر
+                </span>
+
+                <span
+                    class="stat-number"
+                    id="userLevel"
+                >
+                    مبتدی
+                </span>
+
+            </div>
+
         </div>
+
+    </div>
+
+    <!-- SETTINGS -->
+
+    <div class="card">
+
+        <h3>⚙️ تنظیمات حساب</h3>
+
+        <div class="stat">
+
+            <span class="stat-title">
+                🌐 زبان برنامه
+            </span>
+
+            <select
+                id="languageSelect"
+                class="language-select"
+                onchange="saveLanguage()"
+            >
+
+                <option value="fa">
+                    🇦🇫 دری
+                </option>
+
+                <option value="en">
+                    🇬🇧 English
+                </option>
+
+                <option value="ar">
+                    🇸🇦 العربية
+                </option>
+
+                <option value="hi">
+                    🇮🇳 हिन्दी
+                </option>
+
+                <option value="ur">
+                    🇵🇰 اردو
+                </option>
+
+                <option value="tr">
+                    🇹🇷 Türkçe
+                </option>
+
+                <option value="sw">
+                    🌍 Swahili
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="stat setting-status">
+            زبان انتخاب‌شده ذخیره می‌شود.
+        </div>
+
+        <button
+            type="button"
+            class="button secondary settings-button"
+            onclick="toggleNotifications()"
+            id="notificationButton"
+        >
+            🔔 اعلان‌ها: روشن
+        </button>
+
+        <button
+            type="button"
+            class="button secondary settings-button"
+            onclick="toggleSound()"
+            id="soundButton"
+        >
+            🔊 صدا: روشن
+        </button>
+
+        <button
+            type="button"
+            class="button secondary settings-button"
+            onclick="toggleVibration()"
+            id="vibrationButton"
+        >
+            📳 لرزش: روشن
+        </button>
+
+        <button
+            type="button"
+            class="button secondary settings-button"
+            onclick="showGameSettings()"
+        >
+            🎮 تنظیمات بازی
+        </button>
+
+        <button
+            type="button"
+            class="button secondary settings-button"
+            onclick="showPrivacy()"
+        >
+            🛡️ امنیت و حریم خصوصی
+        </button>
+
+        <button
+            type="button"
+            class="button secondary settings-button"
+            onclick="showAbout()"
+        >
+            ℹ️ درباره USDT Earn
+        </button>
 
     </div>
 
@@ -1013,13 +1250,39 @@ body.game-mode main{
 
 <script>
 
+/* GLOBAL STATS */
+
 var coins=0;
 var totalScore=0;
 var adCount=0;
+var gamesPlayed=0;
+
+/* SETTINGS */
+
+var notificationsEnabled=
+    localStorage.getItem(
+        "notificationsEnabled"
+    )!=="0";
+
+var soundEnabled=
+    localStorage.getItem(
+        "soundEnabled"
+    )!=="0";
+
+var vibrationEnabled=
+    localStorage.getItem(
+        "vibrationEnabled"
+    )!=="0";
+
+var savedLanguage=
+    localStorage.getItem(
+        "language"
+    ) || "fa";
 
 /* TELEGRAM */
 
 var tg=null;
+var telegramUser=null;
 
 if(
     window.Telegram &&
@@ -1028,7 +1291,8 @@ if(
 
     try{
 
-        tg=window.Telegram.WebApp;
+        tg=
+            window.Telegram.WebApp;
 
         tg.ready();
         tg.expand();
@@ -1038,20 +1302,8 @@ if(
             tg.initDataUnsafe.user
         ){
 
-            var user=
+            telegramUser=
                 tg.initDataUnsafe.user;
-
-            var userElement=
-                document.getElementById(
-                    "userId"
-                );
-
-            if(userElement){
-
-                userElement.textContent=
-                    user.id || "-";
-
-            }
 
         }
 
@@ -1060,6 +1312,331 @@ if(
         console.log(error);
 
     }
+
+}
+
+/* PROFILE */
+
+function updateProfile(){
+
+    var nameElement=
+        document.getElementById(
+            "profileName"
+        );
+
+    var idElement=
+        document.getElementById(
+            "userId"
+        );
+
+    var coinsElement=
+        document.getElementById(
+            "profileCoins"
+        );
+
+    var scoreElement=
+        document.getElementById(
+            "profileScore"
+        );
+
+    var balanceElement=
+        document.getElementById(
+            "profileBalance"
+        );
+
+    var invitesElement=
+        document.getElementById(
+            "profileInvites"
+        );
+
+    var gamesElement=
+        document.getElementById(
+            "gamesPlayed"
+        );
+
+    var levelElement=
+        document.getElementById(
+            "userLevel"
+        );
+
+    var welcomeElement=
+        document.getElementById(
+            "welcomeUser"
+        );
+
+    var name="-";
+
+    if(telegramUser){
+
+        name=
+            telegramUser.first_name ||
+            telegramUser.username ||
+            "-";
+
+    }
+
+    if(nameElement){
+
+        nameElement.textContent=
+            name;
+
+    }
+
+    if(idElement){
+
+        idElement.textContent=
+            telegramUser
+            ? telegramUser.id
+            : "-";
+
+    }
+
+    if(coinsElement){
+
+        coinsElement.textContent=
+            coins;
+
+    }
+
+    if(scoreElement){
+
+        scoreElement.textContent=
+            totalScore;
+
+    }
+
+    if(balanceElement){
+
+        balanceElement.textContent=
+            "0.00";
+
+    }
+
+    if(invitesElement){
+
+        invitesElement.textContent=
+            "0";
+
+    }
+
+    if(gamesElement){
+
+        gamesElement.textContent=
+            gamesPlayed;
+
+    }
+
+    if(levelElement){
+
+        if(coins>=1000){
+
+            levelElement.textContent=
+                "طلایی";
+
+        }else if(coins>=500){
+
+            levelElement.textContent=
+                "نقره‌ای";
+
+        }else{
+
+            levelElement.textContent=
+                "مبتدی";
+
+        }
+
+    }
+
+    if(welcomeElement){
+
+        if(name!=="-"){
+
+            welcomeElement.textContent=
+                "خوش آمدید "+name+" 👋";
+
+        }else{
+
+            welcomeElement.textContent=
+                "خوش آمدید 👋";
+
+        }
+
+    }
+
+    updateSettingButtons();
+
+}
+
+/* SETTINGS UI */
+
+function updateSettingButtons(){
+
+    var notificationButton=
+        document.getElementById(
+            "notificationButton"
+        );
+
+    var soundButton=
+        document.getElementById(
+            "soundButton"
+        );
+
+    var vibrationButton=
+        document.getElementById(
+            "vibrationButton"
+        );
+
+    var languageSelect=
+        document.getElementById(
+            "languageSelect"
+        );
+
+    if(notificationButton){
+
+        notificationButton.textContent=
+            notificationsEnabled
+            ? "🔔 اعلان‌ها: روشن"
+            : "🔕 اعلان‌ها: خاموش";
+
+    }
+
+    if(soundButton){
+
+        soundButton.textContent=
+            soundEnabled
+            ? "🔊 صدا: روشن"
+            : "🔇 صدا: خاموش";
+
+    }
+
+    if(vibrationButton){
+
+        vibrationButton.textContent=
+            vibrationEnabled
+            ? "📳 لرزش: روشن"
+            : "📴 لرزش: خاموش";
+
+    }
+
+    if(languageSelect){
+
+        languageSelect.value=
+            savedLanguage;
+
+    }
+
+}
+
+/* SETTINGS FUNCTIONS */
+
+function toggleNotifications(){
+
+    notificationsEnabled=
+        !notificationsEnabled;
+
+    localStorage.setItem(
+        "notificationsEnabled",
+        notificationsEnabled
+        ? "1"
+        : "0"
+    );
+
+    updateSettingButtons();
+
+}
+
+function toggleSound(){
+
+    soundEnabled=
+        !soundEnabled;
+
+    localStorage.setItem(
+        "soundEnabled",
+        soundEnabled
+        ? "1"
+        : "0"
+    );
+
+    updateSettingButtons();
+
+}
+
+function toggleVibration(){
+
+    vibrationEnabled=
+        !vibrationEnabled;
+
+    localStorage.setItem(
+        "vibrationEnabled",
+        vibrationEnabled
+        ? "1"
+        : "0"
+    );
+
+    if(vibrationEnabled){
+
+        if(
+            navigator.vibrate
+        ){
+
+            navigator.vibrate(30);
+
+        }
+
+    }
+
+    updateSettingButtons();
+
+}
+
+function saveLanguage(){
+
+    var select=
+        document.getElementById(
+            "languageSelect"
+        );
+
+    if(!select)return;
+
+    savedLanguage=
+        select.value;
+
+    localStorage.setItem(
+        "language",
+        savedLanguage
+    );
+
+    alert(
+        "زبان انتخاب شد ✅"
+    );
+
+}
+
+function showGameSettings(){
+
+    alert(
+        "🎮 تنظیمات بازی\n\n"+
+        "تنظیمات کنترل و امکانات بازی در این بخش قرار می‌گیرد."
+    );
+
+}
+
+function showPrivacy(){
+
+    alert(
+        "🛡️ امنیت و حریم خصوصی\n\n"+
+        "اطلاعات حساب کاربر از اطلاعات تلگرام دریافت می‌شود."
+    );
+
+}
+
+function showAbout(){
+
+    alert(
+        "ℹ️ USDT Earn\n\n"+
+        "برنامه درآمدی و بازی USDT Earn\n"+
+        "نسخه اولیه"
+    );
 
 }
 
@@ -1123,6 +1700,12 @@ function showPage(
 
     }
 
+    if(id==="profile"){
+
+        updateProfile();
+
+    }
+
 }
 
 /* GAME */
@@ -1180,9 +1763,9 @@ var canvas=
     );
 
 var ctx=
-    canvas ?
-    canvas.getContext("2d") :
-    null;
+    canvas
+    ? canvas.getContext("2d")
+    : null;
 
 /* CANVAS */
 
@@ -1483,8 +2066,6 @@ function updateStats(){
 
     }
 
-    /* WALLET COINS */
-
     if(walletCoins){
 
         walletCoins.textContent=
@@ -1492,16 +2073,12 @@ function updateStats(){
 
     }
 
-    /* CONVERTIBLE COINS */
-
     if(convertCoins){
 
         convertCoins.textContent=
             coins;
 
     }
-
-    /* USDT - RATE NOT DEFINED YET */
 
     if(walletBalance){
 
@@ -1523,6 +2100,8 @@ function updateStats(){
             "0.00";
 
     }
+
+    updateProfile();
 
 }
 
@@ -1624,6 +2203,8 @@ function startGame(){
     gameRunning=true;
     gamePaused=false;
 
+    gamesPlayed++;
+
     gameStartTime=
         performance.now();
 
@@ -1690,6 +2271,7 @@ function startGame(){
 
     updateGameUI();
     updateControlButtons();
+    updateProfile();
 
     lastFrameTime=
         performance.now();
@@ -2079,7 +2661,9 @@ function findNearestEnemy(
         var d=
             dx*dx+dy*dy;
 
-        if(d<bestDistance){
+        if(
+            d<bestDistance
+        ){
 
             bestDistance=d;
             nearest=enemies[i];
@@ -2984,12 +3568,16 @@ function movingBulletHitsEnemy(
         );
 
     return segmentRectCollision(
+
         bullet.oldX,
         bullet.oldY,
+
         bullet.x,
         bullet.y,
+
         enemyBox,
         padding
+
     );
 
 }
@@ -3002,12 +3590,16 @@ function movingCircleHitsPlayer(
 ){
 
     return segmentRectCollision(
+
         object.oldX,
         object.oldY,
+
         object.x,
         object.y,
+
         getPlayerHitbox(),
         radius
+
     );
 
 }
@@ -3038,12 +3630,16 @@ function movingEnemyHitsPlayer(
     }
 
     return segmentRectCollision(
+
         enemy.oldX,
         enemy.oldY,
+
         enemy.x,
         enemy.y,
+
         playerBox,
         enemy.width/2
+
     );
 
 }
@@ -3253,6 +3849,15 @@ function loseLife(){
         now+900;
 
     gameLives--;
+
+    if(
+        vibrationEnabled &&
+        navigator.vibrate
+    ){
+
+        navigator.vibrate(100);
+
+    }
 
     if(gameLives<=0){
 
@@ -3791,7 +4396,10 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(-5,20);
+    ctx.moveTo(
+        -5,
+        20
+    );
 
     ctx.lineTo(
         0,
@@ -3801,7 +4409,10 @@ function drawPlayerPlane(
         )*3
     );
 
-    ctx.lineTo(5,20);
+    ctx.lineTo(
+        5,
+        20
+    );
 
     ctx.closePath();
 
@@ -3812,9 +4423,20 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(-6,-4);
-    ctx.lineTo(-24,15);
-    ctx.lineTo(-8,11);
+    ctx.moveTo(
+        -6,
+        -4
+    );
+
+    ctx.lineTo(
+        -24,
+        15
+    );
+
+    ctx.lineTo(
+        -8,
+        11
+    );
 
     ctx.closePath();
 
@@ -3825,9 +4447,20 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(6,-4);
-    ctx.lineTo(24,15);
-    ctx.lineTo(8,11);
+    ctx.moveTo(
+        6,
+        -4
+    );
+
+    ctx.lineTo(
+        24,
+        15
+    );
+
+    ctx.lineTo(
+        8,
+        11
+    );
 
     ctx.closePath();
 
@@ -3835,12 +4468,35 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-27);
-    ctx.lineTo(8,8);
-    ctx.lineTo(6,22);
-    ctx.lineTo(0,27);
-    ctx.lineTo(-6,22);
-    ctx.lineTo(-8,8);
+    ctx.moveTo(
+        0,
+        -27
+    );
+
+    ctx.lineTo(
+        8,
+        8
+    );
+
+    ctx.lineTo(
+        6,
+        22
+    );
+
+    ctx.lineTo(
+        0,
+        27
+    );
+
+    ctx.lineTo(
+        -6,
+        22
+    );
+
+    ctx.lineTo(
+        -8,
+        8
+    );
 
     ctx.closePath();
 
@@ -3851,10 +4507,25 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-21);
-    ctx.lineTo(5,-8);
-    ctx.lineTo(0,-4);
-    ctx.lineTo(-5,-8);
+    ctx.moveTo(
+        0,
+        -21
+    );
+
+    ctx.lineTo(
+        5,
+        -8
+    );
+
+    ctx.lineTo(
+        0,
+        -4
+    );
+
+    ctx.lineTo(
+        -5,
+        -8
+    );
 
     ctx.closePath();
 
@@ -3865,9 +4536,20 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(-4,14);
-    ctx.lineTo(-12,25);
-    ctx.lineTo(-3,22);
+    ctx.moveTo(
+        -4,
+        14
+    );
+
+    ctx.lineTo(
+        -12,
+        25
+    );
+
+    ctx.lineTo(
+        -3,
+        22
+    );
 
     ctx.closePath();
 
@@ -3878,9 +4560,20 @@ function drawPlayerPlane(
 
     ctx.beginPath();
 
-    ctx.moveTo(4,14);
-    ctx.lineTo(12,25);
-    ctx.lineTo(3,22);
+    ctx.moveTo(
+        4,
+        14
+    );
+
+    ctx.lineTo(
+        12,
+        25
+    );
+
+    ctx.lineTo(
+        3,
+        22
+    );
 
     ctx.closePath();
 
@@ -3920,8 +4613,15 @@ function drawBomb(
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-9);
-    ctx.lineTo(6,-16);
+    ctx.moveTo(
+        0,
+        -9
+    );
+
+    ctx.lineTo(
+        6,
+        -16
+    );
 
     ctx.strokeStyle=
         "#b8b8b8";
@@ -3964,9 +4664,20 @@ function drawEnemy(
 
     ctx.beginPath();
 
-    ctx.moveTo(-5,3);
-    ctx.lineTo(-16,12);
-    ctx.lineTo(-5,9);
+    ctx.moveTo(
+        -5,
+        3
+    );
+
+    ctx.lineTo(
+        -16,
+        12
+    );
+
+    ctx.lineTo(
+        -5,
+        9
+    );
 
     ctx.closePath();
 
@@ -3977,9 +4688,20 @@ function drawEnemy(
 
     ctx.beginPath();
 
-    ctx.moveTo(5,3);
-    ctx.lineTo(16,12);
-    ctx.lineTo(5,9);
+    ctx.moveTo(
+        5,
+        3
+    );
+
+    ctx.lineTo(
+        16,
+        12
+    );
+
+    ctx.lineTo(
+        5,
+        9
+    );
 
     ctx.closePath();
 
@@ -3987,12 +4709,35 @@ function drawEnemy(
 
     ctx.beginPath();
 
-    ctx.moveTo(0,-19);
-    ctx.lineTo(5,7);
-    ctx.lineTo(3.5,18);
-    ctx.lineTo(0,21);
-    ctx.lineTo(-3.5,18);
-    ctx.lineTo(-5,7);
+    ctx.moveTo(
+        0,
+        -19
+    );
+
+    ctx.lineTo(
+        5,
+        7
+    );
+
+    ctx.lineTo(
+        3.5,
+        18
+    );
+
+    ctx.lineTo(
+        0,
+        21
+    );
+
+    ctx.lineTo(
+        -3.5,
+        18
+    );
+
+    ctx.lineTo(
+        -5,
+        7
+    );
 
     ctx.closePath();
 
@@ -4047,7 +4792,7 @@ function drawBullet(
 
 }
 
-/* MISSILE */
+/* MISSILE DRAW */
 
 function drawMissile(
     missile
@@ -4124,9 +4869,20 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(-4,-13);
-    ctx.lineTo(0,-22);
-    ctx.lineTo(4,-13);
+    ctx.moveTo(
+        -4,
+        -13
+    );
+
+    ctx.lineTo(
+        0,
+        -22
+    );
+
+    ctx.lineTo(
+        4,
+        -13
+    );
 
     ctx.closePath();
 
@@ -4137,9 +4893,20 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(-4,4);
-    ctx.lineTo(-10,11);
-    ctx.lineTo(-4,10);
+    ctx.moveTo(
+        -4,
+        4
+    );
+
+    ctx.lineTo(
+        -10,
+        11
+    );
+
+    ctx.lineTo(
+        -4,
+        10
+    );
 
     ctx.closePath();
 
@@ -4150,9 +4917,20 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(4,4);
-    ctx.lineTo(10,11);
-    ctx.lineTo(4,10);
+    ctx.moveTo(
+        4,
+        4
+    );
+
+    ctx.lineTo(
+        10,
+        11
+    );
+
+    ctx.lineTo(
+        4,
+        10
+    );
 
     ctx.closePath();
 
@@ -4160,7 +4938,10 @@ function drawMissile(
 
     ctx.beginPath();
 
-    ctx.moveTo(-3,12);
+    ctx.moveTo(
+        -3,
+        12
+    );
 
     ctx.lineTo(
         0,
@@ -4170,7 +4951,10 @@ function drawMissile(
         )*3
     );
 
-    ctx.lineTo(3,12);
+    ctx.lineTo(
+        3,
+        12
+    );
 
     ctx.closePath();
 
@@ -4306,7 +5090,7 @@ function drawExplosion(
 
 }
 
-/* MOVEMENT */
+/* PLAYER MOVEMENT */
 
 function movePlayerFromEvent(
     event
@@ -4546,6 +5330,7 @@ if(startGameButton){
 /* INITIAL */
 
 updateStats();
+updateProfile();
 updateGameUI();
 updateControlButtons();
 resizeCanvas();
