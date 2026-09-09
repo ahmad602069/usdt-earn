@@ -272,7 +272,7 @@ body.game-mode main{
     line-height:1.8
 }
 
-/* سه دکمه پایین */
+/* BOTTOM CONTROLS */
 
 .game-bottom-controls{
     position:absolute;
@@ -321,48 +321,50 @@ body.game-mode main{
     cursor:not-allowed
 }
 
-/* دکمه موشک */
+/* MISSILE BUTTON */
 
 .missile-button{
-    position:absolute !important;
+    position:fixed !important;
     left:50% !important;
-    bottom:68px !important;
+    bottom:78px !important;
     transform:translateX(-50%) !important;
 
-    z-index:999 !important;
+    z-index:999999 !important;
 
-    display:block !important;
+    display:flex !important;
     visibility:visible !important;
 
-    width:auto !important;
-    min-width:175px !important;
-    height:46px !important;
+    align-items:center;
+    justify-content:center;
 
-    padding:10px 16px !important;
+    width:180px;
+    min-height:46px;
 
-    border:2px solid #ff6875 !important;
-    border-radius:13px !important;
+    padding:10px 14px;
 
-    background:#b52b38 !important;
-    color:#ffffff !important;
+    border:2px solid #ff7373;
+    border-radius:13px;
 
-    font-size:14px !important;
-    font-weight:bold !important;
+    background:#c6283a !important;
+    color:#fff !important;
 
-    text-align:center !important;
-    white-space:nowrap !important;
+    font-size:13px;
+    font-weight:bold;
 
-    cursor:pointer !important;
-    touch-action:manipulation !important;
+    cursor:pointer;
+    touch-action:manipulation;
 
-    box-shadow:0 3px 14px rgba(181,43,56,.45) !important;
+    pointer-events:auto !important;
+
+    box-shadow:
+        0 0 15px rgba(255,50,60,.7)
 }
 
 .missile-button:disabled{
-    opacity:.55 !important;
-    color:#ffffff !important;
-    display:block !important;
+    display:flex !important;
     visibility:visible !important;
+    opacity:.65 !important;
+    cursor:not-allowed
 }
 
 /* GROUND */
@@ -499,7 +501,7 @@ body.game-mode main{
 
     .game-badge{
         height:29px;
-        padding:3px 3px;
+        padding:3px;
         font-size:11px;
         border-radius:7px
     }
@@ -519,10 +521,10 @@ body.game-mode main{
     }
 
     .missile-button{
-        bottom:68px !important;
-        min-width:165px !important;
-        height:45px !important;
-        font-size:13px !important;
+        width:170px;
+        min-height:44px;
+        bottom:76px !important;
+        font-size:12px
     }
 }
 </style>
@@ -637,7 +639,10 @@ body.game-mode main{
 
             </div>
 
-            <div id="startOverlay" class="game-overlay">
+            <div
+                id="startOverlay"
+                class="game-overlay"
+            >
 
                 <div class="overlay-box">
 
@@ -673,7 +678,10 @@ body.game-mode main{
 
             </div>
 
-            <div id="gameOverOverlay" class="game-overlay hidden">
+            <div
+                id="gameOverOverlay"
+                class="game-overlay hidden"
+            >
 
                 <div class="overlay-box">
 
@@ -719,8 +727,6 @@ body.game-mode main{
 
             </div>
 
-            <!-- سه دکمه پایین -->
-
             <div class="game-bottom-controls">
 
                 <button
@@ -753,18 +759,6 @@ body.game-mode main{
                 </button>
 
             </div>
-
-            <!-- دکمه مستقل موشک -->
-
-            <button
-                type="button"
-                id="missileButton"
-                class="missile-button"
-                onclick="fireSpecialMissile()"
-                disabled
-            >
-                🚀 موشک ویژه (<span id="missileCount">3</span>)
-            </button>
 
         </div>
 
@@ -875,7 +869,10 @@ body.game-mode main{
 
 </main>
 
-<nav class="nav" id="mainNav">
+<nav
+    class="nav"
+    id="mainNav"
+>
 
     <button
         type="button"
@@ -911,6 +908,21 @@ body.game-mode main{
     </button>
 
 </nav>
+
+<!-- MISSILE BUTTON
+     خارج از game-wrapper قرار گرفته تا Overlay نتواند آن را بپوشاند.
+-->
+
+<button
+    type="button"
+    id="missileButton"
+    class="missile-button"
+    onclick="fireSpecialMissile()"
+    disabled
+>
+    🚀 موشک ویژه
+    (<span id="missileCount">3</span>)
+</button>
 
 <script>
 
@@ -966,10 +978,7 @@ if(
 
 /* PAGE */
 
-function showPage(
-    id,
-    button
-){
+function showPage(id,button){
 
     var pages=
         document.querySelectorAll(
@@ -1089,12 +1098,7 @@ var ctx=
 
 function resizeCanvas(){
 
-    if(
-        !canvas ||
-        !ctx
-    ){
-        return;
-    }
+    if(!canvas || !ctx)return;
 
     var rect=
         canvas.getBoundingClientRect();
@@ -1213,7 +1217,9 @@ function openGame(){
 
     document.getElementById(
         "mainNav"
-    ).classList.add("hidden");
+    ).classList.add(
+        "hidden"
+    );
 
     showPage(
         "gamePage",
@@ -1351,25 +1357,40 @@ function updateStats(){
             "profileBalance"
         );
 
-    if(coinStat)
+    if(coinStat){
+
         coinStat.textContent=
             coins;
 
-    if(scoreStat)
+    }
+
+    if(scoreStat){
+
         scoreStat.textContent=
             totalScore;
 
-    if(adStat)
+    }
+
+    if(adStat){
+
         adStat.textContent=
             adCount;
 
-    if(walletBalance)
+    }
+
+    if(walletBalance){
+
         walletBalance.textContent=
             "0.00 USDT";
 
-    if(profileBalance)
+    }
+
+    if(profileBalance){
+
         profileBalance.textContent=
             "0.00";
+
+    }
 
 }
 
@@ -1388,16 +1409,14 @@ function adsReady(){
 
     return(
         window.Adsgram &&
-        typeof window.Adsgram.init===
-        "function"
+        typeof window.Adsgram.init==="function"
     );
 
 }
 
 function initAds(){
 
-    if(!adsReady())
-        return;
+    if(!adsReady())return;
 
     try{
 
@@ -1450,10 +1469,7 @@ initAds();
 
 function startGame(){
 
-    if(
-        !canvas ||
-        !ctx
-    ){
+    if(!canvas || !ctx){
 
         alert(
             "خطا در بارگذاری صفحه بازی"
@@ -1585,7 +1601,9 @@ function pauseGame(){
         !gameRunning ||
         gamePaused
     ){
+
         return;
+
     }
 
     gamePaused=true;
@@ -1616,15 +1634,15 @@ function resumeGame(){
         !gameRunning ||
         !gamePaused
     ){
+
         return;
+
     }
 
     var now=
         performance.now();
 
-    if(
-        pauseStartTime>0
-    ){
+    if(pauseStartTime>0){
 
         gameStartTime+=
             now-pauseStartTime;
@@ -1906,8 +1924,7 @@ function updateGame(
 
 function fireAutomaticBullet(){
 
-    if(!gameRunning)
-        return;
+    if(!gameRunning)return;
 
     var y=
         player.y-35;
@@ -1969,7 +1986,7 @@ function findNearestEnemy(
 
 }
 
-/* MISSILE */
+/* SPECIAL MISSILE */
 
 function fireSpecialMissile(){
 
@@ -2029,8 +2046,7 @@ function enemyStillExists(
     target
 ){
 
-    if(!target)
-        return false;
+    if(!target)return false;
 
     for(
         var i=0;
@@ -2220,9 +2236,7 @@ function updateMissiles(
 
         }
 
-        if(
-            hitIndex>=0
-        ){
+        if(hitIndex>=0){
 
             var hitEnemy=
                 enemies[hitIndex];
@@ -2673,8 +2687,6 @@ function getEnemyHitbox(
 
 }
 
-/* BULLET HITBOX */
-
 function getBulletHitbox(
     bullet
 ){
@@ -2912,12 +2924,16 @@ function movingBulletHitsEnemy(
         );
 
     return segmentRectCollision(
+
         bullet.oldX,
         bullet.oldY,
+
         bullet.x,
         bullet.y,
+
         enemyBox,
         padding
+
     );
 
 }
@@ -2930,12 +2946,16 @@ function movingCircleHitsPlayer(
 ){
 
     return segmentRectCollision(
+
         object.oldX,
         object.oldY,
+
         object.x,
         object.y,
+
         getPlayerHitbox(),
         radius
+
     );
 
 }
@@ -2961,12 +2981,16 @@ function movingEnemyHitsPlayer(
     }
 
     return segmentRectCollision(
+
         enemy.oldX,
         enemy.oldY,
+
         enemy.x,
         enemy.y,
+
         playerBox,
         enemy.width/2
+
     );
 
 }
@@ -3136,8 +3160,7 @@ function checkCollisions(){
 
 function loseLife(){
 
-    if(!gameRunning)
-        return;
+    if(!gameRunning)return;
 
     var now=
         performance.now();
@@ -3298,8 +3321,7 @@ function watchLifeAd(){
 
 function showFourMinuteAd(){
 
-    if(!gameRunning)
-        return;
+    if(!gameRunning)return;
 
     gamePaused=true;
 
@@ -3407,8 +3429,6 @@ function updateGameUI(){
 
     }
 
-    /* شمارنده موشک */
-
     if(missileCount){
 
         missileCount.textContent=
@@ -3416,20 +3436,12 @@ function updateGameUI(){
 
     }
 
-    /* فعال/غیرفعال شدن دکمه موشک */
-
     if(missileButton){
 
         missileButton.disabled=
             !gameRunning ||
             gamePaused ||
             missiles<=0;
-
-        missileButton.style.display=
-            "block";
-
-        missileButton.style.visibility=
-            "visible";
 
     }
 
@@ -3462,12 +3474,7 @@ function updateGameUI(){
 
 function drawGame(){
 
-    if(
-        !canvas ||
-        !ctx
-    ){
-        return;
-    }
+    if(!canvas || !ctx)return;
 
     var width=
         canvas.clientWidth;
@@ -4104,7 +4111,7 @@ function drawBullet(
 
 }
 
-/* MISSILE */
+/* MISSILE DRAW */
 
 function drawMissile(
     missile
